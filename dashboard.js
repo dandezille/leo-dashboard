@@ -1,11 +1,10 @@
 "use strict";
 
-class Dashboard extends React.Component {
+class TimeDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       date: new Date(),
-      activity: "☕️",
     };
   }
 
@@ -25,6 +24,35 @@ class Dashboard extends React.Component {
 
   render() {
     return (
+      <div style={{ fontSize: "10vmin", color: "#001D47" }}>
+        {this.state.date.toLocaleTimeString()}
+      </div>
+    );
+  }
+}
+
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activity: "☕️",
+    };
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({});
+  }
+
+  render() {
+    return (
       <div
         style={{
           display: "flex",
@@ -35,9 +63,7 @@ class Dashboard extends React.Component {
         }}
       >
         <div style={{ fontSize: "50vmin" }}>{this.state.activity}</div>
-        <div style={{ fontSize: "10vmin", color: "#001D47" }}>
-          {this.state.date.toLocaleTimeString()}
-        </div>
+        <TimeDisplay />
       </div>
     );
   }
