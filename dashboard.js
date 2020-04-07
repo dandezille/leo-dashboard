@@ -1,25 +1,39 @@
 "use strict";
 
-const e = React.createElement;
-
-class LikeButton extends React.Component {
+class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { liked: false };
+    this.state = { date: new Date() };
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({
+      date: new Date(),
+    });
   }
 
   render() {
-    if (this.state.liked) {
-      return "You liked this.";
-    }
-
-    return e(
-      "button",
-      { onClick: () => this.setState({ liked: true }) },
-      "Like"
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <h1>It is {this.state.date.toLocaleTimeString()}.</h1>
+      </div>
     );
   }
 }
 
-const domContainer = document.querySelector("#dashboard_container");
-ReactDOM.render(e(LikeButton), domContainer);
+ReactDOM.render(<Dashboard />, document.getElementById("dashboard_container"));
