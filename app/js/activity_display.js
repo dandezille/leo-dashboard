@@ -18,10 +18,6 @@ class ActivityDisplay extends React.Component {
     clearInterval(this.timerID);
   }
 
-  tick() {
-    this.setState({});
-  }
-
   currentActivity() {
     const activities = {
       "07:30": "🥐",
