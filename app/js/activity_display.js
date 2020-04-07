@@ -1,5 +1,20 @@
 "use strict";
 
+const activities = {
+  "07:30": "🥐",
+  "08:30": "📖",
+  "08:45": "🚗",
+  "10:00": "☕️",
+  "12:00": "🍽️",
+  "13:30": "📖",
+  "13:40": "️🛏️",
+  "16:30": "🚗",
+  "18:00": "🍽️",
+  "19:30": "📖",
+  "19:40": "😬",
+  "19:50": "️🛏️",
+};
+
 class ActivityDisplay extends React.Component {
   constructor(props) {
     super(props);
@@ -19,21 +34,6 @@ class ActivityDisplay extends React.Component {
   }
 
   currentActivity() {
-    const activities = {
-      "07:30": "🥐",
-      "08:30": "📖",
-      "08:45": "🚗",
-      "10:00": "☕️",
-      "12:00": "🍽️",
-      "13:30": "📖",
-      "13:40": "️🛏️",
-      "16:30": "🚗",
-      "18:00": "🍽️",
-      "19:30": "📖",
-      "19:40": "😬",
-      "19:50": "️🛏️",
-    };
-
     const keys = Object.keys(activities);
     const current_key =
       keys.findIndex((k) => moment(k, "HH:mm") > moment()) - 1;
