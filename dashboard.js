@@ -35,7 +35,7 @@ class Dashboard extends React.Component {
         }}
       >
         <div style={{ fontSize: "50vmin" }}>{this.state.activity}</div>
-        <div style={{ fontSize: "10vmin" }}>
+        <div style={{ fontSize: "10vmin", color: "#001D47" }}>
           {this.state.date.toLocaleTimeString()}
         </div>
       </div>
