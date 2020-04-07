@@ -31,7 +31,7 @@ class TimeDisplay extends React.Component {
   }
 }
 
-class Dashboard extends React.Component {
+class ActivityDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,6 +52,12 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    return <div style={{ fontSize: "50vmin" }}>{this.state.activity}</div>;
+  }
+}
+
+class Dashboard extends React.Component {
+  render() {
     return (
       <div
         style={{
@@ -62,7 +68,7 @@ class Dashboard extends React.Component {
           height: "100vh",
         }}
       >
-        <div style={{ fontSize: "50vmin" }}>{this.state.activity}</div>
+        <ActivityDisplay />
         <TimeDisplay />
       </div>
     );
