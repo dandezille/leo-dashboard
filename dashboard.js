@@ -3,7 +3,10 @@
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { date: new Date() };
+    this.state = {
+      date: new Date(),
+      activity: "☕️",
+    };
   }
 
   componentDidMount() {
@@ -25,12 +28,16 @@ class Dashboard extends React.Component {
       <div
         style={{
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
         }}
       >
-        <h1>It is {this.state.date.toLocaleTimeString()}.</h1>
+        <div style={{ fontSize: "50vmin" }}>{this.state.activity}</div>
+        <div style={{ fontSize: "10vmin" }}>
+          {this.state.date.toLocaleTimeString()}
+        </div>
       </div>
     );
   }
