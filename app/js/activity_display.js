@@ -4,7 +4,7 @@ class ActivityDisplay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentActivity: "☕️",
+      currentActivity: this.currentActivity(),
     };
   }
 
