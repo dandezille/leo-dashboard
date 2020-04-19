@@ -1,0 +1,14 @@
+[Unit]
+Description=Dashboard server
+Requires=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/leo-dashboard/app
+ExecStart=/bin/bash /home/pi/leo-dashboard/app/start.sh
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
