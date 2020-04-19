@@ -16,13 +16,13 @@ if [ "$ORIGINAL_SHA" = "$NEW_SHA" ]; then
 else
   echo SHAs different, update
 
-  # Update kiosk
-  pushd kiosk
+  # Update app
+  pushd app
   bash ./update.sh
   popd
 
-  # Update app
-  pushd app
+  # Update kiosk
+  pushd kiosk
   bash ./update.sh
   popd
 
