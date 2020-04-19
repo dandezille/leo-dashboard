@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Updating dashboard at $(date)"
+
 # Pull latest updates
 ORIGINAL_SHA=$(git rev-parse HEAD)
 git pull --rebase --prune
