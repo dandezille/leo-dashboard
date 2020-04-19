@@ -26,5 +26,6 @@ else
   bash ./update.sh
   popd
 
+  echo Update complete
 fi  # end if SHA compare
 
