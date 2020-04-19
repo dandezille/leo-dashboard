@@ -1,7 +1,7 @@
 [Unit]
 Description=Chromium Kiosk
-Wants=graphical.target
-After=graphical.target
+Wants=graphical.target dashboard-app.service
+After=graphical.target dashboard-app.service
 
 [Service]
 Environment=DISPLAY=:0.0
