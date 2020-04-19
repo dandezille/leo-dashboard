@@ -12,7 +12,7 @@ sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/pi/.config/chromi
 sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/pi/.config/chromium/Default/Preferences
 
 # Start browser
-/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk https://pimylifeup.com &
+/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8000 &
 
 # Refresh every 15 seconds
 while true; do
