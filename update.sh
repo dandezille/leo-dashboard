@@ -5,8 +5,8 @@ ORIGINAL_SHA=$(git rev-parse HEAD)
 git pull --rebase --prune
 NEW_SHA=$(git rev-parse HEAD)
 
-echo Original SHA: $ORIGINAL_SHA
-echo New SHA: $NEW_SHA
+echo Original SHA $ORIGINAL_SHA
+echo New SHA      $NEW_SHA
 
 # Update running code if new changes
 if [ "$ORIGINAL_SHA" = "$NEW_SHA" ]; then
