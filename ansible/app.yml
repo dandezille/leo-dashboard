@@ -42,4 +42,5 @@
       systemd:
         state: restarted
         name: dashboard-app.service
+        enabled: yes
         daemon_reload: yes
