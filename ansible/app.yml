@@ -1,14 +1,36 @@
 ---
 - hosts: all
+  vars:
+    dashboard_app_directory: /home/pi/leo-dashboard/app
   tasks:
-    - name: Install git
-      become: yes
-      apt:
-        name: git
-        state: present
+    - name: Read service info
+      service_facts:
+
+    - name: Stop app service
+      systemd:
+        state: stopped
+        name: dashboard-app.service
+      when: 
+        - "'dashboard-app.service' in ansible_facts.services"
+        - ansible_facts.services['dashboard-app.service']['state'] != 'stopped'
 
     - name: Get latest dashboard code
       git:
         repo: git@github.com:dandezille/leo-dashboard.git
-        dest: ~/leo-dashboard
+        dest: /home/pi/leo-dashboard
+        version: master
         accept_hostkey: yes
+      register: checkout_result
+
+    - name: Install service unit file
+      become: yes
+      template: 
+        src: dashboard-app.service.j2 
+        dest: /etc/systemd/system/dashboard-app.service
+
+    - name: Start service
+      become: yes
+      systemd:
+        state: started
+        name: dashboard-app.service
+        daemon_reload: yes

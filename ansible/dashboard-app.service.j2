@@ -6,8 +6,8 @@ Requires=network.target
 Type=simple
 User=pi
 Group=pi
-WorkingDirectory=/home/pi/leo-dashboard/app
-ExecStart=/bin/bash /home/pi/leo-dashboard/app/start.sh
+WorkingDirectory={{dashboard_app_directory}}
+ExecStart=/bin/bash {{dashboard_app_directory}}/start.sh
 Restart=on-abort
 
 [Install]
