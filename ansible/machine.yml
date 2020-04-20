@@ -48,6 +48,7 @@
           - unclutter
           - sed
           - git
+          - python3
 
     - name: Clean up apt packages
       become: yes
