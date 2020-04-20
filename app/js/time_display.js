@@ -22,7 +22,9 @@ class TimeDisplay extends React.Component {
 
   render() {
     return (
-      <div style={{ fontSize: "10vmin", color: "#edf3ff" }}>
+      <div
+        style={{ fontSize: "10vmin", color: "#edf3ff", textAlign: "center" }}
+      >
         {this.state.date.format("HH:mm")}
       </div>
     );
