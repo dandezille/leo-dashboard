@@ -6,8 +6,8 @@ Requires=network.target
 Type=simple
 User=pi
 Group=pi
-WorkingDirectory={{dashboard_app_directory}}
-ExecStart=/bin/bash {{dashboard_app_directory}}/start.sh
+WorkingDirectory={{dashboard_directory}}/app
+ExecStart=/bin/bash {{dashboard_directory}}/app/start.sh
 Restart=on-abort
 
 [Install]

@@ -1,36 +1,47 @@
 ---
 - hosts: all
   vars:
-    dashboard_app_directory: /home/pi/leo-dashboard/app
+    dashboard_directory: /home/pi/leo-dashboard
+    git_repo: git@github.com:dandezille/leo-dashboard.git
+    git_branch: master
   tasks:
-    - name: Read service info
-      service_facts:
+    - name: Get local commit
+      git:
+        repo: "{{dashboard_directory}}"
+        clone: no
+        update: no
+      register: local_commit
 
-    - name: Stop app service
-      systemd:
-        state: stopped
-        name: dashboard-app.service
-      when: 
-        - "'dashboard-app.service' in ansible_facts.services"
-        - ansible_facts.services['dashboard-app.service']['state'] != 'stopped'
+    - name: Get remote commit
+      git:
+        repo: "{{git_repo}}"
+        version: "{{git_branch}}"
+        clone: no
+        update: no
+      register: remote_commit
 
     - name: Get latest dashboard code
       git:
-        repo: git@github.com:dandezille/leo-dashboard.git
-        dest: /home/pi/leo-dashboard
-        version: master
+        repo: "{{git_repo}}"
+        dest: "{{dashboard_directory}}"
+        version: "{{git_branch}}"
         accept_hostkey: yes
-      register: checkout_result
+      when: local_commit.after != remote_commit.after
+      notify:
+        - restart service
 
     - name: Install service unit file
       become: yes
       template: 
         src: dashboard-app.service.j2 
         dest: /etc/systemd/system/dashboard-app.service
+      notify:
+        - restart service
 
-    - name: Start service
+  handlers:
+    - name: restart service
       become: yes
       systemd:
-        state: started
+        state: restarted
         name: dashboard-app.service
         daemon_reload: yes
