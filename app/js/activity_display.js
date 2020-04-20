@@ -35,8 +35,11 @@ class ActivityDisplay extends React.Component {
 
   currentActivity() {
     const keys = Object.keys(activities);
-    const current_key =
-      keys.findIndex((k) => moment(k, "HH:mm") > moment()) - 1;
+    let current_key = keys.findIndex((k) => moment(k, "HH:mm") > moment()) - 1;
+
+    if (current_key == -2) {
+      current_key = keys.length - 1;
+    }
 
     return activities[keys[current_key]];
   }
