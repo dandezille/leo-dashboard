@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+if [ -z "$1" ]; then
+  printf "You must provide a component to deploy (machine|app).\n"
+  exit 1
+else
+  ansible-playbook -i ansible/inventory.ini ansible/"$1".yml
+fi

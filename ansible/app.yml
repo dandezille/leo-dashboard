@@ -1,0 +1,52 @@
+---
+- hosts: all
+  vars:
+    dashboard_directory: /home/pi/leo-dashboard
+    git_repo: git@github.com:dandezille/leo-dashboard.git
+    git_branch: master
+  tasks:
+    - name: Get local commit
+      git:
+        repo: "{{dashboard_directory}}"
+        clone: no
+        update: no
+      register: local_commit
+
+    - name: Get remote commit
+      git:
+        repo: "{{git_repo}}"
+        version: "{{git_branch}}"
+        clone: no
+        update: no
+      register: remote_commit
+
+    - name: Get latest dashboard code
+      git:
+        repo: "{{git_repo}}"
+        dest: "{{dashboard_directory}}"
+        version: "{{git_branch}}"
+        accept_hostkey: yes
+      when: local_commit.after != remote_commit.after
+      notify: restart service
+
+    - name: Install service unit file
+      become: yes
+      template: 
+        src: dashboard-app.service.j2 
+        dest: /etc/systemd/system/dashboard-app.service
+      notify: restart service
+
+  handlers:
+    - name: restart service
+      become: yes
+      systemd:
+        state: restarted
+        name: dashboard-app.service
+        enabled: yes
+        daemon_reload: yes
+      notify: refresh browser
+
+    - name: refresh browser
+      command: xdotool getactivewindow key F5
+      environment:
+        DISPLAY: ":0"
