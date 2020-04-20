@@ -36,6 +36,7 @@
           - lightdm
           - openbox
           - chromium-browser
+          - fonts-noto-color-emoji
           - unclutter
           - sed
           - git
