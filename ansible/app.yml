@@ -27,16 +27,14 @@
         version: "{{git_branch}}"
         accept_hostkey: yes
       when: local_commit.after != remote_commit.after
-      notify:
-        - restart service
+      notify: restart service
 
     - name: Install service unit file
       become: yes
       template: 
         src: dashboard-app.service.j2 
         dest: /etc/systemd/system/dashboard-app.service
-      notify:
-        - restart service
+      notify: restart service
 
   handlers:
     - name: restart service
