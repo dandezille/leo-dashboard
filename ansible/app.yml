@@ -44,3 +44,9 @@
         name: dashboard-app.service
         enabled: yes
         daemon_reload: yes
+      notify: refresh browser
+
+    - name: refresh browser
+      command: xdotool getactivewindow key F5
+      environment:
+        DISPLAY: ":0"
