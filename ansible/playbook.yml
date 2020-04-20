@@ -1,0 +1,33 @@
+---
+- hosts: all
+  tasks:
+    - name: Generate ssh keypair
+      openssh_keypair:
+        path: ~/.ssh/id_rsa
+      register: ssh_keypair
+
+    - name: Print ssh public key
+      debug:
+        var: ssh_keypair.public_key
+
+    - name: Wait for user to confirm key added to GitHub
+      pause:
+        prompt: "Make sure ssh key added to GitHub account"
+
+    - name: Upgrade all packages to latest version
+      become: yes
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install git
+      become: yes
+      apt:
+        name: git
+        state: present
+
+    - name: Get latest dashboard code
+      git:
+        repo: git@github.com:dandezille/leo-dashboard.git
+        dest: ~/leo-dashboard
+        accept_hostkey: yes
