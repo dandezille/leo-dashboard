@@ -5,8 +5,8 @@
       become: yes
       lineinfile:
         path: /boot/config.txt
-        regexp: "^display_rotate="
-        line: display_rotate=2
+        regexp: "^lcd_rotate="
+        line: lcd_rotate=2
 
     - name: Upgrade all packages to latest version
       become: yes
