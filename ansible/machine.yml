@@ -7,6 +7,7 @@
         path: /boot/config.txt
         regexp: "^lcd_rotate="
         line: lcd_rotate=2
+      notify: reboot
 
     - name: Generate ssh keypair
       openssh_keypair:
@@ -22,8 +23,9 @@
       apt:
         update_cache: yes
         upgrade: "yes"
+      notify: reboot
 
-    - name: Install X server and window manager
+    - name: Install X server, window manager, Chromium and required tools
       become: yes
       apt:
         install_recommends: no
@@ -32,29 +34,19 @@
           - x11-xserver-utils
           - lightdm
           - openbox
-
-    - name: Install Chromium
-      become: yes
-      apt:
-        install_recommends: no
-        pkg:
           - chromium-browser
-
-    - name: Install tools
-      become: yes
-      apt:
-        install_recommends: no
-        pkg:
           - unclutter
           - sed
           - git
           - python3
+      notify: reboot
 
     - name: Clean up apt packages
       become: yes
       apt:
         autoclean: yes
         autoremove: yes
+      notify: reboot
 
     - name: Openbox Configuration
       become: yes
@@ -73,7 +65,9 @@
           sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
           sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
           chromium-browser --noerrdialogs --disable-infobars --kiosk 'https://google.com'
+      notify: reboot
 
-    - name: Restart
+  handlers:
+    - name: reboot
       become: yes
       reboot:
