@@ -8,6 +8,15 @@
         regexp: "^lcd_rotate="
         line: lcd_rotate=2
 
+    - name: Generate ssh keypair
+      openssh_keypair:
+        path: ~/.ssh/id_rsa
+      register: ssh_keypair
+
+    - name: Print ssh public key
+      debug:
+        var: ssh_keypair.public_key
+
     - name: Upgrade all packages to latest version
       become: yes
       apt:
@@ -38,6 +47,7 @@
         pkg:
           - unclutter
           - sed
+          - git
 
     - name: Clean up apt packages
       become: yes
