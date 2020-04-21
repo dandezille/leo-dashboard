@@ -16,14 +16,15 @@ const activities = {
 };
 
 function ActivityDisplay(props) {
-  const keys = Object.keys(activities);
+  const activity_times = Object.keys(activities);
 
-  let current_key = keys.findIndex((k) => moment(k, "HH:mm") > props.time) - 1;
+  let current_key =
+    activity_times.findIndex((k) => moment(k, "HH:mm") > props.time) - 1;
   if (current_key == -2) {
-    current_key = keys.length - 1;
+    current_key = activity_times.length - 1;
   }
 
-  const current_activity = activities[keys[current_key]];
+  const current_activity = activities[activity_times[current_key]];
 
   return <div style={{ fontSize: "50vmin" }}>{current_activity}</div>;
 }
