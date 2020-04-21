@@ -82,7 +82,7 @@
       cron:
         name: Display off
         minute: '0'
-        hour: '22'
+        hour: '20'
         job: echo 1 > /sys/class/backlight/rpi_backlight/bl_power
 
   handlers:
