@@ -15,38 +15,18 @@ const activities = {
   "19:50": "️🛏️",
 };
 
-class ActivityDisplay extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentActivity: this.currentActivity(),
-    };
+function nextTimeIndex(times, current_time) {
+  const index = times.findIndex((k) => moment(k, "HH:mm") > current_time);
+  if (index != -1) {
+    return index;
   }
 
-  componentDidMount() {
-    this.timerID = setInterval(() => {
-      this.setState({ currentActivity: this.currentActivity() });
-    }, 1000);
+  return times.length; // Handle last activity
   }
 
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  currentActivity() {
-    const keys = Object.keys(activities);
-    let current_key = keys.findIndex((k) => moment(k, "HH:mm") > moment()) - 1;
-
-    if (current_key == -2) {
-      current_key = keys.length - 1;
-    }
-
-    return activities[keys[current_key]];
-  }
-
-  render() {
-    return (
-      <div style={{ fontSize: "50vmin" }}>{this.state.currentActivity}</div>
-    );
-  }
+function ActivityDisplay(props) {
+  const activity_times = Object.keys(activities);
+  const next_activity = nextTimeIndex(activity_times, props.time);
+  const current_activity = activities[activity_times[next_activity - 1]];
+  return <div style={{ fontSize: "50vmin" }}>{current_activity}</div>;
 }
