@@ -15,16 +15,18 @@ const activities = {
   "19:50": "️🛏️",
 };
 
-function ActivityDisplay(props) {
-  const activity_times = Object.keys(activities);
-
-  let current_key =
-    activity_times.findIndex((k) => moment(k, "HH:mm") > props.time) - 1;
-  if (current_key == -2) {
-    current_key = activity_times.length - 1;
+function nextTimeIndex(times, current_time) {
+  const index = times.findIndex((k) => moment(k, "HH:mm") > current_time);
+  if (index != -1) {
+    return index;
   }
 
-  const current_activity = activities[activity_times[current_key]];
+  return times.length; // Handle last activity
+  }
 
+function ActivityDisplay(props) {
+  const activity_times = Object.keys(activities);
+  const next_activity = nextTimeIndex(activity_times, props.time);
+  const current_activity = activities[activity_times[next_activity - 1]];
   return <div style={{ fontSize: "50vmin" }}>{current_activity}</div>;
 }
