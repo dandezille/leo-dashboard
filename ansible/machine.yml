@@ -69,6 +69,22 @@
           chromium-browser --noerrdialogs --disable-infobars --kiosk 'http://localhost:8000'
       notify: reboot
 
+    - name: Create cron job to turn display on
+      become: yes
+      cron:
+        name: Display on
+        minute: '0'
+        hour: '7'
+        job: echo 0 > /sys/class/backlight/rpi_backlight/bl_power
+
+    - name: Create cron job to turn display off
+      become: yes
+      cron:
+        name: Display off
+        minute: '0'
+        hour: '22'
+        job: echo 1 > /sys/class/backlight/rpi_backlight/bl_power
+
   handlers:
     - name: reboot
       become: yes
