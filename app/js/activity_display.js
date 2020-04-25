@@ -40,8 +40,27 @@ function ActivityDisplay(props) {
   const next_activity = nextTimeIndex(activity_times, props.time);
   const current_activity = activities[activity_times[next_activity - 1]];
   return (
-    <div style={{ fontSize: "50vmin", color: "#edf3ff", textAlign: "center" }}>
-      {current_activity}
+    <div
+      style={{
+        position: "relative",
+        color: "#edf3ff",
+        textAlign: "center",
+      }}
+    >
+      <svg viewBox="-1 -1 2 2" height="75vh" width="75vh">
+        <circle
+          className="progress-ring__circle"
+          stroke="white"
+          strokeWidth="0.05"
+          fill="transparent"
+          r="0.95"
+          cx="0"
+          cy="0"
+        />
+        <text fontSize="1.3" textAnchor="middle" dominantBaseline="central">
+          {current_activity}
+        </text>
+      </svg>
     </div>
   );
 }
