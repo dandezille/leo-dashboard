@@ -66,6 +66,7 @@
           - sed
           - git
           - python3
+          - nodejs
           - neovim
           - nodejs
           - yarn
