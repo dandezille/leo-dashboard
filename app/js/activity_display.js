@@ -82,7 +82,7 @@ function ActivityDisplay(props) {
     >
       <svg viewBox="-1 -1 2 2" height="75vh" width="75vh">
         <ProgressRing radius="0.94" progress={progress} />
-        <text fontSize="1.1" textAnchor="middle" dominantBaseline="central">
+        <text fontSize="1.1" textAnchor="middle" dominantBaseline="middle">
           {current_activity}
         </text>
       </svg>
