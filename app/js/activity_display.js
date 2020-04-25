@@ -41,7 +41,10 @@ function ProgressRing(props) {
   return (
     <circle
       className="progress-ring__circle"
-      style={{ transition: "stroke-dashoffset 0.35s" }}
+      style={{
+        transition: "stroke-dashoffset 0.35s",
+        transform: "rotate(-90deg)",
+      }}
       stroke="white"
       strokeWidth={1 - props.radius}
       strokeDasharray={circumference + " " + circumference}
