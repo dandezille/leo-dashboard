@@ -39,5 +39,9 @@ function ActivityDisplay(props) {
   const activity_times = Object.keys(activities);
   const next_activity = nextTimeIndex(activity_times, props.time);
   const current_activity = activities[activity_times[next_activity - 1]];
-  return <div style={{ fontSize: "50vmin" }}>{current_activity}</div>;
+  return (
+    <div style={{ fontSize: "50vmin", color: "#edf3ff", textAlign: "center" }}>
+      {current_activity}
+    </div>
+  );
 }
