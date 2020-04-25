@@ -65,7 +65,7 @@ function ActivityDisplay(props) {
   const next_activity_start = moment(activity_times[next_activity], "HH:mm");
 
   const activity_duration = next_activity_start - current_activity_start;
-  const activity_elapsed = moment() - current_activity_start;
+  const activity_elapsed = props.time - current_activity_start;
   const progress = activity_elapsed / activity_duration;
 
   return (
