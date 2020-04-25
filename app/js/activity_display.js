@@ -35,6 +35,24 @@ function nextTimeIndex(times, current_time) {
   return times.length; // Handle last activity
 }
 
+function ProgressRing(props) {
+  const circumference = props.radius * 2 * Math.PI;
+  const offset = circumference - props.progress * circumference;
+  return (
+    <circle
+      className="progress-ring__circle"
+      stroke="white"
+      strokeWidth={1 - props.radius}
+      strokeDasharray={circumference + " " + circumference}
+      strokeDashoffset={offset}
+      fill="transparent"
+      r={props.radius}
+      cx="0"
+      cy="0"
+    />
+  );
+}
+
 function ActivityDisplay(props) {
   const activity_times = Object.keys(activities);
   const next_activity = nextTimeIndex(activity_times, props.time);
@@ -50,10 +68,6 @@ function ActivityDisplay(props) {
   const activity_elapsed = moment() - current_activity_start;
   const progress = activity_elapsed / activity_duration;
 
-  const radius = 0.95;
-  const circumference = radius * 2 * Math.PI;
-  const offset = circumference - progress * circumference;
-
   return (
     <div
       style={{
@@ -63,17 +77,7 @@ function ActivityDisplay(props) {
       }}
     >
       <svg viewBox="-1 -1 2 2" height="75vh" width="75vh">
-        <circle
-          className="progress-ring__circle"
-          stroke="white"
-          strokeWidth="0.05"
-          strokeDasharray={circumference + " " + circumference}
-          strokeDashoffset={offset}
-          fill="transparent"
-          r={radius}
-          cx="0"
-          cy="0"
-        />
+        <ProgressRing radius="0.95" progress={progress} />
         <text fontSize="1.3" textAnchor="middle" dominantBaseline="central">
           {current_activity}
         </text>
