@@ -5,6 +5,8 @@ if [[ $1 = 'display_on' ]]; then
   ssh pi@pi-leo 'sudo /bin/bash -c "echo 0 > /sys/class/backlight/rpi_backlight/bl_power"'
 elif [[ $1 = 'display_off' ]]; then
   ssh pi@pi-leo 'sudo /bin/bash -c "echo 1 > /sys/class/backlight/rpi_backlight/bl_power"'
+elif [[ $1 = 'refresh' ]]; then
+  ssh pi@pi-leo 'DISPLAY=:0 xdotool getactivewindow key F5'
 else
   printf "You must provide a command to send (display_on|display_off).\n"
   exit 1
