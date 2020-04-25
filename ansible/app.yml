@@ -25,6 +25,7 @@
         repo: "{{git_repo}}"
         dest: "{{dashboard_directory}}"
         version: "{{git_branch}}"
+        force: yes
         accept_hostkey: yes
       when: local_commit.after != remote_commit.after
       notify: restart service
