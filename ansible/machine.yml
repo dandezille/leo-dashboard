@@ -41,6 +41,7 @@
           - sed
           - git
           - python3
+          - neovim
           - realvnc-vnc-server 
           - realvnc-vnc-viewer
       notify: reboot
