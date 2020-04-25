@@ -80,7 +80,7 @@ function ActivityDisplay(props) {
         textAlign: "center",
       }}
     >
-      <svg viewBox="-1 -1 2 2" height="75vh" width="75vh">
+      <svg viewBox="-1 -1 2 2" height="95vh" width="95vh">
         <ProgressRing radius="0.94" progress={progress} />
         <text fontSize="1.1" textAnchor="middle" dominantBaseline="middle">
           {current_activity}
