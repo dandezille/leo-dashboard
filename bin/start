@@ -1,4 +1,4 @@
 #!/bin/bash
 
 yarn --cwd app build
-npx serve -s app/build
+npx serve -s app/build -l 8000
