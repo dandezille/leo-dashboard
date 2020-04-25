@@ -39,6 +39,21 @@ function ActivityDisplay(props) {
   const activity_times = Object.keys(activities);
   const next_activity = nextTimeIndex(activity_times, props.time);
   const current_activity = activities[activity_times[next_activity - 1]];
+
+  const current_activity_start = moment(
+    activity_times[next_activity - 1],
+    "HH:mm"
+  );
+  const next_activity_start = moment(activity_times[next_activity], "HH:mm");
+
+  const activity_duration = next_activity_start - current_activity_start;
+  const activity_elapsed = moment() - current_activity_start;
+  const progress = activity_elapsed / activity_duration;
+
+  const radius = 0.95;
+  const circumference = radius * 2 * Math.PI;
+  const offset = circumference - progress * circumference;
+
   return (
     <div
       style={{
@@ -52,8 +67,10 @@ function ActivityDisplay(props) {
           className="progress-ring__circle"
           stroke="white"
           strokeWidth="0.05"
+          strokeDasharray={circumference + " " + circumference}
+          strokeDashoffset={offset}
           fill="transparent"
-          r="0.95"
+          r={radius}
           cx="0"
           cy="0"
         />
