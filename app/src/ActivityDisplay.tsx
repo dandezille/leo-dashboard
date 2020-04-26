@@ -24,8 +24,8 @@ const activities: { [time: string]: string } = {
   "18:00": "️🍽️", // Dinner and listen
   "18:30": "️️️📺", // Cartoon
   "19:00": "️️️🛀", // Bath or shower
-  "19:30": "️️️📖️", // Story
-  "19:40": "🦷", // Teeth and face wash
+  "19:30": "🦷", // Teeth and face wash
+  "19:40": "️️️📖️", // Story
   "19:45": "🛏️", // Bed
 };
 
