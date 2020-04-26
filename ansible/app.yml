@@ -19,14 +19,12 @@
       yarn:
         path: "{{dashboard_directory}}/app"
       when: checkout.changed
-      notify: restart service
 
     - name: Yarn build
       command: yarn build
       args:
         chdir: "{{dashboard_directory}}/app"
       when: checkout.changed
-      notify: restart service
 
     - name: Install service unit file
       become: yes
