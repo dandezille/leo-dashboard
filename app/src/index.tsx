@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+import create_activities from "./Activities";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App activities={create_activities()} />
   </React.StrictMode>,
   document.getElementById("root")
 );

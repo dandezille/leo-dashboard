@@ -1,9 +1,19 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render } from "@testing-library/react";
+import moment from "moment";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+import App from "./App";
+
+it("renders successfully", () => {
+  const activity = {
+    start: moment().subtract(30, "minutes"),
+    duration: 60,
+    symbol: "?",
+  };
+
+  const activities_mock = {
+    current: jest.fn().mockReturnValue(activity),
+  };
+
+  const { getByText } = render(<App activities={activities_mock} />);
 });

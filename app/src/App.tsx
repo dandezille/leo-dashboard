@@ -5,7 +5,9 @@ import ActivityDisplay from "./ActivityDisplay";
 import TimeDisplay from "./TimeDisplay";
 import Activities from "./Activities";
 
-interface Props {}
+interface Props {
+  activities: Activities;
+}
 
 interface State {
   time: moment.Moment;
@@ -13,10 +15,11 @@ interface State {
 
 class App extends React.Component<Props, State> {
   timerID: NodeJS.Timeout = setTimeout(function () {}, 0);
-  activities: Activities = new Activities();
+  activities: Activities;
 
   constructor(props: Props) {
     super(props);
+    this.activities = props.activities;
     this.state = {
       time: moment(),
     };
