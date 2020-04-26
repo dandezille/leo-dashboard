@@ -1,7 +1,19 @@
-"use strict";
+import React from "react";
+import moment from "moment";
 
-class Dashboard extends React.Component {
-  constructor(props) {
+import ActivityDisplay from "./ActivityDisplay";
+import TimeDisplay from "./TimeDisplay";
+
+interface Props {}
+
+interface State {
+  time: moment.Moment;
+}
+
+class App extends React.Component<Props, State> {
+  timerID: NodeJS.Timeout = setTimeout(function () {}, 0);
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       time: moment(),
@@ -35,4 +47,4 @@ class Dashboard extends React.Component {
   }
 }
 
-ReactDOM.render(<Dashboard />, document.getElementById("dashboard_container"));
+export default App;

@@ -1,6 +1,11 @@
-"use strict";
+import React from "react";
+import moment from "moment";
 
-function TimeDisplay(props) {
+interface Props {
+  time: moment.Moment;
+}
+
+function TimeDisplay(props: Props) {
   return (
     <div
       style={{
@@ -16,3 +21,5 @@ function TimeDisplay(props) {
     </div>
   );
 }
+
+export default TimeDisplay;
