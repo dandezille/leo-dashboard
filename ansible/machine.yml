@@ -18,6 +18,30 @@
       debug:
         var: ssh_keypair.public_key
 
+    - name: Add NodeSource signing key
+      become: yes
+      apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
+
+    - name: Add NodeSource repo
+      become: yes
+      apt_repository:
+        repo: deb https://deb.nodesource.com/node_12.x {{ansible_distribution_release}} main
+        state: present
+
+    - name: Add Yarn signing key
+      become: yes
+      apt_key:
+        url: https://dl.yarnpkg.com/debian/pubkey.gpg
+        state: present
+
+    - name: Add Yarn repo
+      become: yes
+      apt_repository:
+        repo: deb https://dl.yarnpkg.com/debian/ stable main
+        state: present
+
     - name: Upgrade all packages to latest version
       become: yes
       apt:
@@ -38,10 +62,13 @@
           - chromium-browser
           - fonts-noto-color-emoji
           - unclutter
+          - build-essential
           - sed
           - git
           - python3
           - neovim
+          - nodejs
+          - yarn
           - realvnc-vnc-server 
           - realvnc-vnc-viewer
       notify: reboot
