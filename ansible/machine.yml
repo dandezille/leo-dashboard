@@ -65,7 +65,6 @@
           - build-essential
           - sed
           - git
-          - nodejs
           - neovim
           - nodejs
           - yarn
