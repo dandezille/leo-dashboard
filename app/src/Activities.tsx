@@ -15,22 +15,41 @@ class ActivitiesImplementation implements Activities {
     this.activities = activities;
   }
 
+  private current_activity_index(time_strings: string[], time: moment.Moment) {
+    const times = time_strings.map((t) => moment(t, "HH:mm"));
+
+    for (var i = 0; i < times.length - 1; i++) {
+      if (times[i] <= time && times[i + 1] > time) {
+        return i;
+      }
+    }
+
+    return times.length - 1;
+  }
+
+  private time_diff(current: moment.Moment, next: moment.Moment) {
+    if (next > current) {
+      return next.diff(current);
+    }
+
+    return next.add(1, "day").diff(current);
+  }
+
   current(time: moment.Moment) {
-    const activity_times = Object.keys(this.activities);
-    const next_activity = this.nextTimeIndex(activity_times, time);
-    const current_activity = this.activities[activity_times[next_activity - 1]];
+    const times = Object.keys(this.activities);
 
-    const current_activity_start = this.parseTime(
-      activity_times[next_activity - 1]
-    );
-    const next_activity_start = this.parseTime(activity_times[next_activity]);
+    const current_index = this.current_activity_index(times, time);
+    const current_start = this.parseTime(times[current_index]);
 
-    const activity_duration = next_activity_start.diff(current_activity_start);
+    const next_index = (current_index + 1) % times.length;
+    const next_start = this.parseTime(times[next_index]);
+
+    const activity_duration = this.time_diff(current_start, next_start);
 
     return {
-      start: current_activity_start,
+      start: current_start,
       duration: activity_duration,
-      symbol: current_activity,
+      symbol: this.activities[times[current_index]],
     };
   }
 
@@ -40,7 +59,7 @@ class ActivitiesImplementation implements Activities {
     return moment(time, "HH:mm");
   }
 
-  private nextTimeIndex(times: any[], current_time: moment.Moment) {
+  private nextTimeIndex(times: string[], current_time: moment.Moment) {
     const index = times.findIndex((k) => this.parseTime(k) > current_time);
     if (index !== -1) {
       return index;
