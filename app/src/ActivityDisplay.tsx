@@ -12,13 +12,16 @@ function ActivityDisplay(props: Props) {
     <div
       style={{
         position: "relative",
-        color: "#edf3ff",
-        textAlign: "center",
       }}
     >
       <svg viewBox="-1 -1 2 2" height="95vh" width="95vh">
         <ProgressRing radius={0.94} progress={props.progress} />
-        <text fontSize="1.1" textAnchor="middle" dominantBaseline="middle">
+        <text
+          fill="#edf3ff"
+          fontSize="1.1"
+          textAnchor="middle"
+          dominantBaseline="middle"
+        >
           {props.current_activity}
         </text>
       </svg>
