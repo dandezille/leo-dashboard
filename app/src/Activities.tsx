@@ -53,6 +53,14 @@ class ActivitiesImplementation implements Activities {
     };
   }
 
+  next() {
+    return {
+      start: moment("12:00", "HH:mm"),
+      duration: 22 * 60 * 60 * 1000,
+      symbol: "b",
+    };
+  }
+
   private activities: { [time: string]: string };
 
   private parseTime(time: string) {
