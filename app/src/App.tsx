@@ -1,9 +1,10 @@
 import React from "react";
 import moment from "moment";
 
-import ActivityDisplay from "./ActivityDisplay";
-import TimeDisplay from "./TimeDisplay";
 import Activities from "./Activities";
+import ActivityDisplay from "./ActivityDisplay";
+import NextActivityDisplay from "./NextActivityDisplay";
+import TimeDisplay from "./TimeDisplay";
 
 interface Props {
   activities: Activities;
@@ -14,11 +15,12 @@ interface State {
 }
 
 class App extends React.Component<Props, State> {
-  timerID: NodeJS.Timeout = setTimeout(function () {}, 0);
+  timerID: NodeJS.Timeout;
   activities: Activities;
 
   constructor(props: Props) {
     super(props);
+    this.timerID = setTimeout(function () {}, 0);
     this.activities = props.activities;
     this.state = {
       time: moment(),
@@ -39,6 +41,7 @@ class App extends React.Component<Props, State> {
 
   render() {
     const activity = this.activities.current(this.state.time);
+    const next_activity = this.activities.next(this.state.time);
     const elapsed = this.state.time.diff(activity.start);
     const progress = elapsed / activity.duration;
 
@@ -49,11 +52,9 @@ class App extends React.Component<Props, State> {
           flexDirection: "column",
         }}
       >
-        <ActivityDisplay
-          current_activity={activity.symbol}
-          progress={progress}
-        />
+        <ActivityDisplay activity={activity.symbol} progress={progress} />
         <TimeDisplay time={this.state.time} />
+        <NextActivityDisplay activity={next_activity.symbol} />
       </div>
     );
   }

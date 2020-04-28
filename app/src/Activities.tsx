@@ -20,6 +20,7 @@ interface Activity {
 
 interface Activities {
   current(time: moment.Moment): Activity;
+  next(time: moment.Moment): Activity;
 }
 
 class ActivitiesImplementation implements Activities {
@@ -107,7 +108,7 @@ const default_activities = {
 
 export function create_activities(
   activities: { [time: string]: string } = default_activities
-) {
+): Activities {
   return new ActivitiesImplementation(activities);
 }
 
