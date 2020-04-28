@@ -1,5 +1,17 @@
 import moment from "moment";
 
+function parse_time(time: string) {
+  return moment(time, "HH:mm");
+}
+
+function time_diff(current: moment.Moment, next: moment.Moment) {
+  if (next > current) {
+    return next.diff(current);
+  }
+
+  return next.add(1, "day").diff(current);
+}
+
 interface Activity {
   start: moment.Moment;
   duration: number;
@@ -8,15 +20,42 @@ interface Activity {
 
 interface Activities {
   current(time: moment.Moment): Activity;
+  next(time: moment.Moment): Activity;
 }
 
 class ActivitiesImplementation implements Activities {
+  private activities: { [time: string]: string };
+  private activity_times: string[];
+
   constructor(activities: { [time: string]: string }) {
     this.activities = activities;
+    this.activity_times = Object.keys(this.activities);
   }
 
-  private current_activity_index(time_strings: string[], time: moment.Moment) {
-    const times = time_strings.map((t) => moment(t, "HH:mm"));
+  current(time: moment.Moment) {
+    const current_index = this.activity_index_at(time);
+    const current_start = parse_time(this.activity_times[current_index]);
+
+    return {
+      start: current_start,
+      duration: this.activity_duration(current_index),
+      symbol: this.activities[this.activity_times[current_index]],
+    };
+  }
+
+  next(time: moment.Moment) {
+    const current_index = this.next_index(this.activity_index_at(time));
+    const current_start = parse_time(this.activity_times[current_index]);
+
+    return {
+      start: current_start,
+      duration: this.activity_duration(current_index),
+      symbol: this.activities[this.activity_times[current_index]],
+    };
+  }
+
+  private activity_index_at(time: moment.Moment) {
+    const times = this.activity_times.map((t) => moment(t, "HH:mm"));
 
     for (var i = 0; i < times.length - 1; i++) {
       if (times[i] <= time && times[i + 1] > time) {
@@ -27,45 +66,17 @@ class ActivitiesImplementation implements Activities {
     return times.length - 1;
   }
 
-  private time_diff(current: moment.Moment, next: moment.Moment) {
-    if (next > current) {
-      return next.diff(current);
-    }
-
-    return next.add(1, "day").diff(current);
+  private next_index(index: number): number {
+    return (index + 1) % this.activity_times.length;
   }
 
-  current(time: moment.Moment) {
-    const times = Object.keys(this.activities);
+  private activity_duration(current_index: number): number {
+    const next_index = this.next_index(current_index);
 
-    const current_index = this.current_activity_index(times, time);
-    const current_start = this.parseTime(times[current_index]);
+    const current_start = parse_time(this.activity_times[current_index]);
+    const next_start = parse_time(this.activity_times[next_index]);
 
-    const next_index = (current_index + 1) % times.length;
-    const next_start = this.parseTime(times[next_index]);
-
-    const activity_duration = this.time_diff(current_start, next_start);
-
-    return {
-      start: current_start,
-      duration: activity_duration,
-      symbol: this.activities[times[current_index]],
-    };
-  }
-
-  private activities: { [time: string]: string };
-
-  private parseTime(time: string) {
-    return moment(time, "HH:mm");
-  }
-
-  private nextTimeIndex(times: string[], current_time: moment.Moment) {
-    const index = times.findIndex((k) => this.parseTime(k) > current_time);
-    if (index !== -1) {
-      return index;
-    }
-
-    return times.length; // Handle last activity
+    return time_diff(current_start, next_start);
   }
 }
 
@@ -97,7 +108,7 @@ const default_activities = {
 
 export function create_activities(
   activities: { [time: string]: string } = default_activities
-) {
+): Activities {
   return new ActivitiesImplementation(activities);
 }
 

@@ -4,7 +4,7 @@ import ProgressRing from "./ProgressRing";
 
 interface Props {
   progress: number;
-  current_activity: string;
+  activity: string;
 }
 
 function ActivityDisplay(props: Props) {
@@ -22,7 +22,7 @@ function ActivityDisplay(props: Props) {
           textAnchor="middle"
           dominantBaseline="middle"
         >
-          {props.current_activity}
+          {props.activity}
         </text>
       </svg>
     </div>
