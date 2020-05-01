@@ -89,6 +89,7 @@ const default_activities = {
   "09:30": "️🚶‍♂️", // Walk
   "10:00": "️☕", // Coffee and listen
   "10:30": "️🧩", // Play
+  "11:50": "️️️📖️", // Story
   "12:00": "️📺", // Cartoon
   "12:30": "️🍽️", // Lunch and listen
   "13:00": "️️️📺", // Cartoon
