@@ -5,6 +5,7 @@ import Activities from "./Activities";
 import ActivityDisplay from "./ActivityDisplay";
 import NextActivityDisplay from "./NextActivityDisplay";
 import TimeDisplay from "./TimeDisplay";
+import Weather from "./Weather";
 
 interface Props {
   activities: Activities;
@@ -65,6 +66,7 @@ export default class App extends React.Component<Props, State> {
         >
           <TimeDisplay time={this.state.time} />
           <NextActivityDisplay activity={next_activity.symbol} />
+          <Weather />
         </div>
       </div>
     );
