@@ -4,6 +4,12 @@ interface Error {
   message: string;
 }
 
+function fetch_weather_data() {
+  return fetch(
+    "http://api.openweathermap.org/data/2.5/weather?q=Dublin,IE&units=metric&appid=d69dc974f03525bb28591d7132bbf921"
+  ).then((res) => res.json());
+}
+
 export default function Weather() {
   const [error, setError] = useState<Error | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -11,21 +17,17 @@ export default function Weather() {
   const [feelsLike, setFeelsLike] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch(
-      "http://api.openweathermap.org/data/2.5/weather?q=Dublin,IE&units=metric&appid=d69dc974f03525bb28591d7132bbf921"
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setTemp(result.main.temp.toFixed(0));
-          setFeelsLike(result.main.feels_like.toFixed(0));
-          setIsLoaded(true);
-        },
-        (error) => {
-          setError(error);
-          setIsLoaded(true);
-        }
-      );
+    fetch_weather_data().then(
+      (result) => {
+        setTemp(result.main.temp.toFixed(0));
+        setFeelsLike(result.main.feels_like.toFixed(0));
+        setIsLoaded(true);
+      },
+      (error) => {
+        setError(error);
+        setIsLoaded(true);
+      }
+    );
   }, []);
 
   if (error) {
