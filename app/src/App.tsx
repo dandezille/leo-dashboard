@@ -20,7 +20,7 @@ class App extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.timerID = setTimeout(function () {}, 0);
+    this.timerID = setInterval(function () {}, 0);
     this.activities = props.activities;
     this.state = {
       time: moment(),
