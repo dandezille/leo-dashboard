@@ -14,7 +14,7 @@ interface State {
   time: moment.Moment;
 }
 
-class App extends React.Component<Props, State> {
+export default class App extends React.Component<Props, State> {
   timerID: NodeJS.Timeout;
   activities: Activities;
 
@@ -70,5 +70,3 @@ class App extends React.Component<Props, State> {
     );
   }
 }
-
-export default App;
