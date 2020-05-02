@@ -13,7 +13,7 @@
         force: yes
         accept_hostkey: yes
       register: checkout
-      notify: restart service
+      notify: refresh browser
 
     - name: Yarn install
       yarn:
