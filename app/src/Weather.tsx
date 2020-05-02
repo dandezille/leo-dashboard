@@ -43,7 +43,7 @@ export default function Weather() {
       <div
         style={{
           color: "white",
-          fontSize: "4vmin",
+          fontSize: "6vmin",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-end",
