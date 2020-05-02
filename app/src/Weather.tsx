@@ -12,17 +12,17 @@ export default function Weather(props: Props) {
   const [feelsLike, setFeelsLike] = useState<string | null>(null);
 
   useEffect(() => {
-    props.weather_provider.fetch().then(
-      (result) => {
+    props.weather_provider
+      .fetch()
+      .then((result) => {
         setTemp(result.temp.toFixed(0));
         setFeelsLike(result.feels_like.toFixed(0));
         setIsLoaded(true);
-      },
-      (error) => {
-        setError(error);
+      })
+      .catch((error: Error) => {
+        setError(error.message);
         setIsLoaded(true);
-      }
-    );
+      });
   }, [props.weather_provider]);
 
   if (error) {
