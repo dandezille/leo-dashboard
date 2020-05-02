@@ -6,23 +6,27 @@ interface Props {
 }
 
 export default function Weather(props: Props) {
-  const [error, setError] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [temp, setTemp] = useState<string | null>(null);
-  const [feelsLike, setFeelsLike] = useState<string | null>(null);
+  const [error, setError] = useState<string>("");
+  const [temp, setTemp] = useState<string>("");
+  const [feelsLike, setFeelsLike] = useState<string>("");
 
   useEffect(() => {
-    props.weather_provider
-      .fetch()
-      .then((result) => {
-        setTemp(result.temp.toFixed(0));
-        setFeelsLike(result.feels_like.toFixed(0));
-        setIsLoaded(true);
-      })
-      .catch((error: Error) => {
-        setError(error.message);
-        setIsLoaded(true);
-      });
+    function update() {
+      props.weather_provider
+        .fetch()
+        .then((result) => {
+          setTemp(result.temp.toFixed(0));
+          setFeelsLike(result.feels_like.toFixed(0));
+          setIsLoaded(true);
+        })
+        .catch((error: Error) => {
+          setError(error.message);
+          setIsLoaded(true);
+        });
+    }
+
+    update();
   }, [props.weather_provider]);
 
   if (error) {
