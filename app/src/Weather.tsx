@@ -4,10 +4,18 @@ interface Error {
   message: string;
 }
 
-function fetch_weather_data() {
-  return fetch(
-    "http://api.openweathermap.org/data/2.5/weather?q=Dublin,IE&units=metric&appid=d69dc974f03525bb28591d7132bbf921"
-  ).then((res) => res.json());
+interface WeatherProvider {
+  fetch(): any;
+}
+
+class WeatherProviderImplementation implements WeatherProvider {
+  async fetch() {
+    const response = await fetch(
+      "http://api.openweathermap.org/data/2.5/weather?q=Dublin,IE&units=metric&appid=d69dc974f03525bb28591d7132bbf921"
+    );
+
+    return await response.json();
+  }
 }
 
 export default function Weather() {
@@ -17,7 +25,8 @@ export default function Weather() {
   const [feelsLike, setFeelsLike] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch_weather_data().then(
+    const weather_provider = new WeatherProviderImplementation();
+    weather_provider.fetch().then(
       (result) => {
         setTemp(result.main.temp.toFixed(0));
         setFeelsLike(result.main.feels_like.toFixed(0));
