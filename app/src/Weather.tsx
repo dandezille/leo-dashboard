@@ -31,7 +31,6 @@ export default class Weather extends React.Component<Props, State> {
     this.props.weather_provider
       .fetch()
       .then((result) => {
-        console.log(result);
         this.setState({
           temp: result.temp,
           feels_like: result.feels_like,
