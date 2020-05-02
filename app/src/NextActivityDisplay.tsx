@@ -8,9 +8,8 @@ function NextActivityDisplay(props: Props) {
   return (
     <div
       style={{
-        fontSize: "10vmin",
+        fontSize: "18vmin",
         color: "#edf3ff",
-        textAlign: "center",
       }}
     >
       {props.activity}

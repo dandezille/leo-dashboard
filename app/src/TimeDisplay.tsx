@@ -9,9 +9,8 @@ function TimeDisplay(props: Props) {
   return (
     <div
       style={{
-        fontSize: "10vmin",
+        fontSize: "18vmin",
         color: "#edf3ff",
-        textAlign: "center",
       }}
     >
       {props.time.format("HH:mm")}

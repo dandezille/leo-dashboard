@@ -55,7 +55,13 @@ class App extends React.Component<Props, State> {
       >
         <ActivityDisplay activity={activity.symbol} progress={progress} />
         <div
-          style={{ flex: "0 0 10em", display: "flex", flexDirection: "column" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            padding: "15px",
+          }}
         >
           <TimeDisplay time={this.state.time} />
           <NextActivityDisplay activity={next_activity.symbol} />
