@@ -73,7 +73,7 @@ export default class Weather extends React.Component<Props, State> {
       <div
         style={{
           color: "white",
-          fontSize: "6vmin",
+          fontSize: "8vmin",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-end",
