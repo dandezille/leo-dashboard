@@ -68,7 +68,7 @@ export default class App extends React.Component<Props, State> {
           <TimeDisplay time={this.state.time} />
           <Weather
             weather_provider={create_open_weather_map_provider()}
-            update_interval={60 * 1000}
+            update_interval={5 * 60 * 1000}
           />
           <NextActivityDisplay activity={next_activity.symbol} />
         </div>
