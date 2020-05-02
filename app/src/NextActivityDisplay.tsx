@@ -10,6 +10,7 @@ function NextActivityDisplay(props: Props) {
       style={{
         fontSize: "18vmin",
         color: "#edf3ff",
+        lineHeight: "120px",
       }}
     >
       {props.activity}
