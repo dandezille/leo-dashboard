@@ -49,12 +49,17 @@ class App extends React.Component<Props, State> {
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
+          flex: 1,
+          minHeight: "100vh",
         }}
       >
         <ActivityDisplay activity={activity.symbol} progress={progress} />
-        <TimeDisplay time={this.state.time} />
-        <NextActivityDisplay activity={next_activity.symbol} />
+        <div
+          style={{ flex: "0 0 10em", display: "flex", flexDirection: "column" }}
+        >
+          <TimeDisplay time={this.state.time} />
+          <NextActivityDisplay activity={next_activity.symbol} />
+        </div>
       </div>
     );
   }

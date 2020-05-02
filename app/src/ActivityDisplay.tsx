@@ -11,7 +11,11 @@ function ActivityDisplay(props: Props) {
   return (
     <div
       style={{
-        position: "relative",
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <svg viewBox="-1 -1 2 2" height="95vh" width="95vh">

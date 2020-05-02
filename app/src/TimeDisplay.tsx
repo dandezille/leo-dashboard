@@ -9,9 +9,6 @@ function TimeDisplay(props: Props) {
   return (
     <div
       style={{
-        position: "absolute",
-        left: "10px",
-        bottom: "10px",
         fontSize: "10vmin",
         color: "#edf3ff",
         textAlign: "center",
