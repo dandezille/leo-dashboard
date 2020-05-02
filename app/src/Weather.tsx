@@ -40,9 +40,17 @@ export default function Weather() {
     return <div style={{ color: "white" }}>Loading...</div>;
   } else {
     return (
-      <div style={{ color: "white" }}>
-        <div>Temp: {temp}</div>
-        <div>Feels Like: {feelsLike}</div>
+      <div
+        style={{
+          color: "white",
+          fontSize: "4vmin",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+        }}
+      >
+        <div>Temp: {temp} °C</div>
+        <div>Feels: {feelsLike} °C</div>
       </div>
     );
   }

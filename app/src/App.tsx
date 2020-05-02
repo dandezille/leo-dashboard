@@ -65,8 +65,8 @@ export default class App extends React.Component<Props, State> {
           }}
         >
           <TimeDisplay time={this.state.time} />
-          <NextActivityDisplay activity={next_activity.symbol} />
           <Weather />
+          <NextActivityDisplay activity={next_activity.symbol} />
         </div>
       </div>
     );
