@@ -23,8 +23,8 @@ export default function Weather() {
       .then(log)
       .then(
         (result) => {
-          setTemp(result.main.temp);
-          setFeelsLike(result.main.feels_like);
+          setTemp(result.main.temp.toFixed(0));
+          setFeelsLike(result.main.feels_like.toFixed(0));
           setIsLoaded(true);
         },
         (error) => {
