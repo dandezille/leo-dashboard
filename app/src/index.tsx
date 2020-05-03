@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { create_activities } from "./Activities";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
+import { create_activities } from "./Activities";
+import { create_open_weather_map_provider } from "./WeatherProvider";
+
+const activities = create_activities();
+const provider = create_open_weather_map_provider();
+
 ReactDOM.render(
   <React.StrictMode>
-    <App activities={create_activities()} />
+    <App activities={activities} weather_provider={provider} />
   </React.StrictMode>,
   document.getElementById("root")
 );
