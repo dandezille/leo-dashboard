@@ -11,6 +11,11 @@ it("renders successfully", async () => {
   };
 
   await act(async () => {
-    render(<Weather weather_provider={create_test_weather_provider(data)} />);
+    render(
+      <Weather
+        weather_provider={create_test_weather_provider(data)}
+        update_interval={5 * 1000}
+      />
+    );
   });
 });
