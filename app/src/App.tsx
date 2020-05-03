@@ -6,10 +6,11 @@ import ActivityDisplay from "./ActivityDisplay";
 import NextActivityDisplay from "./NextActivityDisplay";
 import TimeDisplay from "./TimeDisplay";
 import Weather from "./Weather";
-import { create_open_weather_map_provider } from "./WeatherProvider";
+import WeatherProvider from "./WeatherProvider";
 
 interface Props {
   activities: Activities;
+  weather_provider: WeatherProvider;
 }
 
 interface State {
@@ -67,7 +68,7 @@ export default class App extends React.Component<Props, State> {
         >
           <TimeDisplay time={this.state.time} />
           <Weather
-            weather_provider={create_open_weather_map_provider()}
+            weather_provider={this.props.weather_provider}
             update_interval={5 * 60 * 1000}
           />
           <NextActivityDisplay activity={next_activity.symbol} />

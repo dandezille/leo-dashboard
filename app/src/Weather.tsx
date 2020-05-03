@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import WeatherProvider from "./WeatherProvider";
 
 interface Props {
@@ -6,81 +6,61 @@ interface Props {
   update_interval: number;
 }
 
-interface State {
-  is_loaded: boolean;
-  error: string;
-  temp: number;
-  feels_like: number;
-}
+export default function App(props: Props) {
+  const [is_loaded, set_is_loaded] = useState(false);
+  const [error, set_error] = useState("");
+  const [temp, set_temp] = useState(0);
+  const [feels_like, set_feels_like] = useState(0);
 
-export default class Weather extends React.Component<Props, State> {
-  timerID: NodeJS.Timeout;
-
-  constructor(props: Props) {
-    super(props);
-    this.timerID = setInterval(function () {}, 0);
-    this.state = {
-      is_loaded: false,
-      error: "",
-      temp: 0,
-      feels_like: 0,
-    };
-  }
-
-  update_weather() {
-    this.props.weather_provider
+  function update(provider: WeatherProvider) {
+    console.log("update");
+    provider
       .fetch()
       .then((result) => {
-        this.setState({
-          temp: result.temp,
-          feels_like: result.feels_like,
-          error: "",
-          is_loaded: true,
-        });
+        set_is_loaded(true);
+        set_temp(result.temp);
+        set_feels_like(result.feels_like);
+        set_error("");
       })
       .catch((error: Error) => {
-        console.log(error);
-        this.setState({
-          error: error.message,
-          is_loaded: true,
-        });
+        console.log(`Weather error: ${error}`);
+        set_is_loaded(true);
+        set_error(error.message);
       });
   }
 
-  componentDidMount() {
-    this.update_weather();
-    this.timerID = setInterval(
-      () => this.update_weather(),
-      this.props.update_interval
-    );
+  useEffect(() => {
+    console.log("effect");
+    update(props.weather_provider);
+    const id = setInterval(() => {
+      update(props.weather_provider);
+    }, props.update_interval);
+    return () => {
+      console.log("clear");
+      clearInterval(id);
+    };
+  }, [props.weather_provider, props.update_interval]);
+
+  if (!is_loaded) {
+    return <div style={{ color: "white" }}>Loading...</div>;
   }
 
-  componentWillUnmount() {
-    clearInterval(this.timerID);
+  if (error) {
+    return <div style={{ color: "white" }}>Error: {error}</div>;
   }
 
-  render() {
-    if (!this.state.is_loaded) {
-      return <div style={{ color: "white" }}>Loading...</div>;
-    }
-
-    if (this.state.error) {
-      return <div style={{ color: "white" }}>Error: {this.state.error}</div>;
-    }
-
-    return (
-      <div
-        style={{
-          color: "white",
-          fontSize: "8vmin",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-        }}
-      >
-        <div>Temp: {this.state.temp.toFixed(0)} °C</div>
-        <div>Feels: {this.state.feels_like.toFixed(0)} °C</div>
-      </div>
-    );
-  }
+  return (
+    <div
+      style={{
+        color: "white",
+        fontSize: "8vmin",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
+      }}
+    >
+      <div>Temp: {temp.toFixed(0)} °C</div>
+      <div>Feels: {feels_like.toFixed(0)} °C</div>
+    </div>
+  );
 }
