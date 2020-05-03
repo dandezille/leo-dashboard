@@ -9,17 +9,14 @@ interface Props {
 export default function App(props: Props) {
   const [is_loaded, set_is_loaded] = useState(false);
   const [error, set_error] = useState("");
-  const [temp, set_temp] = useState(0);
-  const [feels_like, set_feels_like] = useState(0);
+  const [data, set_data] = useState({ temp: 0, feels_like: 0 });
 
   function update(provider: WeatherProvider) {
-    console.log("update");
     provider
       .fetch()
       .then((result) => {
         set_is_loaded(true);
-        set_temp(result.temp);
-        set_feels_like(result.feels_like);
+        set_data(result);
         set_error("");
       })
       .catch((error: Error) => {
@@ -30,15 +27,11 @@ export default function App(props: Props) {
   }
 
   useEffect(() => {
-    console.log("effect");
     update(props.weather_provider);
     const id = setInterval(() => {
       update(props.weather_provider);
     }, props.update_interval);
-    return () => {
-      console.log("clear");
-      clearInterval(id);
-    };
+    return () => clearInterval(id);
   }, [props.weather_provider, props.update_interval]);
 
   if (!is_loaded) {
@@ -59,8 +52,8 @@ export default function App(props: Props) {
         alignItems: "flex-end",
       }}
     >
-      <div>Temp: {temp.toFixed(0)} °C</div>
-      <div>Feels: {feels_like.toFixed(0)} °C</div>
+      <div>Temp: {data.temp.toFixed(0)} °C</div>
+      <div>Feels: {data.feels_like.toFixed(0)} °C</div>
     </div>
   );
 }
