@@ -82,9 +82,9 @@ class ActivitiesImplementation implements Activities {
 
 const default_activities = {
   "07:30": "🥐", // breakfast
-  "08:15": "🦷", // Teeth and face wash
-  "08:20": "📚", // French story and drawing
-  "08:30": "🎨", // Craft (colouring, painting, drawing)
+  "08:30": "🦷", // Teeth and face wash
+  "08:35": "📚", // French story and drawing
+  "08:45": "🎨", // Craft (colouring, painting, drawing)
   "09:00": "🍳", // Baking
   "09:30": "️🚶‍♂️", // Walk
   "10:00": "️☕", // Coffee and listen
