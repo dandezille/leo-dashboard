@@ -5,7 +5,6 @@
     update_cache: yes
     upgrade: "yes"
   register: apt_upgrade_output
-  notify: reboot
 
 - name: apt upgrade output
   debug:
@@ -33,11 +32,9 @@
       - yarn
       - realvnc-vnc-server 
       - realvnc-vnc-viewer
-  notify: reboot
 
 - name: Clean up apt packages
   become: yes
   apt:
     autoclean: yes
     autoremove: yes
-  notify: reboot
