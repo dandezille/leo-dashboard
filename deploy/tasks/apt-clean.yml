@@ -1,0 +1,6 @@
+---
+- name: Clean up apt packages
+  become: yes
+  apt:
+    autoclean: yes
+    autoremove: yes

@@ -1,0 +1,16 @@
+---
+- name: Create cron job to turn display on
+  become: yes
+  cron:
+    name: Display on
+    minute: '0'
+    hour: '7'
+    job: echo 0 > /sys/class/backlight/rpi_backlight/bl_power
+
+- name: Create cron job to turn display off
+  become: yes
+  cron:
+    name: Display off
+    minute: '0'
+    hour: '20'
+    job: echo 1 > /sys/class/backlight/rpi_backlight/bl_power

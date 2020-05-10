@@ -1,0 +1,23 @@
+---
+- name: Enable vnc server
+  become: yes
+  command: raspi-config nonint do_vnc 0
+  register: enable_vnc_output
+  changed_when: enable_vnc_output.stderr != ''
+  notify: reboot
+
+- name: Allow non-RealVNC clients
+  become: yes
+  lineinfile:
+    path: /root/.vnc/config.d/vncserver-x11
+    regexp: "^Authentication="
+    line: Authentication=VncAuth
+  notify: reboot
+
+- name: Set VNC password
+  become: yes
+  lineinfile:
+    path: /root/.vnc/config.d/vncserver-x11
+    regexp: "^Password="
+    line: Password=23b46a660df761b9
+  notify: reboot

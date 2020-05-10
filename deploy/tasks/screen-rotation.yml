@@ -1,0 +1,8 @@
+---
+- name: Set screen rotation
+  become: yes
+  lineinfile:
+    path: /boot/config.txt
+    regexp: "^lcd_rotate="
+    line: lcd_rotate=2
+  notify: reboot

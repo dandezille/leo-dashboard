@@ -1,0 +1,8 @@
+---
+- name: Disable Chromium cache
+  become: yes
+  lineinfile:
+    path: /etc/chromium-browser/default
+    regexp: "^CHROMIUM_FLAGS="
+    line: CHROMIUM_FLAGS="--disk-cache-dir=/dev/null --disk-cache-size=1"
+  notify: reboot

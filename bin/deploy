@@ -5,5 +5,5 @@ if [ -z "$1" ]; then
   printf "You must provide a component to deploy (machine|app).\n"
   exit 1
 else
-  ansible-playbook -i deploy/inventory.ini deploy/"$1".yml
+  ansible-playbook -i deploy/inventory.ini deploy/"$1".yml "${@:2}"
 fi

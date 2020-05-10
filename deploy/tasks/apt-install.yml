@@ -1,0 +1,22 @@
+---
+- name: Install X server, window manager, Chromium and required tools
+  become: yes
+  apt:
+    install_recommends: no
+    pkg:
+      - xserver-xorg
+      - x11-xserver-utils
+      - xdotool
+      - lightdm
+      - openbox
+      - chromium-browser
+      - fonts-noto-color-emoji
+      - unclutter
+      - build-essential
+      - sed
+      - git
+      - neovim
+      - nodejs
+      - yarn
+      - realvnc-vnc-server 
+      - realvnc-vnc-viewer
