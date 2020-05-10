@@ -46,11 +46,13 @@ export default function App(props: Props) {
           padding: "15px",
         }}
       >
-        <TimeDisplay time={time} />
-        <Weather
-          weather_provider={props.weather_provider}
-          update_interval={5 * 60 * 1000}
-        />
+        <div>
+          <TimeDisplay time={time} />
+          <Weather
+            weather_provider={props.weather_provider}
+            update_interval={5 * 60 * 1000}
+          />
+        </div>
         <NextActivityDisplay activity={next_activity.symbol} />
       </div>
     </div>
