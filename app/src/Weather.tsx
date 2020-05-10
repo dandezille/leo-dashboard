@@ -46,13 +46,13 @@ export default function App(props: Props) {
     <div
       style={{
         color: "white",
-        fontSize: "8vmin",
+        fontSize: "12vmin",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
       }}
     >
-      <div>{temp.toFixed(0)} °C</div>
+      {temp.toFixed(0)} °C
     </div>
   );
 }
