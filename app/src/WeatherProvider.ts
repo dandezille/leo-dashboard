@@ -1,6 +1,5 @@
 export interface WeatherData {
   temp: number;
-  feels_like: number;
 }
 
 export default interface WeatherProvider {
@@ -16,7 +15,6 @@ class OpenWeatherMapProvider implements WeatherProvider {
     const data = await response.json();
     return {
       temp: data.main.temp,
-      feels_like: data.main.feels_like,
     };
   }
 }
