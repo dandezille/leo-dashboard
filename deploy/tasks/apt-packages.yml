@@ -1,0 +1,43 @@
+---
+- name: Upgrade all packages to latest version
+  become: yes
+  apt:
+    update_cache: yes
+    upgrade: "yes"
+  register: apt_upgrade_output
+  notify: reboot
+
+- name: apt upgrade output
+  debug:
+    var: apt_upgrade_output
+  when: apt_upgrade_output.changed
+
+- name: Install X server, window manager, Chromium and required tools
+  become: yes
+  apt:
+    install_recommends: no
+    pkg:
+      - xserver-xorg
+      - x11-xserver-utils
+      - xdotool
+      - lightdm
+      - openbox
+      - chromium-browser
+      - fonts-noto-color-emoji
+      - unclutter
+      - build-essential
+      - sed
+      - git
+      - neovim
+      - nodejs
+      - yarn
+      - realvnc-vnc-server 
+      - realvnc-vnc-viewer
+  notify: reboot
+
+- name: Clean up apt packages
+  become: yes
+  apt:
+    autoclean: yes
+    autoremove: yes
+  notify: reboot
