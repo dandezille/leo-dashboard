@@ -2,6 +2,8 @@
 - name: Enable vnc server
   become: yes
   command: raspi-config nonint do_vnc 0
+  register: enable_vnc_output
+  changed_when: enable_vnc_output.stderr != ''
   notify: reboot
 
 - name: Allow non-RealVNC clients
