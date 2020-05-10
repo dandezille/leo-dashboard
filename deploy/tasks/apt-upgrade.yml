@@ -1,0 +1,12 @@
+---
+- name: Upgrade all packages to latest version
+  become: yes
+  apt:
+    update_cache: yes
+    upgrade: "yes"
+  register: apt_upgrade_output
+
+- name: apt upgrade output
+  debug:
+    var: apt_upgrade_output
+  when: apt_upgrade_output.changed

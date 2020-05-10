@@ -5,7 +5,9 @@
     - include: tasks/ssh-keys.yml
     - include: tasks/node-repo.yml
     - include: tasks/yarn-repo.yml
-    - include: tasks/apt-packages.yml
+    - include: tasks/apt-upgrade.yml
+    - include: tasks/apt-install.yml
+    - include: tasks/apt-clean.yml
     - include: tasks/vnc-server.yml
     - include: tasks/chromium-config.yml
     - include: tasks/openbox-config.yml

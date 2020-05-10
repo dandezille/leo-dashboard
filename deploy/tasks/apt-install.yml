@@ -1,16 +1,4 @@
 ---
-- name: Upgrade all packages to latest version
-  become: yes
-  apt:
-    update_cache: yes
-    upgrade: "yes"
-  register: apt_upgrade_output
-
-- name: apt upgrade output
-  debug:
-    var: apt_upgrade_output
-  when: apt_upgrade_output.changed
-
 - name: Install X server, window manager, Chromium and required tools
   become: yes
   apt:
@@ -32,9 +20,3 @@
       - yarn
       - realvnc-vnc-server 
       - realvnc-vnc-viewer
-
-- name: Clean up apt packages
-  become: yes
-  apt:
-    autoclean: yes
-    autoremove: yes
