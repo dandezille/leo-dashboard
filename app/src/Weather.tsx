@@ -9,14 +9,14 @@ interface Props {
 export default function App(props: Props) {
   const [is_loaded, set_is_loaded] = useState(false);
   const [error, set_error] = useState("");
-  const [data, set_data] = useState({ temp: 0, feels_like: 0 });
+  const [temp, set_temp] = useState(0);
 
   function update(provider: WeatherProvider) {
     provider
       .fetch()
       .then((result) => {
         set_is_loaded(true);
-        set_data(result);
+        set_temp(result.temp);
         set_error("");
       })
       .catch((error: Error) => {
@@ -52,8 +52,7 @@ export default function App(props: Props) {
         alignItems: "flex-end",
       }}
     >
-      <div>Temp: {data.temp.toFixed(0)} °C</div>
-      <div>Feels: {data.feels_like.toFixed(0)} °C</div>
+      <div>{temp.toFixed(0)} °C</div>
     </div>
   );
 }

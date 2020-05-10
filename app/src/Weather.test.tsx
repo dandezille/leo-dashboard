@@ -7,7 +7,6 @@ import { create_test_weather_provider, WeatherData } from "./WeatherProvider";
 it("renders successfully", async () => {
   const data: WeatherData = {
     temp: 20,
-    feels_like: 18,
   };
 
   await act(async () => {
