@@ -36,7 +36,7 @@ export default function App(props: Props) {
         minHeight: "100vh",
       }}
     >
-      <ActivityDisplay activity={activity.symbol} progress={progress} />
+      <ActivityDisplay activity={activity} progress={progress} />
       <div
         style={{
           display: "flex",

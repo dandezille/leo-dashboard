@@ -1,10 +1,11 @@
 import React from "react";
 
+import { Activity as ActivityInterface } from "./Activities";
 import ProgressRing from "./ProgressRing";
 
 interface Props {
   progress: number;
-  activity: string;
+  activity: ActivityInterface;
 }
 
 export default function Activity(props: Props) {
@@ -26,7 +27,7 @@ export default function Activity(props: Props) {
           textAnchor="middle"
           dominantBaseline="middle"
         >
-          {props.activity}
+          {props.activity.symbol}
         </text>
       </svg>
     </div>
