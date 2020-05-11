@@ -2,13 +2,17 @@ import React from "react";
 
 import { Activity as ActivityInterface } from "./Activities";
 import ProgressRing from "./ProgressRing";
+import moment from "moment";
 
 interface Props {
-  progress: number;
   activity: ActivityInterface;
+  time: moment.Moment;
 }
 
 export default function Activity(props: Props) {
+  const elapsed = props.time.diff(props.activity.start);
+  const progress = elapsed / props.activity.duration;
+
   return (
     <div
       style={{
@@ -20,7 +24,7 @@ export default function Activity(props: Props) {
       }}
     >
       <svg viewBox="-1 -1 2 2" height="95vh" width="95vh">
-        <ProgressRing radius={0.94} progress={props.progress} />
+        <ProgressRing radius={0.94} progress={progress} />
         <text
           fill="#edf3ff"
           fontSize="1.1"
