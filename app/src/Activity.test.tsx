@@ -9,11 +9,11 @@ it("renders successfully", () => {
   ReactDOM.render(
     <Activity
       activity={{
-        start: moment(),
+        start: moment().subtract(5, "minutes"),
         duration: moment.duration(1, "hour").asMilliseconds(),
         symbol: "?",
       }}
-      time={moment().add(5, "minutes")}
+      time={moment()}
     />,
     div
   );
