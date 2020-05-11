@@ -12,6 +12,11 @@ interface Props {
 export default function Activity(props: Props) {
   const elapsed = props.time.diff(props.activity.start);
   const progress = elapsed / props.activity.duration;
+  const remaining = moment
+    .duration(
+      props.activity.start.add(props.activity.duration).diff(props.time)
+    )
+    .humanize();
 
   return (
     <div
@@ -34,6 +39,16 @@ export default function Activity(props: Props) {
           {props.activity.symbol}
         </text>
       </svg>
+      <div
+        style={{
+          color: "white",
+          position: "absolute",
+          bottom: "110px",
+          fontSize: "1.5em",
+        }}
+      >
+        {remaining}
+      </div>
     </div>
   );
 }
