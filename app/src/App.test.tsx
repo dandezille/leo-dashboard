@@ -25,7 +25,6 @@ it("renders successfully", async () => {
       activities={activities_mock}
       weather_provider={create_test_weather_provider({
         temp: 20,
-        feels_like: 18,
       })}
     />,
     div
