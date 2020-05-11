@@ -43,8 +43,8 @@ export default function Activity(props: Props) {
         style={{
           color: "white",
           position: "absolute",
-          bottom: "110px",
-          fontSize: "1.5em",
+          bottom: "60px",
+          fontSize: "1.8em",
         }}
       >
         {remaining}
