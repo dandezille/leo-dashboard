@@ -25,8 +25,6 @@ export default function App(props: Props) {
 
   const activity = props.activities.current(time);
   const next_activity = props.activities.next(time);
-  const elapsed = time.diff(activity.start);
-  const progress = elapsed / activity.duration;
 
   return (
     <div
@@ -36,7 +34,7 @@ export default function App(props: Props) {
         minHeight: "100vh",
       }}
     >
-      <ActivityDisplay activity={activity.symbol} progress={progress} />
+      <ActivityDisplay activity={activity} time={time} />
       <div
         style={{
           display: "flex",
