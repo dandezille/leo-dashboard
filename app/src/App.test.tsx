@@ -1,5 +1,5 @@
 import React from "react";
-import { render, act } from "@testing-library/react";
+import ReactDOM from "react-dom";
 import moment from "moment";
 
 import App from "./App";
@@ -19,15 +19,15 @@ it("renders successfully", async () => {
     }),
   };
 
-  await act(async () =>
-    render(
-      <App
-        activities={activities_mock}
-        weather_provider={create_test_weather_provider({
-          temp: 20,
-          feels_like: 18,
-        })}
-      />
-    )
+  const div = document.createElement("div");
+  ReactDOM.render(
+    <App
+      activities={activities_mock}
+      weather_provider={create_test_weather_provider({
+        temp: 20,
+        feels_like: 18,
+      })}
+    />,
+    div
   );
 });

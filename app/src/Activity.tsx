@@ -7,7 +7,7 @@ interface Props {
   activity: string;
 }
 
-function ActivityDisplay(props: Props) {
+export default function Activity(props: Props) {
   return (
     <div
       style={{
@@ -32,5 +32,3 @@ function ActivityDisplay(props: Props) {
     </div>
   );
 }
-
-export default ActivityDisplay;

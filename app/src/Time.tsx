@@ -5,7 +5,7 @@ interface Props {
   time: moment.Moment;
 }
 
-function TimeDisplay(props: Props) {
+export default function Time(props: Props) {
   return (
     <div
       style={{
@@ -17,5 +17,3 @@ function TimeDisplay(props: Props) {
     </div>
   );
 }
-
-export default TimeDisplay;
