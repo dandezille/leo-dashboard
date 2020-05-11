@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 
 import Activities from "./Activities";
-import ActivityDisplay from "./ActivityDisplay";
+import ActivityDisplay from "./Activity";
 import NextActivity from "./NextActivity";
-import TimeDisplay from "./TimeDisplay";
+import TimeDisplay from "./Time";
 import Weather from "./Weather";
 import WeatherProvider from "./WeatherProvider";
 
