@@ -4,7 +4,7 @@ interface Props {
   activity: string;
 }
 
-function NextActivityDisplay(props: Props) {
+export default function NextActivity(props: Props) {
   return (
     <div
       style={{
@@ -16,5 +16,3 @@ function NextActivityDisplay(props: Props) {
     </div>
   );
 }
-
-export default NextActivityDisplay;

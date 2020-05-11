@@ -3,7 +3,7 @@ import moment from "moment";
 
 import Activities from "./Activities";
 import ActivityDisplay from "./ActivityDisplay";
-import NextActivityDisplay from "./NextActivityDisplay";
+import NextActivity from "./NextActivity";
 import TimeDisplay from "./TimeDisplay";
 import Weather from "./Weather";
 import WeatherProvider from "./WeatherProvider";
@@ -53,7 +53,7 @@ export default function App(props: Props) {
             update_interval={5 * 60 * 1000}
           />
         </div>
-        <NextActivityDisplay activity={next_activity.symbol} />
+        <NextActivity activity={next_activity.symbol} />
       </div>
     </div>
   );
