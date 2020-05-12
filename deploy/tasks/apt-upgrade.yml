@@ -8,5 +8,5 @@
 
 - name: apt upgrade output
   debug:
-    var: apt_upgrade_output
+    var: apt_upgrade_output.stdout_lines
   when: apt_upgrade_output.changed
