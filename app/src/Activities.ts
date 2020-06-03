@@ -100,11 +100,11 @@ const default_activities = {
   "16:45": "️🚶‍♂️", // Walk
   "17:30": "️️️📺", // Cartoon
   "18:00": "️🍽️", // Dinner and listen
-  "18:30": "️️️📺", // Cartoon
-  "18:50": "️️️🛀", // Bath or shower
-  "19:25": "🦷", // Teeth and face wash
-  "19:35": "️️️📖️", // Story
-  "19:40": "🛏️", // Bed
+  "18:40": "️️️🛀", // Bath or shower
+  "19:15": "️️️📺", // Cartoon
+  "19:45": "🦷", // Teeth and face wash
+  "19:55": "️️️📖️", // Story
+  "20:00": "🛏️", // Bed
 };
 
 export function create_activities(
