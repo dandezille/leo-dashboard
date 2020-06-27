@@ -81,29 +81,27 @@ class ActivitiesImplementation implements Activities {
 }
 
 const default_activities = {
-  "07:30": "🥐", // breakfast
-  "08:30": "🦷", // Teeth and face wash
-  "08:35": "📚", // French story and drawing
-  "08:45": "🎨", // Craft (colouring, painting, drawing)
-  "09:00": "👨‍🍳", // Baking
-  "09:30": "️🚶‍♂️", // Walk
+  "08:00": "⏰", // wake up
+  "08:15": "🥐", // breakfast
+  "08:45": "🦷", // Teeth and face wash
+  "09:00": "🇫🇷", // French story and drawing
+  "09:15": "️🚶", // Walk
   "10:00": "️☕", // Coffee and listen
   "10:30": "️🧩", // Play
-  "11:50": "️️️📖️", // Story
-  "12:00": "️📺", // Cartoon
-  "12:30": "️🍽️", // Lunch and listen
-  "13:00": "️️️📺", // Cartoon
+  "11:45": "️📺", // Cartoon
+  "12:15": "️🍽️", // Lunch and listen
+  "12:45": "️🚶", // Walk
   "13:30": "️️️🧩️", // Play
-  "14:10": "️️️📖️", // Story
-  "14:15": "️️️️🛏️", // Nap
-  "16:00": "️️️🧩️", // Play
-  "16:45": "️🚶‍♂️", // Walk
+  "14:15": "️️️📖️", // Story
+  "14:30": "️️️️🛏️", // Nap
+  "16:00": "️️️📖️", // Story
+  "16:30": "️🚶", // Walk
+  "17:00": "️️️🧩️", // Play
   "17:30": "️️️📺", // Cartoon
   "18:00": "️🍽️", // Dinner and listen
-  "18:40": "️️️🛀", // Bath or shower
-  "19:15": "️️️📺", // Cartoon
+  "18:30": "️🚶", // Walk
+  "19:15": "️️️🛀", // Bath or shower
   "19:45": "🦷", // Teeth and face wash
-  "19:55": "️️️📖️", // Story
   "20:00": "🛏️", // Bed
 };
 
