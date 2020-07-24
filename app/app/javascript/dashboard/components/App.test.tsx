@@ -2,8 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import moment from "moment";
 
+import { create_test_weather_provider } from "../models/WeatherProvider";
+
 import App from "./App";
-import { create_test_weather_provider } from "./WeatherProvider";
 
 it("renders successfully", async () => {
   const activities_mock = {

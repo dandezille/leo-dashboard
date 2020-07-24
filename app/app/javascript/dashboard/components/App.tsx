@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 
-import Activities from "./Activities";
+import Activities from "../models/Activities";
+import WeatherProvider from "../models/WeatherProvider";
+
 import ActivityDisplay from "./Activity";
 import NextActivity from "./NextActivity";
 import TimeDisplay from "./Time";
 import Weather from "./Weather";
-import WeatherProvider from "./WeatherProvider";
 
 interface Props {
   activities: Activities;

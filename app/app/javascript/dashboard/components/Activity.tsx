@@ -1,7 +1,8 @@
 import React from "react";
 import moment from "moment";
 
-import { Activity as ActivityInterface } from "./Activities";
+import { Activity as ActivityInterface } from "../models/Activities";
+
 import ProgressRing from "./ProgressRing";
 
 interface Props {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import WeatherProvider from "./WeatherProvider";
+
+import WeatherProvider from "../models/WeatherProvider";
 
 interface Props {
   weather_provider: WeatherProvider;
