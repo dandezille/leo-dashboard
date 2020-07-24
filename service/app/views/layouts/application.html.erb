@@ -7,13 +7,12 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'hello_react', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'dashboard', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
     <%= render partial: 'layouts/flash' %>
     <%= render partial: 'layouts/header' %>
     <%= yield %>
-    <div id="root"></div>
   </body>
 </html>
