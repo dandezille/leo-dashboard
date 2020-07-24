@@ -3,7 +3,7 @@
   vars:
     dashboard_directory: /home/pi/leo-dashboard
     git_repo: git@github.com:dandezille/leo-dashboard.git
-    git_branch: master
+    git_branch: dev/server
   tasks:
     - name: Get latest dashboard code
       git:
