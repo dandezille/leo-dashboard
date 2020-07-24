@@ -97,9 +97,8 @@ const default_activities = {
   "16:00": "️️️📖️", // Story
   "16:30": "️🚶", // Walk
   "17:00": "️️️🧩️", // Play
-  "17:30": "️️️📺", // Cartoon
-  "18:00": "️🍽️", // Dinner and listen
-  "18:30": "️🚶", // Walk
+  "18:00": "️️️📺", // Cartoon
+  "18:30": "️🍽️", // Dinner and listen
   "19:15": "️️️🛀", // Bath or shower
   "19:45": "🦷", // Teeth and face wash
   "20:00": "🛏️", // Bed
