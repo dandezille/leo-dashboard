@@ -1,14 +1,10 @@
-// Run this example by adding <%= javascript_pack_tag 'hello_react' %> to the head of your layout file,
-// like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
-// of the page.
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import React from 'react'
-import ReactDOM from 'react-dom'
+import App from "./components/App";
 
-import App from "./App";
-
-import { create_activities } from "./Activities";
-import { create_open_weather_map_provider } from "./WeatherProvider";
+import { create_activities } from "./models/Activities";
+import { create_open_weather_map_provider } from "./models/WeatherProvider";
 
 const activities = create_activities();
 const provider = create_open_weather_map_provider();
@@ -20,4 +16,4 @@ document.addEventListener('DOMContentLoaded', () => {
     </React.StrictMode>,
     document.body.appendChild(document.createElement('div')),
   )
-})
+});
