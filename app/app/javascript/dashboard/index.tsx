@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (element) {
     ReactDOM.render(
       <React.StrictMode>
-      <App activities={activities} weather_provider={provider} />
+        <App activities={activities} weather_provider={provider} />
       </React.StrictMode>,
 
       document.body.appendChild(document.createElement('div')),
