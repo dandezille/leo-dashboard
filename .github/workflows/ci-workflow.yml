@@ -10,3 +10,4 @@ jobs:
       - run: docker-compose up -d
       - run: docker-compose run web rails db:create
       - run: docker-compose run web rspec
+      - run: docker-compose run web yarn jest
