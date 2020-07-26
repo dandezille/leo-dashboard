@@ -3,8 +3,6 @@
   tasks:
     - include: tasks/screen-rotation.yml
     - include: tasks/ssh-keys.yml
-    - include: tasks/node-repo.yml
-    - include: tasks/yarn-repo.yml
     - include: tasks/apt-upgrade.yml
     - include: tasks/apt-install.yml
     - include: tasks/apt-clean.yml

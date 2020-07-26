@@ -16,7 +16,5 @@
       - sed
       - git
       - neovim
-      - nodejs
-      - yarn
       - realvnc-vnc-server 
       - realvnc-vnc-viewer
