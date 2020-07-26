@@ -5,6 +5,7 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     restart: unless-stopped
   web:
@@ -12,7 +13,11 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - RAILS_ENV=productino
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      RAILS_ENV: development
+      RAILS_SERVE_STATIC_FILES: 'true'
+      RAILS_LOG_TO_STDOUT: 'true'
     depends_on:
       - db
     restart: unless-stopped
