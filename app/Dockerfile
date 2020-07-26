@@ -22,7 +22,7 @@ COPY package.json .
 COPY yarn.lock .
 
 RUN bundle install
-RUN yarn install
+RUN yarn install --check-files
 
 EXPOSE 3000
 
