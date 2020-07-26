@@ -1,6 +1,6 @@
 version: '3'
 services:
   web:
-    build: ./app
+    image: dandezille/private:leo-dashboard
     ports:
       - "8000:80"
