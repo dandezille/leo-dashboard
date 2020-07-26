@@ -11,6 +11,8 @@ services:
     build: ./app
     ports:
       - "3000:3000"
+    environment:
+      - RAILS_ENV=productino
     depends_on:
       - db
     restart: unless-stopped
