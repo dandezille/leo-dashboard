@@ -1,14 +1,15 @@
-FROM node:latest
+FROM node:latest AS builder
 
 RUN mkdir /app
 WORKDIR /app
 
-COPY package.json .
-COPY yarn.lock .
+COPY . .
 
 RUN yarn install
 RUN yarn build
 
-EXPOSE 8000
+FROM nginx:latest
 
-CMD ["npx", "serve", "-s", "/build", "-l" "8000"]
+COPY --from=builder /app/build /usr/share/nginx/html
+
+EXPOSE 80
