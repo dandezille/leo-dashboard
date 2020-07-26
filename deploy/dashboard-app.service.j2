@@ -1,14 +1,18 @@
 [Unit]
 Description=Dashboard server
-Requires=network.target
+Requires=docker.service
+After=docker.service
 
 [Service]
-Type=simple
 User=pi
 Group=pi
 WorkingDirectory={{dashboard_directory}}
-ExecStart=/bin/bash {{dashboard_directory}}/bin/start
-Restart=on-abort
+ExecStart=/usr/local/bin/docker-compose up --build
+ExecStop=/usr/local/bin/docker-compose down
+TimeoutStartSec=0
+Restart=on-failure
+StartLimitIntervalSec=60
+StartLimitBurst=3
 
 [Install]
 WantedBy=multi-user.target

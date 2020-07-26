@@ -3,7 +3,8 @@
   vars:
     dashboard_directory: /home/pi/leo-dashboard
     git_repo: git@github.com:dandezille/leo-dashboard.git
-    git_branch: dev/server
+    git_branch: dev/docker
+    service_name: dashboard-app.service
   tasks:
     - name: Get latest dashboard code
       git:
@@ -15,19 +16,11 @@
       register: checkout
       notify: refresh browser
 
-    - name: Start docker-compose
-      docker_compose:
-        build: yes
-        state: present
-        project_src: leo-dashboard
-
-    - meta: end_play
-
     - name: Install service unit file
       become: yes
       template: 
         src: dashboard-app.service.j2 
-        dest: /etc/systemd/system/dashboard-app.service
+        dest: "/etc/systemd/system/{{service_name}}"
       notify: restart service
 
   handlers:
@@ -35,7 +28,7 @@
       become: yes
       systemd:
         state: restarted
-        name: dashboard-app.service
+        name: "{{service_name}}"
         enabled: yes
         daemon_reload: yes
       notify: refresh browser
