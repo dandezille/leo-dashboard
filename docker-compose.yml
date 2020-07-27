@@ -14,7 +14,8 @@ services:
     volumes:
       - ./rails:/app
       - /app/tmp
-      - /app/node_modules
+      - gem_cache:/usr/local/bundle/gems
+      - node_modules:/app/node_modules
     environment:
       RAILS_ENV: development
       POSTGRES_HOST: db
@@ -26,3 +27,6 @@ services:
       - ./data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: supersecret
+volumes:
+  gem_cache:
+  node_modules:
