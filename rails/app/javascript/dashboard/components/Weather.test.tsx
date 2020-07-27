@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import { create_test_weather_provider, WeatherData } from "../models/WeatherProvider";
+
 import Weather from "./Weather";
-import { create_test_weather_provider, WeatherData } from "./WeatherProvider";
 
 it("renders successfully", async () => {
   const data: WeatherData = {
