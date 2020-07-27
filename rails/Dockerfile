@@ -21,6 +21,4 @@ RUN bundle check || bundle install
 COPY package.json yarn.lock ./
 RUN yarn install --check-files
 
-COPY . .
-
-CMD ["bundle" "exec" "rails", "server", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-b", "0.0.0.0"]
