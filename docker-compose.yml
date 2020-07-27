@@ -1,7 +1,28 @@
 version: '3'
 services:
   web:
-    build: app
+    build: ./app
     ports:
       - "9000:80"
     restart: unless-stopped
+  rails:
+    build: ./rails
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./rails:/app
+      - /app/tmp
+      - /app/node_modules
+    environment:
+      RAILS_ENV: development
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: supersecret
+  db:
+    image: postgres:latest
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: supersecret
