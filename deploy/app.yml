@@ -1,10 +1,9 @@
 ---
 - hosts: all
   vars:
-    dashboard_directory: /home/pi/leo-dashboard
+    dashboard_directory: /home/pi/leo-dashboard-v2
     git_repo: git@github.com:dandezille/leo-dashboard.git
     git_branch: dev/docker
-    service_name: dashboard-app.service
   tasks:
     - name: Get latest dashboard code
       git:
@@ -16,12 +15,16 @@
       register: checkout
       notify: refresh browser
 
-    - name: Install service unit file
-      become: yes
-      template: 
-        src: dashboard-app.service.j2 
-        dest: "/etc/systemd/system/{{service_name}}"
-      notify: restart service
+    - name: Start with docker compose
+      docker_compose:
+        project_src: "{{dashboard_directory}}"
+        build: yes
+      register: docker_compose_out
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+
+    - debug:
+        var: docker_compose_out
 
   handlers:
     - name: restart service
