@@ -1,9 +1,10 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
-const environment = require('./environment')
+const path = require("path");
 
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const path = require("path");
+
+const environment = require('./environment')
 
 environment.plugins.append(
   "ForkTsCheckerWebpackPlugin",

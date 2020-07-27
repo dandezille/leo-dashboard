@@ -13,12 +13,17 @@ RUN apt-get update -qq && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir /app
 WORKDIR /app
 
-COPY Gemfile Gemfile.lock ./
-RUN bundle check || bundle install
+COPY Gemfile .
+COPY Gemfile.lock .
+COPY package.json .
+COPY yarn.lock .
 
-COPY package.json yarn.lock ./
+RUN bundle install
 RUN yarn install --check-files
+
+EXPOSE 3000
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
