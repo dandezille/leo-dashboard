@@ -1,7 +1,7 @@
 ---
 - hosts: all
   vars:
-    dashboard_directory: /home/pi/leo-dashboard
+    dashboard_directory: /home/pi/leo-dashboard-rails
     git_repo: git@github.com:dandezille/leo-dashboard.git
     git_branch: dev/server
   tasks:
