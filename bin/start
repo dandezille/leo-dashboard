@@ -1,3 +1,0 @@
-#!/bin/bash
-
-npx serve -s app/build -l 8000
