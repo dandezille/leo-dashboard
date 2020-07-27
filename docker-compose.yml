@@ -10,7 +10,7 @@ services:
     depends_on:
       - db
     ports:
-      - "3000:3000"
+      - "9000:3000"
     volumes:
       - ./rails:/app
       - /app/tmp
