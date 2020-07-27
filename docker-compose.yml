@@ -1,6 +1,7 @@
 version: '3'
 services:
   web:
-    image: dandezille/private:leo-dashboard
+    build: app
     ports:
-      - "8000:80"
+      - "9000:80"
+    restart: unless-stopped
