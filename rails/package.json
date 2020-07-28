@@ -23,6 +23,7 @@
   "devDependencies": {
     "fork-ts-checker-webpack-plugin": "^5.0.11",
     "jest": "^26.1.0",
+    "jsdom": "^16.3.0",
     "ts-jest": "^26.1.4",
     "webpack-dev-server": "^3.11.0"
   }
