@@ -20,9 +20,11 @@ services:
       POSTGRES_HOST: db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: supersecret
+    restart: unless-stopped
   db:
     image: postgres:latest
     volumes:
       - ./data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: supersecret
+    restart: unless-stopped
