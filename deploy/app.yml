@@ -13,6 +13,20 @@
         force: yes
         accept_hostkey: yes
 
+    - name: Clean up docker resources
+      docker_prune:
+        containers: yes
+        images: yes
+        images_filters:
+          dangling: false
+        networks: yes
+        volumes: yes
+        builder_cache: yes
+      register: docker_prune_out
+
+    - debug:
+        var: docker_prune_out
+
     - name: Start with docker compose
       docker_compose:
         project_src: "{{dashboard_directory}}"
