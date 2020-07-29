@@ -17,8 +17,6 @@ services:
       - /app/node_modules
     environment:
       RAILS_ENV:
-      RAILS_SERVE_STATIC_FILES: 'true'
-      RAILS_LOG_TO_STDOUT: 'true'
       SECRET_KEY_BASE:
       POSTGRES_HOST: db
       POSTGRES_USER: postgres
