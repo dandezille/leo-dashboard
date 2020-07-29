@@ -12,6 +12,7 @@
         version: dev/assets
         force: yes
         accept_hostkey: yes
+      register: checkout
 
     - name: Copy .env file
       copy:
@@ -22,6 +23,7 @@
       command: docker-compose run rails rails assets:precompile
       args:
         chdir: "{{dashboard_directory}}" 
+      when: checkout.changed
       register: assets_out
 
     - debug:
