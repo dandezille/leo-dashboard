@@ -3,7 +3,7 @@
   vars:
     dashboard_directory: /home/pi/leo-dashboard
   environment: 
-    COMPOSE_HTTP_TIMEOUT: 120
+    COMPOSE_HTTP_TIMEOUT: 240
   tasks:
     - name: Get latest dashboard code
       git:
@@ -12,6 +12,22 @@
         version: master
         force: yes
         accept_hostkey: yes
+      register: checkout
+
+    - name: Copy .env file
+      copy:
+        src: ../.env
+        dest: "{{dashboard_directory}}"
+
+    - name: Precompile assets
+      command: docker-compose run rails rails assets:precompile
+      args:
+        chdir: "{{dashboard_directory}}" 
+      when: checkout.changed
+      register: assets_out
+
+    - debug:
+        var: assets_out
 
     - name: Start with docker compose
       docker_compose:
@@ -20,7 +36,18 @@
         remove_orphans: yes
       vars:
         ansible_python_interpreter: /usr/bin/python3
+      environment:
+        RAILS_ENV: production
       notify: refresh browser
+
+    - name: Clean assets
+      command: docker-compose run rails rails assets:clean
+      args:
+        chdir: "{{dashboard_directory}}" 
+      register: assets_out
+
+    - debug:
+        var: assets_out
 
     - name: Clean up docker resources
       docker_prune:

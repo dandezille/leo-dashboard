@@ -16,15 +16,16 @@ services:
       - /app/tmp
       - /app/node_modules
     environment:
-      RAILS_ENV: development
+      RAILS_ENV:
+      SECRET_KEY_BASE:
       POSTGRES_HOST: db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: supersecret
+      POSTGRES_PASSWORD:
     restart: unless-stopped
   db:
     image: postgres:latest
     volumes:
       - ./data:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: supersecret
+      POSTGRES_PASSWORD:
     restart: unless-stopped
