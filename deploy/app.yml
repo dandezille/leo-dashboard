@@ -2,16 +2,25 @@
 - hosts: all
   vars:
     dashboard_directory: /home/pi/leo-dashboard
-    git_repo: git@github.com:dandezille/leo-dashboard.git
-    git_branch: master
+  environment: 
+    COMPOSE_HTTP_TIMEOUT: 120
   tasks:
     - name: Get latest dashboard code
       git:
-        repo: "{{git_repo}}"
+        repo: git@github.com:dandezille/leo-dashboard.git
         dest: "{{dashboard_directory}}"
-        version: "{{git_branch}}"
+        version: master
         force: yes
         accept_hostkey: yes
+
+    - name: Start with docker compose
+      docker_compose:
+        project_src: "{{dashboard_directory}}"
+        build: yes
+        remove_orphans: yes
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+      notify: refresh browser
 
     - name: Clean up docker resources
       docker_prune:
@@ -26,15 +35,6 @@
 
     - debug:
         var: docker_prune_out
-
-    - name: Start with docker compose
-      docker_compose:
-        project_src: "{{dashboard_directory}}"
-        build: yes
-        remove_orphans: yes
-      vars:
-        ansible_python_interpreter: /usr/bin/python3
-      notify: refresh browser
 
   handlers:
     - name: refresh browser
