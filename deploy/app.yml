@@ -9,7 +9,7 @@
       git:
         repo: git@github.com:dandezille/leo-dashboard.git
         dest: "{{dashboard_directory}}"
-        version: dev/assets
+        version: master
         force: yes
         accept_hostkey: yes
       register: checkout
