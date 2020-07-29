@@ -10,9 +10,14 @@
       git:
         repo: git@github.com:dandezille/leo-dashboard.git
         dest: "{{dashboard_directory}}"
-        version: master
+        version: dev/assets
         force: yes
         accept_hostkey: yes
+
+    - name: Copy .env file
+      copy:
+        src: ../.env
+        dest: "{{dashboard_directory}}"
 
     - name: Precompile assets
       command: docker-compose run rails rails assets:precompile
