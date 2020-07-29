@@ -18,3 +18,4 @@
       - neovim
       - realvnc-vnc-server 
       - realvnc-vnc-viewer
+      - tmux
