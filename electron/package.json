@@ -1,0 +1,11 @@
+{
+  "name": "leo-dashboard",
+  "description": "GUI for leo-dashboard",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^9.1.2"
+  }
+}
