@@ -2,10 +2,18 @@
   "name": "leo-dashboard",
   "description": "GUI for leo-dashboard",
   "version": "0.1.0",
-  "scripts": {
-    "start": "electron ."
+  "author": {
+    "name": "Dan de Zille"
   },
+  "main": "build/index.js",
+  "scripts": {
+    "compile": "tsc && copyfiles -f src/index.html build",
+    "start": "npm run compile && electron ."
+  },
+  "dependencies": {},
   "devDependencies": {
-    "electron": "^9.1.2"
+    "copyfiles": "^2.3.0",
+    "electron": "^9.1.2",
+    "typescript": "^3.9.7"
   }
 }
