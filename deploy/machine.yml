@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  vars:
+    dashboard_directory: /home/pi/leo-dashboard
   tasks:
     - include: tasks/screen-rotation.yml
     - include: tasks/ssh-keys.yml
@@ -10,6 +12,7 @@
     - include: tasks/chromium-config.yml
     - include: tasks/openbox-config.yml
     - include: tasks/display-schedule.yml
+    - include: tasks/leo-dashboard.yml
 
   handlers:
     - name: reboot
