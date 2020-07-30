@@ -10,7 +10,9 @@
     "compile": "tsc",
     "start": "npm run compile && electron ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
   "devDependencies": {
     "copyfiles": "^2.3.0",
     "electron": "^9.1.2",
