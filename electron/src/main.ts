@@ -10,11 +10,8 @@ function createWindow() {
     }
   });
 
-  const index_file = path.join(__dirname + '/index.html');
-  console.log(index_file);
-
-  win.loadFile(index_file);
-
+  win.setFullScreen(true);
+  win.loadURL('http://localhost:9000');
   win.webContents.openDevTools();
 }
 

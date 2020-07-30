@@ -5,9 +5,9 @@
   "author": {
     "name": "Dan de Zille"
   },
-  "main": "build/index.js",
+  "main": "build/main.js",
   "scripts": {
-    "compile": "tsc && copyfiles -f src/index.html build",
+    "compile": "tsc",
     "start": "npm run compile && electron ."
   },
   "dependencies": {},
