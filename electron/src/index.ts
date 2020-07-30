@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron');
+import { app, BrowserWindow } from 'electron';
+import * as path from 'path';
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -9,7 +10,10 @@ function createWindow() {
     }
   });
 
-  win.loadFile('index.html');
+  const index_file = path.join(__dirname + '/index.html');
+  console.log(index_file);
+
+  win.loadFile(index_file);
 
   win.webContents.openDevTools();
 }
