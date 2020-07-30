@@ -7,14 +7,15 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    webPreferences: {
-      nodeIntegration: true
-    }
+    kiosk: true,
+    show: false
   });
 
   win.setFullScreen(true);
   win.loadURL('http://localhost:9000');
   // win.webContents.openDevTools();
+
+  win.once('ready-to-show', () => win.show()); 
 }
 
 function waitForServer() {
