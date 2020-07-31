@@ -18,3 +18,11 @@
       - realvnc-vnc-server 
       - realvnc-vnc-viewer
       - tmux
+
+- name: Install electron dependencies
+  become: yes
+  apt:
+    install_recommends: no
+    pkg:
+      - libnss3-dev
+      - libxss1
