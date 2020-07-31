@@ -1,0 +1,65 @@
+- name: Create checkout directory
+  become: yes
+  file:
+    path: "{{deploy_directory}}"
+    state: directory
+    owner: pi
+    group: pi
+
+- name: Get latest dashboard code
+  git:
+    repo: git@github.com:dandezille/leo-dashboard.git
+    dest: "{{deploy_directory}}"
+    version: master
+    force: yes
+    accept_hostkey: yes
+  register: checkout
+
+- name: Copy .env file
+  copy:
+    src: ../.env
+    dest: "{{deploy_directory}}"
+
+- name: Precompile assets
+  command: docker-compose run rails rails assets:precompile
+  args:
+    chdir: "{{deploy_directory}}" 
+  register: assets_out
+
+- debug:
+    var: assets_out
+
+- name: Start with docker compose
+  docker_compose:
+    project_src: "{{deploy_directory}}"
+    build: yes
+    remove_orphans: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  environment:
+    RAILS_ENV: production
+  notify: refresh browser
+
+- name: Clean assets
+  command: docker-compose run rails rails assets:clean
+  args:
+    chdir: "{{deploy_directory}}" 
+  register: assets_out
+
+- debug:
+    var: assets_out
+
+- name: Clean up docker resources
+  docker_prune:
+    containers: yes
+    images: yes
+    images_filters:
+      dangling: false
+    networks: yes
+    volumes: yes
+    builder_cache: yes
+    timeout: 240
+  register: docker_prune_out
+
+- debug:
+    var: docker_prune_out
