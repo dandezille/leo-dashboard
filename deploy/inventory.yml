@@ -1,0 +1,5 @@
+all:
+  hosts:
+    pi-leo: 
+      ansible_user: pi 
+      deploy_directory: /usr/local/src/dashboard
