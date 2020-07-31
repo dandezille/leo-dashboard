@@ -9,7 +9,6 @@
       - xdotool
       - lightdm
       - openbox
-      - chromium-browser
       - fonts-noto-color-emoji
       - unclutter
       - build-essential
