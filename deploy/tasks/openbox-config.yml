@@ -12,16 +12,6 @@
       # Hide cursor after 0.5s
       unclutter -idle 0.5 -root &
 
-      # Wait for server to be up
-      while curl localhost:9000 -gt 0
-      do
-        sleep 5
-        echo "Trying again..."
-        curl $1
-      done
-
-      # Start Chromium in kiosk mode
-      sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
-      sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
-      chromium-browser --noerrdialogs --disable-infobars --kiosk  --incognito 'http://localhost:9000'
+      # Start electron app
+      npm run --prefix /home/pi/leo-dashboard/electron start
   notify: reboot
