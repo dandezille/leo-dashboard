@@ -6,11 +6,19 @@
     owner: pi
     group: pi
 
+- name: Get current git branch
+  command: git branch --show-current
+  register: git_branch_out
+  delegate_to: 127.0.0.1
+
+- debug:
+    var: git_branch_out
+
 - name: Get latest dashboard code
   git:
     repo: git@github.com:dandezille/leo-dashboard.git
     dest: "{{deploy_directory}}"
-    version: master
+    version: git_branch_out.stdout
     force: yes
     accept_hostkey: yes
   register: checkout
