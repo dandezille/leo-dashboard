@@ -58,6 +58,7 @@
     networks: yes
     volumes: yes
     builder_cache: yes
+    timeout: 240
   register: docker_prune_out
 
 - debug:
