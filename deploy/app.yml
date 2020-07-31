@@ -3,7 +3,8 @@
   environment:
     COMPOSE_HTTP_TIMEOUT: 240
   tasks:
-    - include: tasks/dashboard.yml
+    - include: tasks/dashboard-source.yml
+    - include: tasks/dashboard-build.yml
   handlers:
     - name: refresh browser
       command: xdotool getactivewindow key F5
