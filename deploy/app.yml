@@ -1,14 +1,20 @@
 ---
 - hosts: all
-  vars:
-    dashboard_directory: /home/pi/leo-dashboard
-  environment: 
+  environment:
     COMPOSE_HTTP_TIMEOUT: 240
   tasks:
+    - name: Create checkout directory
+      become: yes
+      file:
+        path: "{{deploy_directory}}"
+        state: directory
+        owner: pi
+        group: pi
+
     - name: Get latest dashboard code
       git:
         repo: git@github.com:dandezille/leo-dashboard.git
-        dest: "{{dashboard_directory}}"
+        dest: "{{deploy_directory}}"
         version: master
         force: yes
         accept_hostkey: yes
@@ -17,13 +23,12 @@
     - name: Copy .env file
       copy:
         src: ../.env
-        dest: "{{dashboard_directory}}"
+        dest: "{{deploy_directory}}"
 
     - name: Precompile assets
       command: docker-compose run rails rails assets:precompile
       args:
-        chdir: "{{dashboard_directory}}" 
-      when: checkout.changed
+        chdir: "{{deploy_directory}}" 
       register: assets_out
 
     - debug:
@@ -31,7 +36,7 @@
 
     - name: Start with docker compose
       docker_compose:
-        project_src: "{{dashboard_directory}}"
+        project_src: "{{deploy_directory}}"
         build: yes
         remove_orphans: yes
       vars:
@@ -43,7 +48,7 @@
     - name: Clean assets
       command: docker-compose run rails rails assets:clean
       args:
-        chdir: "{{dashboard_directory}}" 
+        chdir: "{{deploy_directory}}" 
       register: assets_out
 
     - debug:
