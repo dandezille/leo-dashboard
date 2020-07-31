@@ -57,17 +57,5 @@
 - debug:
     var: assets_out
 
-- name: Clean up docker resources
-  docker_prune:
-    containers: yes
-    images: yes
-    images_filters:
-      dangling: false
-    networks: yes
-    volumes: yes
-    builder_cache: yes
-    timeout: 240
-  register: docker_prune_out
-
 - debug:
     var: docker_prune_out
