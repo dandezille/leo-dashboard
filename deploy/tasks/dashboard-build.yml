@@ -48,3 +48,15 @@
   register: db_migrate
 
 - debug: var=db_migrate.stdout
+
+- name: Install electron dependencies
+  npm:
+    path: "{{deploy_directory}}/electron"
+
+- name: Build electron app
+  command: npm run build
+  args:
+    chdir: "{{deploy_directory}}/electron" 
+  register: electron_build_out
+
+- debug: var=electron_build_out

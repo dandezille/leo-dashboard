@@ -13,6 +13,5 @@
       unclutter -idle 0.5 -root &
 
       # Start electron app
-      npm run --prefix {{deploy_directory}}/electron install
       npm run --prefix {{deploy_directory}}/electron start
   notify: reboot
