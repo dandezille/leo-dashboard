@@ -32,7 +32,12 @@ module LeoDashboard
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    # Don't generate system test files.
-    config.generators.system_tests = nil
+    # Disable clutter generators
+    config.generators do |generate|
+      generate.stylesheets false
+      generate.javascripts false
+      generate.helper false
+      generate.view_specs false
+    end
   end
 end
