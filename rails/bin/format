@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-npx prettier --write .
+yarn run prettier --write .

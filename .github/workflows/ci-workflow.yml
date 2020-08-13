@@ -19,4 +19,5 @@ jobs:
           restore-keys: |
             ${{ runner.os}}-yarn-
       - run: yarn --cwd rails/ install
+      - run: yarn --cwd rails/ run prettier --check .
       - run: yarn --cwd rails/ test
