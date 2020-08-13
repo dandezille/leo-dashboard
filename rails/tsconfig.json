@@ -11,15 +11,10 @@
     "jsx": "react",
     "esModuleInterop": true,
     "noImplicitAny": true,
-    "noImplicitThis": true ,
+    "noImplicitThis": true,
     "noImplicitReturns": true,
     "strictNullChecks": true
   },
-  "exclude": [
-    "**/*.spec.ts",
-    "node_modules",
-    "vendor",
-    "public"
-  ],
+  "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
   "compileOnSave": false
 }

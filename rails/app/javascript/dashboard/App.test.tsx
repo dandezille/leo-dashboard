@@ -1,25 +1,25 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import moment from "moment";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import moment from 'moment';
 
-import App from "./App";
-import { create_test_weather_provider } from "./WeatherProvider";
+import App from './App';
+import { create_test_weather_provider } from './WeatherProvider';
 
-it("renders successfully", async () => {
+it('renders successfully', async () => {
   const activities_mock = {
     current: jest.fn().mockReturnValue({
-      start: moment().subtract(30, "minutes"),
+      start: moment().subtract(30, 'minutes'),
       duration: 60,
-      symbol: "current",
+      symbol: 'current',
     }),
     next: jest.fn().mockReturnValue({
-      start: moment().add(30, "minutes"),
+      start: moment().add(30, 'minutes'),
       duration: 60,
-      symbol: "next",
+      symbol: 'next',
     }),
   };
 
-  const div = document.createElement("div");
+  const div = document.createElement('div');
   ReactDOM.render(
     <App
       activities={activities_mock}

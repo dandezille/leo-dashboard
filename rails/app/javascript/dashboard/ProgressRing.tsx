@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   radius: number;
@@ -12,12 +12,12 @@ function ProgressRing(props: Props) {
     <circle
       className="progress-ring__circle"
       style={{
-        transition: "stroke-dashoffset 0.35s",
-        transform: "rotate(-90deg)",
+        transition: 'stroke-dashoffset 0.35s',
+        transform: 'rotate(-90deg)',
       }}
       stroke="white"
       strokeWidth={1 - props.radius}
-      strokeDasharray={circumference + " " + circumference}
+      strokeDasharray={circumference + ' ' + circumference}
       strokeDashoffset={offset}
       fill="transparent"
       r={props.radius}

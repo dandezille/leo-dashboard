@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import WeatherProvider from "./WeatherProvider";
+import React, { useState, useEffect } from 'react';
+import WeatherProvider from './WeatherProvider';
 
 interface Props {
   weather_provider: WeatherProvider;
@@ -8,7 +8,7 @@ interface Props {
 
 export default function App(props: Props) {
   const [is_loaded, set_is_loaded] = useState(false);
-  const [error, set_error] = useState("");
+  const [error, set_error] = useState('');
   const [temp, set_temp] = useState(0);
 
   function update(provider: WeatherProvider) {
@@ -17,7 +17,7 @@ export default function App(props: Props) {
       .then((result) => {
         set_is_loaded(true);
         set_temp(result.temp);
-        set_error("");
+        set_error('');
       })
       .catch((error: Error) => {
         console.log(`Weather error: ${error}`);
@@ -35,21 +35,21 @@ export default function App(props: Props) {
   }, [props.weather_provider, props.update_interval]);
 
   if (!is_loaded) {
-    return <div style={{ color: "white" }}>Loading...</div>;
+    return <div style={{ color: 'white' }}>Loading...</div>;
   }
 
   if (error) {
-    return <div style={{ color: "white" }}>Error: {error}</div>;
+    return <div style={{ color: 'white' }}>Error: {error}</div>;
   }
 
   return (
     <div
       style={{
-        color: "white",
-        fontSize: "12vmin",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-end",
+        color: 'white',
+        fontSize: '12vmin',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end',
       }}
     >
       {temp.toFixed(0)} °C
