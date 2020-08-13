@@ -1,8 +1,8 @@
-import React from "react";
-import moment from "moment";
+import React from 'react';
+import moment from 'moment';
 
-import { Activity as ActivityInterface } from "./Activities";
-import ProgressRing from "./ProgressRing";
+import { Activity as ActivityInterface } from './Activities';
+import ProgressRing from './ProgressRing';
 
 interface Props {
   activity: ActivityInterface;
@@ -22,10 +22,10 @@ export default function Activity(props: Props) {
     <div
       style={{
         flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       <svg viewBox="-1 -1 2 2" height="95vh" width="95vh">
@@ -41,10 +41,10 @@ export default function Activity(props: Props) {
       </svg>
       <div
         style={{
-          color: "white",
-          position: "absolute",
-          bottom: "60px",
-          fontSize: "1.8em",
+          color: 'white',
+          position: 'absolute',
+          bottom: '60px',
+          fontSize: '1.8em',
         }}
       >
         {remaining}

@@ -30,5 +30,8 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }

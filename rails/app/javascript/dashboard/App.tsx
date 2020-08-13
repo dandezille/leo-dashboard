@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import moment from "moment";
+import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 
-import Activities from "./Activities";
-import ActivityDisplay from "./Activity";
-import NextActivity from "./NextActivity";
-import TimeDisplay from "./Time";
-import Weather from "./Weather";
-import WeatherProvider from "./WeatherProvider";
+import Activities from './Activities';
+import ActivityDisplay from './Activity';
+import NextActivity from './NextActivity';
+import TimeDisplay from './Time';
+import Weather from './Weather';
+import WeatherProvider from './WeatherProvider';
 
 interface Props {
   activities: Activities;
@@ -29,19 +29,19 @@ export default function App(props: Props) {
   return (
     <div
       style={{
-        display: "flex",
+        display: 'flex',
         flex: 1,
-        minHeight: "100vh",
+        minHeight: '100vh',
       }}
     >
       <ActivityDisplay activity={activity} time={time} />
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          padding: "15px",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          padding: '15px',
         }}
       >
         <div>

@@ -1,7 +1,7 @@
-import moment from "moment";
+import moment from 'moment';
 
 function parse_time(time: string) {
-  return moment(time, "HH:mm");
+  return moment(time, 'HH:mm');
 }
 
 function time_diff(current: moment.Moment, next: moment.Moment) {
@@ -9,7 +9,7 @@ function time_diff(current: moment.Moment, next: moment.Moment) {
     return next.diff(current);
   }
 
-  return next.add(1, "day").diff(current);
+  return next.add(1, 'day').diff(current);
 }
 
 export interface Activity {
@@ -55,7 +55,7 @@ class ActivitiesImplementation implements Activities {
   }
 
   private activity_index_at(time: moment.Moment) {
-    const times = this.activity_times.map((t) => moment(t, "HH:mm"));
+    const times = this.activity_times.map((t) => moment(t, 'HH:mm'));
 
     for (var i = 0; i < times.length - 1; i++) {
       if (times[i] <= time && times[i + 1] > time) {
@@ -81,26 +81,26 @@ class ActivitiesImplementation implements Activities {
 }
 
 const default_activities = {
-  "08:00": "⏰", // wake up
-  "08:15": "🥐", // breakfast
-  "08:45": "🦷", // Teeth and face wash
-  "09:00": "🇫🇷", // French story and drawing
-  "09:15": "️🚶", // Walk
-  "10:00": "️☕", // Coffee and listen
-  "10:30": "️🧩", // Play
-  "11:45": "️📺", // Cartoon
-  "12:15": "️🍽️", // Lunch and listen
-  "13:15": "️️️📖️", // Story
-  "13:30": "️️️️🛏️", // Np
-  "15:00": "️️️📖️", // Story
-  "15:15": "️️️🧩️", // Play
-  "16:30": "️🚶", // Walk
-  "17:00": "️️️🧩️", // Play
-  "18:00": "️️️📺", // Cartoon
-  "18:30": "️🍽️", // Dinner and listen
-  "19:15": "️️️🛀", // Bath or shower
-  "19:45": "🦷", // Teeth and face wash
-  "20:00": "🛏️", // Bed
+  '08:00': '⏰', // wake up
+  '08:15': '🥐', // breakfast
+  '08:45': '🦷', // Teeth and face wash
+  '09:00': '🇫🇷', // French story and drawing
+  '09:15': '️🚶', // Walk
+  '10:00': '️☕', // Coffee and listen
+  '10:30': '️🧩', // Play
+  '11:45': '️📺', // Cartoon
+  '12:15': '️🍽️', // Lunch and listen
+  '13:15': '️️️📖️', // Story
+  '13:30': '️️️️🛏️', // Np
+  '15:00': '️️️📖️', // Story
+  '15:15': '️️️🧩️', // Play
+  '16:30': '️🚶', // Walk
+  '17:00': '️️️🧩️', // Play
+  '18:00': '️️️📺', // Cartoon
+  '18:30': '️🍽️', // Dinner and listen
+  '19:15': '️️️🛀', // Bath or shower
+  '19:45': '🦷', // Teeth and face wash
+  '20:00': '🛏️', // Bed
 };
 
 export function create_activities(
