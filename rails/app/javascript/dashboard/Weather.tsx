@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useInterval } from './support/Interval';
+
 export interface WeatherData {
   temp: number;
 }
@@ -27,7 +29,7 @@ function useWeather(get_weather: GetWeather, update_interval: number) {
   const [error, set_error] = useState('');
   const [temp, set_temp] = useState(0);
 
-  function update(get_weather: GetWeather) {
+  function update() {
     get_weather()
       .then((result) => {
         set_loading(false);
@@ -41,13 +43,7 @@ function useWeather(get_weather: GetWeather, update_interval: number) {
       });
   }
 
-  useEffect(() => {
-    update(get_weather);
-    const id = setInterval(() => {
-      update(get_weather);
-    }, update_interval);
-    return () => clearInterval(id);
-  }, [get_weather, update_interval]);
+  useInterval(update, update_interval);
 
   return [loading, error, temp];
 }
