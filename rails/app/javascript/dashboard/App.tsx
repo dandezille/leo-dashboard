@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
+import React from 'react';
 
 import Activities from './Activities';
 import ActivityDisplay from './Activity';
 import NextActivity from './NextActivity';
 import TimeDisplay from './Time';
+
+import { useTime } from './support/Time';
 import Weather, { GetWeather } from './Weather';
 
 interface Props {
@@ -13,14 +14,7 @@ interface Props {
 }
 
 export default function App(props: Props) {
-  const [time, set_time] = useState(moment());
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      set_time(moment());
-    }, 1000);
-    return () => clearInterval(id);
-  }, []);
+  const time = useTime();
 
   const activity = props.activities.current(time);
   const next_activity = props.activities.next(time);
