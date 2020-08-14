@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import ActivityDisplay from './Activity';
 import NextActivity from './NextActivity';
@@ -6,33 +6,12 @@ import TimeDisplay from './Time';
 
 import { useTime } from './support/Time';
 import { useInterval } from './support/Interval';
-import Activities, { GetActivities, NullActivities } from './Activities';
+import Activities, { GetActivities, useActivities } from './Activities';
 import Weather, { GetWeather } from './Weather';
 
 interface Props {
   get_activities: GetActivities;
   get_weather: GetWeather;
-}
-
-function useActivities(get_activities: GetActivities, update_interval: number) {
-  const [activities, set_activities] = useState<Activities>(
-    new NullActivities()
-  );
-
-  function update() {
-    console.log('Update activities');
-    get_activities()
-      .then((result) => {
-        set_activities(result);
-      })
-      .catch((error: Error) => {
-        console.log(error.message);
-      });
-  }
-
-  useInterval(update, update_interval);
-
-  return activities;
 }
 
 export default function App(props: Props) {
