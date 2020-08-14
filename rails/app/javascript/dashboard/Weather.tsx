@@ -22,34 +22,43 @@ interface Props {
   update_interval: number;
 }
 
-export default function App(props: Props) {
-  const [is_loaded, set_is_loaded] = useState(false);
+function useWeather(get_weather: GetWeather, update_interval: number) {
+  const [loading, set_loading] = useState(true);
   const [error, set_error] = useState('');
   const [temp, set_temp] = useState(0);
 
   function update(get_weather: GetWeather) {
     get_weather()
       .then((result) => {
-        set_is_loaded(true);
+        set_loading(false);
         set_temp(result.temp);
         set_error('');
       })
       .catch((error: Error) => {
         console.log(`Weather error: ${error}`);
-        set_is_loaded(true);
+        set_loading(false);
         set_error(error.message);
       });
   }
 
   useEffect(() => {
-    update(props.get_weather);
+    update(get_weather);
     const id = setInterval(() => {
-      update(props.get_weather);
-    }, props.update_interval);
+      update(get_weather);
+    }, update_interval);
     return () => clearInterval(id);
-  }, [props.get_weather, props.update_interval]);
+  }, [get_weather, update_interval]);
 
-  if (!is_loaded) {
+  return [loading, error, temp];
+}
+
+export default function App(props: Props) {
+  const [loading, error, temp] = useWeather(
+    props.get_weather,
+    props.update_interval
+  );
+
+  if (loading) {
     return <div style={{ color: 'white' }}>Loading...</div>;
   }
 
@@ -67,7 +76,7 @@ export default function App(props: Props) {
         alignItems: 'flex-end',
       }}
     >
-      {temp.toFixed(0)} °C
+      {(+temp).toFixed(0)} °C
     </div>
   );
 }
