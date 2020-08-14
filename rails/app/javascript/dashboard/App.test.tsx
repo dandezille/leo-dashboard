@@ -20,7 +20,9 @@ it('renders successfully', async () => {
 
   ReactDOM.render(
     <App
-      activities={activities_mock}
+      get_activities={() => {
+        return Promise.resolve(activities_mock);
+      }}
       get_weather={() => {
         return Promise.resolve({ temp: 20 });
       }}

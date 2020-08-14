@@ -1,23 +1,25 @@
 import React from 'react';
 
-import Activities from './Activities';
 import ActivityDisplay from './Activity';
 import NextActivity from './NextActivity';
 import TimeDisplay from './Time';
 
 import { useTime } from './support/Time';
+import { useInterval } from './support/Interval';
+import Activities, { GetActivities, useActivities } from './Activities';
 import Weather, { GetWeather } from './Weather';
 
 interface Props {
-  activities: Activities;
+  get_activities: GetActivities;
   get_weather: GetWeather;
 }
 
 export default function App(props: Props) {
   const time = useTime();
+  const activities = useActivities(props.get_activities, 1000);
 
-  const activity = props.activities.current(time);
-  const next_activity = props.activities.next(time);
+  const current_activity = activities.current(time);
+  const next_activity = activities.next(time);
 
   return (
     <div
@@ -27,7 +29,7 @@ export default function App(props: Props) {
         minHeight: '100vh',
       }}
     >
-      <ActivityDisplay activity={activity} time={time} />
+      <ActivityDisplay activity={current_activity} time={time} />
       <div
         style={{
           display: 'flex',

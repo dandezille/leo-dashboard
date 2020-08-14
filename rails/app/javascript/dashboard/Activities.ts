@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import moment from 'moment';
+
+import { useInterval } from './support/Interval';
 
 function parse_time(time: string) {
   return moment(time, 'HH:mm');
@@ -18,9 +21,52 @@ export interface Activity {
   symbol: string;
 }
 
-interface Activities {
+export interface Activities {
   current(time: moment.Moment): Activity;
   next(time: moment.Moment): Activity;
+}
+
+export type GetActivities = () => Promise<Activities>;
+
+class NullActivities implements Activities {
+  current(time: moment.Moment) {
+    return {
+      start: moment(),
+      duration: 60,
+      symbol: '',
+    };
+  }
+
+  next(time: moment.Moment) {
+    return {
+      start: moment(),
+      duration: 60,
+      symbol: '',
+    };
+  }
+}
+
+export function useActivities(
+  get_activities: GetActivities,
+  update_interval: number
+) {
+  const [activities, set_activities] = useState<Activities>(
+    new NullActivities()
+  );
+
+  function update() {
+    get_activities()
+      .then((result) => {
+        set_activities(result);
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+      });
+  }
+
+  useInterval(update, update_interval);
+
+  return activities;
 }
 
 class ActivitiesImplementation implements Activities {
@@ -80,33 +126,35 @@ class ActivitiesImplementation implements Activities {
   }
 }
 
-const default_activities = {
-  '08:00': '⏰', // wake up
-  '08:15': '🥐', // breakfast
-  '08:45': '🦷', // Teeth and face wash
-  '09:00': '🇫🇷', // French story and drawing
-  '09:15': '️🚶', // Walk
-  '10:00': '️☕', // Coffee and listen
-  '10:30': '️🧩', // Play
-  '11:45': '️📺', // Cartoon
-  '12:15': '️🍽️', // Lunch and listen
-  '13:15': '️️️📖️', // Story
-  '13:30': '️️️️🛏️', // Np
-  '15:00': '️️️📖️', // Story
-  '15:15': '️️️🧩️', // Play
-  '16:30': '️🚶', // Walk
-  '17:00': '️️️🧩️', // Play
-  '18:00': '️️️📺', // Cartoon
-  '18:30': '️🍽️', // Dinner and listen
-  '19:15': '️️️🛀', // Bath or shower
-  '19:45': '🦷', // Teeth and face wash
-  '20:00': '🛏️', // Bed
-};
-
-export function create_activities(
-  activities: { [time: string]: string } = default_activities
-): Activities {
+export function create_activities(activities: {
+  [time: string]: string;
+}): Activities {
   return new ActivitiesImplementation(activities);
+}
+
+export async function get_activities() {
+  return create_activities({
+    '08:00': '⏰', // wake up
+    '08:15': '🥐', // breakfast
+    '08:45': '🦷', // Teeth and face wash
+    '09:00': '🇫🇷', // French story and drawing
+    '09:15': '️🚶', // Walk
+    '10:00': '️☕', // Coffee and listen
+    '10:30': '️🧩', // Play
+    '11:45': '️📺', // Cartoon
+    '12:15': '️🍽️', // Lunch and listen
+    '13:15': '️️️📖️', // Story
+    '13:30': '️️️️🛏️', // Np
+    '15:00': '️️️📖️', // Story
+    '15:15': '️️️🧩️', // Play
+    '16:30': '️🚶', // Walk
+    '17:00': '️️️🧩️', // Play
+    '18:00': '️️️📺', // Cartoon
+    '18:30': '️🍽️', // Dinner and listen
+    '19:15': '️️️🛀', // Bath or shower
+    '19:45': '🦷', // Teeth and face wash
+    '20:00': '🛏️', // Bed
+  });
 }
 
 export default Activities;
