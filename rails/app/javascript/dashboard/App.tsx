@@ -13,29 +13,36 @@ interface Props {
   get_weather: GetWeather;
 }
 
-function useActivities(get_activities: GetActivities) {
+function useActivities(get_activities: GetActivities, update_interval: number) {
   const [activities, set_activities] = useState<Activities>(
     new NullActivities()
   );
 
   function update(get_activities: GetActivities) {
-    get_activities().then((result) => {
-      set_activities(result);
-    });
+    console.log('Update activities');
+    get_activities()
+      .then((result) => {
+        set_activities(result);
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+      });
   }
 
   useEffect(() => {
     update(get_activities);
-  }, [get_activities]);
+    const id = setInterval(() => {
+      update(get_activities);
+    }, update_interval);
+    return () => clearInterval(id);
+  }, [get_activities, update_interval]);
 
   return activities;
 }
 
 export default function App(props: Props) {
   const time = useTime();
-  const activities = useActivities(() => {
-    return Promise.resolve(props.activities);
-  });
+  const activities = useActivities(props.get_activities, 1000);
 
   const current_activity = activities.current(time);
   const next_activity = activities.next(time);
