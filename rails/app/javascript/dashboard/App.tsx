@@ -5,6 +5,7 @@ import NextActivity from './NextActivity';
 import TimeDisplay from './Time';
 
 import { useTime } from './support/Time';
+import { useInterval } from './support/Interval';
 import Activities, { GetActivities, NullActivities } from './Activities';
 import Weather, { GetWeather } from './Weather';
 
@@ -18,7 +19,7 @@ function useActivities(get_activities: GetActivities, update_interval: number) {
     new NullActivities()
   );
 
-  function update(get_activities: GetActivities) {
+  function update() {
     console.log('Update activities');
     get_activities()
       .then((result) => {
@@ -29,13 +30,7 @@ function useActivities(get_activities: GetActivities, update_interval: number) {
       });
   }
 
-  useEffect(() => {
-    update(get_activities);
-    const id = setInterval(() => {
-      update(get_activities);
-    }, update_interval);
-    return () => clearInterval(id);
-  }, [get_activities, update_interval]);
+  useInterval(update, update_interval);
 
   return activities;
 }
