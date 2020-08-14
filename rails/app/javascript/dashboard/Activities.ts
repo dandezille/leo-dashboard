@@ -15,13 +15,13 @@ function time_diff(current: moment.Moment, next: moment.Moment) {
   return next.add(1, 'day').diff(current);
 }
 
-interface Activity {
+export interface Activity {
   start: moment.Moment;
   duration: number;
   symbol: string;
 }
 
-interface Activities {
+export interface Activities {
   current(time: moment.Moment): Activity;
   next(time: moment.Moment): Activity;
 }
