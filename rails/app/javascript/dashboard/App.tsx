@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import Activities from './Activities';
 import ActivityDisplay from './Activity';
 import NextActivity from './NextActivity';
 import TimeDisplay from './Time';
 
 import { useTime } from './support/Time';
+import Activities, { GetActivities, NullActivities } from './Activities';
 import Weather, { GetWeather } from './Weather';
 
 interface Props {
@@ -13,11 +13,32 @@ interface Props {
   get_weather: GetWeather;
 }
 
+function useActivities(get_activities: GetActivities) {
+  const [activities, set_activities] = useState<Activities>(
+    new NullActivities()
+  );
+
+  function update(get_activities: GetActivities) {
+    get_activities().then((result) => {
+      set_activities(result);
+    });
+  }
+
+  useEffect(() => {
+    update(get_activities);
+  }, [get_activities]);
+
+  return activities;
+}
+
 export default function App(props: Props) {
   const time = useTime();
+  const activities = useActivities(() => {
+    return Promise.resolve(props.activities);
+  });
 
-  const activity = props.activities.current(time);
-  const next_activity = props.activities.next(time);
+  const current_activity = activities.current(time);
+  const next_activity = activities.next(time);
 
   return (
     <div
@@ -27,7 +48,7 @@ export default function App(props: Props) {
         minHeight: '100vh',
       }}
     >
-      <ActivityDisplay activity={activity} time={time} />
+      <ActivityDisplay activity={current_activity} time={time} />
       <div
         style={{
           display: 'flex',

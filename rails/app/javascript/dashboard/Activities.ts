@@ -23,6 +23,26 @@ interface Activities {
   next(time: moment.Moment): Activity;
 }
 
+export type GetActivities = () => Promise<Activities>;
+
+export class NullActivities implements Activities {
+  current(time: moment.Moment) {
+    return {
+      start: moment(),
+      duration: 60,
+      symbol: '',
+    };
+  }
+
+  next(time: moment.Moment) {
+    return {
+      start: moment(),
+      duration: 60,
+      symbol: '',
+    };
+  }
+}
+
 class ActivitiesImplementation implements Activities {
   private activities: { [time: string]: string };
   private activity_times: string[];
