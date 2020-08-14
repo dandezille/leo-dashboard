@@ -9,7 +9,7 @@ import Activities, { GetActivities, NullActivities } from './Activities';
 import Weather, { GetWeather } from './Weather';
 
 interface Props {
-  activities: Activities;
+  get_activities: GetActivities;
   get_weather: GetWeather;
 }
 
