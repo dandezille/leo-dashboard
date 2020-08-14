@@ -5,12 +5,11 @@ import Activities from './Activities';
 import ActivityDisplay from './Activity';
 import NextActivity from './NextActivity';
 import TimeDisplay from './Time';
-import Weather from './Weather';
-import WeatherProvider from './WeatherProvider';
+import Weather, { GetWeather } from './Weather';
 
 interface Props {
   activities: Activities;
-  weather_provider: WeatherProvider;
+  get_weather: GetWeather;
 }
 
 export default function App(props: Props) {
@@ -47,7 +46,7 @@ export default function App(props: Props) {
         <div>
           <TimeDisplay time={time} />
           <Weather
-            weather_provider={props.weather_provider}
+            get_weather={props.get_weather}
             update_interval={5 * 60 * 1000}
           />
         </div>

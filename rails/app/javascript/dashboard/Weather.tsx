@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import WeatherProvider from './WeatherProvider';
+
+export interface WeatherData {
+  temp: number;
+}
+
+export type GetWeather = () => Promise<WeatherData>;
+
+export async function get_open_weather_map_data(): Promise<WeatherData> {
+  const response = await fetch(
+    'http://api.openweathermap.org/data/2.5/weather?q=Dublin,IE&units=metric&appid=d69dc974f03525bb28591d7132bbf921'
+  );
+
+  const data = await response.json();
+  return {
+    temp: data.main.temp,
+  };
+}
 
 interface Props {
-  weather_provider: WeatherProvider;
+  get_weather: GetWeather;
   update_interval: number;
 }
 
@@ -11,9 +27,8 @@ export default function App(props: Props) {
   const [error, set_error] = useState('');
   const [temp, set_temp] = useState(0);
 
-  function update(provider: WeatherProvider) {
-    provider
-      .fetch()
+  function update(get_weather: GetWeather) {
+    get_weather()
       .then((result) => {
         set_is_loaded(true);
         set_temp(result.temp);
@@ -27,12 +42,12 @@ export default function App(props: Props) {
   }
 
   useEffect(() => {
-    update(props.weather_provider);
+    update(props.get_weather);
     const id = setInterval(() => {
-      update(props.weather_provider);
+      update(props.get_weather);
     }, props.update_interval);
     return () => clearInterval(id);
-  }, [props.weather_provider, props.update_interval]);
+  }, [props.get_weather, props.update_interval]);
 
   if (!is_loaded) {
     return <div style={{ color: 'white' }}>Loading...</div>;
