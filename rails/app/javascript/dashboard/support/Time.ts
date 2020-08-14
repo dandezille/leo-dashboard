@@ -9,7 +9,7 @@ export function useTime() {
       set_time(moment());
     }, 1000);
     return () => clearInterval(id);
-  });
+  }, []);
 
   return time;
 }
