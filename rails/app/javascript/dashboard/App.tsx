@@ -12,15 +12,19 @@ interface Props {
   get_weather: GetWeather;
 }
 
-export default function App(props: Props) {
+function useTime() {
   const [time, set_time] = useState(moment());
 
   useEffect(() => {
-    const id = setInterval(() => {
-      set_time(moment());
-    }, 1000);
+    const id = setInterval(() => { set_time(moment()); }, 1000);
     return () => clearInterval(id);
-  }, []);
+  });
+
+  return time;
+}
+
+export default function App(props: Props) {
+  const time = useTime();
 
   const activity = props.activities.current(time);
   const next_activity = props.activities.next(time);
