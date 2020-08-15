@@ -9,7 +9,7 @@ export interface WeatherData {
 export type GetWeather = () => Promise<WeatherData>;
 
 export async function get_open_weather_map_data(): Promise<WeatherData> {
-  console.log('Updating weather')
+  console.log('Updating weather');
   const response = await fetch(
     'http://api.openweathermap.org/data/2.5/weather?q=Dublin,IE&units=metric&appid=d69dc974f03525bb28591d7132bbf921'
   );
