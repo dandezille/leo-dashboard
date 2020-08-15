@@ -8,12 +8,9 @@ RSpec.describe "Activities", type: :request do
 
       get "/activities"
       expect(response).to have_http_status(:success)
-      expect(response).to render_template(:index)
 
+      expect(response).to render_template(:index)
       expect(assigns(:activities)).to eq(activities)
-      activities.each do |activity|
-        expect(response.body).to include(activity.symbol)
-      end
     end
 
     it "returns activities as json" do
