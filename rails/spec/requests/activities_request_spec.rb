@@ -5,7 +5,7 @@ RSpec.describe "Activities", type: :request do
   describe "GET /index" do
     it "shows activities" do
       get "/activities"
-       expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:success)
       expect(response).to render_template(:index)
 
       activities = assigns(:activities)
