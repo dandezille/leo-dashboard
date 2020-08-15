@@ -26,7 +26,9 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @activities.to_json }
+      format.json do
+        render json: @activities.to_h { |a| [a.time.strftime('%H:%M'), a.symbol] }
+      end
     end
   end
 end
