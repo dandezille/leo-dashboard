@@ -16,7 +16,7 @@ interface Props {
 
 export default function App(props: Props) {
   const time = useTime();
-  const activities = useActivities(props.get_activities, 1000);
+  const activities = useActivities(props.get_activities, 10 * 1000);
 
   const current_activity = activities.current(time);
   const next_activity = activities.next(time);
