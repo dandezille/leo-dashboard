@@ -62,4 +62,11 @@ Rails.application.configure do
 
   # Allow connections using any host name
   config.hosts.clear
+
+  # Enable Bullet
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.rails_logger = true
+  end
 end
