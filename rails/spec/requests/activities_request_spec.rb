@@ -8,7 +8,7 @@ RSpec.describe "Activities", type: :request do
       get "/activities", headers: headers
       expect(response.content_type).to eq('application/json; charset=utf-8')
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).length).to eq(0)
+      expect(JSON.parse(response.body).length).to eq(20)
     end
   end
 
