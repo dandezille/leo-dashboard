@@ -7,6 +7,9 @@ import { get_activities } from './Activities';
 import { get_open_weather_map_data } from './Weather';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const target = document.getElementById('dashboard');
+  if (!target) return;
+
   ReactDOM.render(
     <React.StrictMode>
       <App
@@ -14,6 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         get_weather={get_open_weather_map_data}
       />
     </React.StrictMode>,
-    document.getElementById('dashboard')
+    target
   );
 });
