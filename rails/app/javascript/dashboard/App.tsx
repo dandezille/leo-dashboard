@@ -27,6 +27,8 @@ export default function App(props: Props) {
         display: 'flex',
         flex: 1,
         minHeight: '100vh',
+        backgroundColor: '#090a0d',
+        fontFamily: "'Rubik', sans-serif",
       }}
     >
       <ActivityDisplay activity={current_activity} time={time} />
