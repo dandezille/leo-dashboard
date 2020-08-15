@@ -1,12 +1,3 @@
-- name: Precompile assets
-  command: docker-compose run rails rails assets:precompile
-  args:
-    chdir: "{{deploy_directory}}" 
-  register: assets_out
-
-- debug:
-    var: assets_out
-
 - name: Start with docker compose
   docker_compose:
     project_src: "{{deploy_directory}}"
@@ -17,6 +8,15 @@
   environment:
     RAILS_ENV: production
   notify: refresh browser
+
+- name: Precompile assets
+  command: docker-compose run rails rails assets:precompile
+  args:
+    chdir: "{{deploy_directory}}" 
+  register: assets_out
+
+- debug:
+    var: assets_out
 
 - name: Clean assets
   command: docker-compose run rails rails assets:clean
