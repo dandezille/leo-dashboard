@@ -1,6 +1,9 @@
-<% @activities.each do |activity| %>
-  <div>
-    <p><%= activity.time %></p>
-    <p><%= activity.symbol %></p>
-  </div>
-<% end %>
+<ul>
+  <% @activities.each do |activity| %>
+    <li>
+      <%= activity.time.strftime('%H:%M') %>
+      <%= activity.symbol %>
+      <%= activity.note %>
+    </li>
+  <% end %>
+</ul>
