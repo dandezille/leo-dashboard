@@ -9,6 +9,7 @@
     - include: tasks/vnc-server.yml
     - include: tasks/openbox-config.yml
     - include: tasks/display-schedule.yml
+    - include: tasks/docker.yml
 
   handlers:
     - name: reboot

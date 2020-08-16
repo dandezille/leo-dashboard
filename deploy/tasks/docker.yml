@@ -1,0 +1,38 @@
+---
+- name: Get docker command
+  shell: command -v docker
+  register: docker_command
+
+- debug: var=docker_command.stdout
+
+- name: Download get-docker.sh
+  become: yes
+  get_url:
+    url: https://get.docker.com
+    dest: /root/get-docker.sh
+  when: docker_command.stdout == ''
+
+- name: Allow execution of get-docker.sh
+  become: yes
+  file: 
+    dest: /root/get-docker.sh
+    mode: a+x
+  when: docker_command.stdout == ''
+
+- name: Run get-docker.sh
+  become: yes
+  shell: /root/get-docker.sh
+  register: get_docker
+  when: docker_command.stdout == ''
+
+- debug: var=get_docker
+  when: docker_command.stdout == ''
+
+- name: Add pi to docker group
+  become: yes
+  user:
+    name: pi
+    groups: docker
+    append: yes
+  notify: reboot
+
