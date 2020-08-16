@@ -10,9 +10,10 @@
 - [Enable WiFi](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) by creating a file called `wpa_supplicant.conf` with contents below.
 - Boot and find the pi's IP address (or default hostname raspberrypi?)
 - Connect via SSH using pi/raspberry
-- Set new password for pi user
+- Set new password for pi user (passwd)
 - Set hostname `sudo raspi-config nonint do_hostname <NEW_HOSTNAME>`
-- Enable autologin `raspi-config->3->B1->B4`
+- Install lightdm `sudo apt update && sudo apt-get install lightdm`
+- Enable autologin `sudo raspi-config->3->B1->B4`
 - Reboot
 - Copy ssh key by `ssh-copy-id pi@HOSTNAME`
 - Run `deploy machine`
