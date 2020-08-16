@@ -134,7 +134,7 @@ export function create_activities(activities: {
 
 export async function get_activities() {
   console.log('Updating activities');
-  const response = await fetch('/activities');
+  const response = await fetch('/activities.json');
   const data = await response.json();
   return create_activities(data);
 }
