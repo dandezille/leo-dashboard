@@ -2,17 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Activities", type: :request do
 
-  describe "GET /index" do
-    it "shows activities" do
-      activities = create_list(:activity, 3)
-
-      get "/activities"
-      expect(response).to have_http_status(:success)
-
-      expect(response).to render_template(:index)
-      expect(assigns(:activities)).to eq(activities)
-    end
-
+  describe "GET /activities" do
     it "returns activities as json" do
       create(:activity, time: '08:00', symbol: 'a')
       create(:activity, time: '09:00', symbol: 'b')
@@ -32,5 +22,4 @@ RSpec.describe "Activities", type: :request do
       )
     end
   end
-
 end

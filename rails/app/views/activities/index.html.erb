@@ -1,9 +1,14 @@
+<%= link_to 'Add activity', new_activity_path %>
+
 <ul>
   <% @activities.each do |activity| %>
-    <li>
+    <li data-activity-id="<%= activity.id %>">
       <%= activity.time.strftime('%H:%M') %>
       <%= activity.symbol %>
       <%= activity.note %>
+
+      <%= link_to '✏️', edit_activity_path(activity) %>
+      <%= link_to '🗑️', activity_path(activity), method: :delete, data: { confirm: "Delete activity - #{activity.time.strftime('%H:%M')} #{activity.symbol}?" } %>
     </li>
   <% end %>
 </ul>
