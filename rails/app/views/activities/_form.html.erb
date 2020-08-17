@@ -1,0 +1,6 @@
+<%= form_with model: @activity do |f| %>
+  <%= f.text_field :time %>
+  <%= f.text_field :symbol %>
+  <%= f.text_field :note %>
+  <%= f.submit 'Add' %>
+<% end %>
