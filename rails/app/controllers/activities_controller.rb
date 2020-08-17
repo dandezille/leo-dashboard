@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :find_activity, only: [:edit]
+  before_action :find_activity, only: [:edit, :update]
 
   def index
     @activities = Activity.all
@@ -13,7 +13,7 @@ class ActivitiesController < ApplicationController
   end
 
   def new
-    @activity = Activity.new
+    @activity = Activity.new(time: '00:00')
   end
 
   def create
@@ -26,7 +26,14 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
-    @activity = Activity.find_by(id: params[:id])
+  end
+
+  def update
+    if @activity.update(activity_params)
+      redirect_to activities_path
+    else
+      render :edit
+    end
   end
 
   private
