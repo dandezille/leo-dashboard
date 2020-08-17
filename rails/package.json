@@ -8,7 +8,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.1.1",
-    "@types/react": "^16.9.43",
+    "@types/react": "^16.9.46",
     "@types/react-dom": "^16.9.8",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "moment": "^2.27.0",
@@ -21,7 +21,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "@types/jest": "^26.0.7",
-    "fork-ts-checker-webpack-plugin": "^5.0.11",
+    "fork-ts-checker-webpack-plugin": "^5.0.14",
     "jest": "^26.1.0",
     "jsdom": "^16.3.0",
     "prettier": "^2.0.5",
