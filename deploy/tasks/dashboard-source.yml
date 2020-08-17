@@ -11,8 +11,7 @@
   register: git_branch_out
   delegate_to: 127.0.0.1
 
-- debug:
-    var: git_branch_out
+- debug: var=git_branch_out.stdout
 
 - name: Get latest dashboard code
   git:

@@ -1,4 +1,6 @@
-body {
-  margin: 0;
-  padding: 0;
-}
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+
+// Custom components/styles go here
+
+@import 'tailwindcss/utilities';
