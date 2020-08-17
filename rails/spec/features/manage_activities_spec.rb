@@ -40,7 +40,16 @@ RSpec.feature "ManageActivities", type: :feature do
   end
 
   scenario 'User deletes an activity' do
+    activity = create(:activity)
+    visit '/activities'
 
+    within "li[data-activity-id='#{activity.id}']" do
+      click_on '🗑️'
+    end
+
+    expect(page).not_to have_text(activity.time.strftime("%H:%M"))
+    expect(page).not_to have_text(activity.symbol)
+    expect(page).not_to have_text(activity.note)
   end
 
   def edit_link_for(activity)

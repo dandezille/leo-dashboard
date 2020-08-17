@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :find_activity, only: [:edit, :update]
+  before_action :find_activity, only: [:edit, :update, :destroy]
 
   def index
     @activities = Activity.all
@@ -34,6 +34,11 @@ class ActivitiesController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @activity.destroy
+    redirect_to activities_path
   end
 
   private
