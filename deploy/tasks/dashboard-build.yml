@@ -8,7 +8,6 @@
   environment:
     RAILS_ENV: production
   register: compose_out
-  notify: refresh browser
 
 - debug: var=compose_out.stdout
 
@@ -25,7 +24,12 @@
     project_src: "{{deploy_directory}}"
     build: no
     restarted: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  environment:
+    RAILS_ENV: production
   register: compose_out
+  notify: refresh browser
 
 - debug: var=compose_out.stdout
 
