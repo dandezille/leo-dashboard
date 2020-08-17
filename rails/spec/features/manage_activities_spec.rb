@@ -18,7 +18,7 @@ RSpec.feature "ManageActivities", type: :feature do
     activity = create(:activity)
     visit '/activities'
 
-    within "li[data-activity-id='#{activity.id}']" do
+    within "[data-activity-id='#{activity.id}']" do
       click_on '✏️'
     end
 
@@ -39,7 +39,7 @@ RSpec.feature "ManageActivities", type: :feature do
     activity = create(:activity)
     visit '/activities'
 
-    within "li[data-activity-id='#{activity.id}']" do
+    within "[data-activity-id='#{activity.id}']" do
       click_on '🗑️'
     end
 
@@ -55,6 +55,6 @@ RSpec.feature "ManageActivities", type: :feature do
   end
 
   def edit_link_for(activity)
-    find("li[data-activity-id='#{activity.id}']").find('a', text: '✏️')
+    find("[data-activity-id='#{activity.id}']").find('a', text: '✏️')
   end
 end
