@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Activities", type: :request do
 
-  describe "GET /index" do
+  describe "GET /activities" do
     it "shows activities" do
       activities = create_list(:activity, 3)
 
@@ -30,6 +30,18 @@ RSpec.describe "Activities", type: :request do
          "09:00": 'b',
          "10:00": 'c' 
       )
+    end
+  end
+
+  describe "GET /activities/:id/edit" do
+    it 'shows edit page' do
+      activity = create(:activity)
+
+      get edit_activity_path(activity)
+      expect(response).to have_http_status(:success)
+
+      expect(response).to render_template(:edit)
+      expect(assigns(:activity)).to eq(activity)
     end
   end
 
