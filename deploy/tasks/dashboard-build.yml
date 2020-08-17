@@ -7,7 +7,10 @@
     ansible_python_interpreter: /usr/bin/python3
   environment:
     RAILS_ENV: production
+  register: compose_out
   notify: refresh browser
+
+- debug: var=compose_out.stdout
 
 - name: Precompile assets
   command: docker-compose exec rails rails assets:precompile
@@ -15,8 +18,16 @@
     chdir: "{{deploy_directory}}" 
   register: assets_out
 
-- debug:
-    var: assets_out
+- debug: var=assets_out.stdout
+
+- name: Restart to pick up assets
+  docker_compose:
+    project_src: "{{deploy_directory}}"
+    build: no
+    restarted: yes
+  register: compose_out
+
+- debug: var=compose_out.stdout
 
 - name: Clean assets
   command: docker-compose exec rails rails assets:clean
@@ -24,8 +35,7 @@
     chdir: "{{deploy_directory}}" 
   register: assets_out
 
-- debug:
-    var: assets_out
+- debug: var=assets_out.stdout
 
 - name: Rails db:migrate
   command: docker-compose exec rails rails db:migrate
@@ -33,4 +43,4 @@
     chdir: "{{deploy_directory}}" 
   register: db_migrate
 
-- debug: var=db_migrate
+- debug: var=db_migrate.stdout
