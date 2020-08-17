@@ -11,9 +11,7 @@ RSpec.feature "ManageActivities", type: :feature do
     fill_in 'activity[note]', with: attributes[:note]
     click_on 'Add'
 
-    expect(page).to have_text(attributes[:time].strftime("%H:%M"))
-    expect(page).to have_text(attributes[:symbol])
-    expect(page).to have_text(attributes[:note])
+    expect(page).to have_activity(attributes)
   end
 
   scenario 'User edits an activity' do
@@ -34,9 +32,7 @@ RSpec.feature "ManageActivities", type: :feature do
     fill_in 'activity[note]', with: attributes[:note]
     click_on 'Change'
 
-    expect(page).to have_text(attributes[:time].strftime("%H:%M"))
-    expect(page).to have_text(attributes[:symbol])
-    expect(page).to have_text(attributes[:note])
+    expect(page).to have_activity(attributes)
   end
 
   scenario 'User deletes an activity' do
@@ -50,6 +46,12 @@ RSpec.feature "ManageActivities", type: :feature do
     expect(page).not_to have_text(activity.time.strftime("%H:%M"))
     expect(page).not_to have_text(activity.symbol)
     expect(page).not_to have_text(activity.note)
+  end
+
+  def have_activity(params)
+    have_text(params[:time].strftime("%H:%M")) &&
+      have_text(params[:symbol]) &&
+      have_text(params[:note])
   end
 
   def edit_link_for(activity)
