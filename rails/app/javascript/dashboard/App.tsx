@@ -35,8 +35,6 @@ export default function App() {
   const activity_data = useActivities(10 * 1000);
 
   const activities = create_activities(activity_data, time);
-  const current_activity = activities.current;
-  const next_activity = activities.next;
 
   return (
     <div
@@ -48,7 +46,7 @@ export default function App() {
         fontFamily: "'Rubik', sans-serif",
       }}
     >
-      <ActivityDisplay activity={current_activity} time={time} />
+      <ActivityDisplay activity={activities.current} time={time} />
       <div
         style={{
           display: 'flex',
@@ -62,7 +60,7 @@ export default function App() {
           <TimeDisplay time={time} />
           <Weather update_interval={5 * 60 * 1000} />
         </div>
-        <NextActivity activity={next_activity.symbol} />
+        <NextActivity activity={activities.next.symbol} />
       </div>
     </div>
   );
