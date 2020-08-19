@@ -10,9 +10,7 @@ import { useTime } from './support/Time';
 import { useInterval } from './support/Interval';
 import { get } from './support/HTTP';
 
-import { create_activities } from './Activities';
-
-type ActivitiesData = { [time: string]: string };
+import { create_activities, ActivitiesData } from './Activities';
 
 export function useActivities(update_interval: number) {
   const [activities, set_activities] = useState<ActivitiesData>();
@@ -36,9 +34,9 @@ export default function App() {
   const time = useTime();
   const activity_data = useActivities(10 * 1000);
 
-  const activities = create_activities(activity_data);
-  const current_activity = activities.current(time);
-  const next_activity = activities.next(time);
+  const activities = create_activities(activity_data, time);
+  const current_activity = activities.current;
+  const next_activity = activities.next;
 
   return (
     <div

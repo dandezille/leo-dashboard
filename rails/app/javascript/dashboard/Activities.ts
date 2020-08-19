@@ -19,29 +19,11 @@ export interface Activity {
 }
 
 export interface Activities {
-  current(time: moment.Moment): Activity;
-  next(time: moment.Moment): Activity;
+  current: Activity;
+  next: Activity;
 }
 
-class NullActivities implements Activities {
-  current(time: moment.Moment) {
-    return {
-      start: moment(),
-      duration: 60,
-      symbol: '',
-    };
-  }
-
-  next(time: moment.Moment) {
-    return {
-      start: moment(),
-      duration: 60,
-      symbol: '',
-    };
-  }
-}
-
-class ActivitiesImplementation implements Activities {
+class ActivitiesFactory {
   private activities: { [time: string]: string };
   private activity_times: string[];
 
@@ -50,7 +32,14 @@ class ActivitiesImplementation implements Activities {
     this.activity_times = Object.keys(this.activities);
   }
 
-  current(time: moment.Moment) {
+  create(time: moment.Moment): Activities {
+    return {
+      current: this.current(time),
+      next: this.next(time),
+    };
+  }
+
+  private current(time: moment.Moment) {
     const current_index = this.activity_index_at(time);
     const current_start = parse_time(this.activity_times[current_index]);
 
@@ -61,7 +50,7 @@ class ActivitiesImplementation implements Activities {
     };
   }
 
-  next(time: moment.Moment) {
+  private next(time: moment.Moment) {
     const current_index = this.next_index(this.activity_index_at(time));
     const current_start = parse_time(this.activity_times[current_index]);
 
@@ -98,14 +87,29 @@ class ActivitiesImplementation implements Activities {
   }
 }
 
-type activities_data = null | { [time: string]: string };
+export type ActivitiesData = null | { [time: string]: string };
 
-export function create_activities(activities: activities_data): Activities {
+export function create_activities(
+  activities: ActivitiesData,
+  time: moment.Moment
+): Activities {
   if (!activities) {
-    return new NullActivities();
+    return {
+      current: {
+        start: moment(),
+        duration: 60,
+        symbol: '',
+      },
+      next: {
+        start: moment(),
+        duration: 60,
+        symbol: '',
+      },
+    };
   }
 
-  return new ActivitiesImplementation(activities);
+  const factory = new ActivitiesFactory(activities);
+  return factory.create(time);
 }
 
 export default Activities;
