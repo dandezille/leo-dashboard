@@ -13,13 +13,12 @@ RSpec.describe "Activities", type: :request do
       expect(response).to have_http_status(:success)
 
       json = JSON.parse(response.body)
-      expect(json.length).to eq(3)
 
-      expect(response.body).to include_json(
-         "08:00": "a",
-         "09:00": 'b',
-         "10:00": 'c' 
-      )
+      expect(json).to eq({
+         "08:00" => "a",
+         "09:00" => 'b',
+         "10:00" => 'c' 
+      })
     end
   end
 end
