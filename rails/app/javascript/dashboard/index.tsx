@@ -8,9 +8,7 @@ import { get_activities } from './Activities';
 export function render_dashboard(container: Element) {
   ReactDOM.render(
     <React.StrictMode>
-      <App
-        get_activities={get_activities}
-      />
+      <App get_activities={get_activities} />
     </React.StrictMode>,
     container
   );
