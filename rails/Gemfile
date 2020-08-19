@@ -6,6 +6,7 @@ ruby '2.7.1'
 gem 'bootsnap', require: false
 gem 'clearance'
 gem 'dotenv-rails'
+gem 'httparty'
 gem 'pg'
 gem 'puma'
 gem 'rails'
@@ -31,6 +32,8 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'climate_control'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
+  gem 'webmock'
 end
