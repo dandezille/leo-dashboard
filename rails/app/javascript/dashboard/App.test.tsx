@@ -23,9 +23,6 @@ it('renders successfully', async () => {
       get_activities={() => {
         return Promise.resolve(activities_mock);
       }}
-      get_weather={() => {
-        return Promise.resolve({ temp: 20 });
-      }}
     />,
     document.createElement('div')
   );

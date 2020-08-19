@@ -1,57 +1,45 @@
 import React, { useState, useEffect } from 'react';
 
 import { useInterval } from './support/Interval';
+import { get } from './support/HTTP';
 
-export interface WeatherData {
-  temp: number;
-}
-
-export type GetWeather = () => Promise<WeatherData>;
-
-export async function get_open_weather_map_data(): Promise<WeatherData> {
-  console.log('Updating weather');
-  const response = await fetch('/weather.json');
-
-  const data = await response.json();
-  return {
-    temp: data.main.temp,
+interface WeatherData {
+  main: {
+    temp: number;
   };
 }
 
-interface Props {
-  get_weather: GetWeather;
-  update_interval: number;
-}
-
-function useWeather(get_weather: GetWeather, update_interval: number) {
+function useWeather(update_interval: number) {
   const [loading, set_loading] = useState(true);
   const [error, set_error] = useState('');
   const [temp, set_temp] = useState(0);
 
-  function update() {
-    get_weather()
-      .then((result) => {
-        set_loading(false);
-        set_temp(result.temp);
-        set_error('');
-      })
-      .catch((error: Error) => {
-        console.log(`Weather error: ${error}`);
-        set_loading(false);
-        set_error(error.message);
-      });
+  async function update() {
+    console.log('Updating weather');
+
+    try {
+      const data = await get<WeatherData>('/weather.json');
+      console.log(`Weather update successful ${data}`);
+      set_temp(data.main.temp);
+      set_error('');
+    } catch (error) {
+      console.log(`Weather error: ${error}`);
+      set_error(error.message);
+    }
+
+    set_loading(false);
   }
 
   useInterval(update, update_interval);
-
   return [loading, error, temp];
 }
 
-export default function App(props: Props) {
-  const [loading, error, temp] = useWeather(
-    props.get_weather,
-    props.update_interval
-  );
+interface Props {
+  update_interval: number;
+}
+
+export default function Weather(props: Props) {
+  const [loading, error, temp] = useWeather(props.update_interval);
 
   if (loading) {
     return <div style={{ color: 'white' }}>Loading...</div>;
