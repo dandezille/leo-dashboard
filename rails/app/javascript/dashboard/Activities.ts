@@ -48,6 +48,8 @@ class NullActivities implements Activities {
   }
 }
 
+type ActivitiesData = { [time: string]: string }
+
 export function useActivities(update_interval: number) {
   const [activities, set_activities] = useState<Activities>(
     new NullActivities()
@@ -57,7 +59,7 @@ export function useActivities(update_interval: number) {
     console.log('Updating activities');
 
     try {
-      const data = await get<{ [time: string]: string }>('/activities.json');
+      const data = await get<ActivitiesData>('/activities.json');
       const activities = create_activities(data);
       set_activities(activities);
     } catch (error) {
@@ -66,7 +68,6 @@ export function useActivities(update_interval: number) {
   }
 
   useInterval(update, update_interval);
-
   return activities;
 }
 
