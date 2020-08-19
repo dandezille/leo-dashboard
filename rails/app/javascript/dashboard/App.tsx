@@ -42,9 +42,7 @@ export default function App(props: Props) {
       >
         <div>
           <TimeDisplay time={time} />
-          <Weather
-            update_interval={5 * 60 * 1000}
-          />
+          <Weather update_interval={5 * 60 * 1000} />
         </div>
         <NextActivity activity={next_activity.symbol} />
       </div>

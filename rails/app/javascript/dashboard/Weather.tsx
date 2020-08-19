@@ -6,11 +6,15 @@ interface WeatherData {
   temp: number;
 }
 
+async function get(request : RequestInfo) : Promise<any> {
+  const response = await fetch(request);
+  const body = await response.json();
+  return body;
+}
+
 async function get_weather(): Promise<WeatherData> {
   console.log('Updating weather');
-  const response = await fetch('/weather.json');
-
-  const data = await response.json();
+  const data = await get('/weather.json');
   return {
     temp: data.main.temp,
   };
