@@ -1,9 +1,4 @@
-import { useState } from 'react';
 import moment from 'moment';
-
-import { get } from './support/HTTP';
-
-import { useInterval } from './support/Interval';
 
 function parse_time(time: string) {
   return moment(time, 'HH:mm');
@@ -28,8 +23,6 @@ export interface Activities {
   next(time: moment.Moment): Activity;
 }
 
-export type GetActivities = () => Promise<Activities>;
-
 class NullActivities implements Activities {
   current(time: moment.Moment) {
     return {
@@ -46,29 +39,6 @@ class NullActivities implements Activities {
       symbol: '',
     };
   }
-}
-
-type ActivitiesData = { [time: string]: string }
-
-export function useActivities(update_interval: number) {
-  const [activities, set_activities] = useState<Activities>(
-    new NullActivities()
-  );
-
-  async function update() {
-    console.log('Updating activities');
-
-    try {
-      const data = await get<ActivitiesData>('/activities.json');
-      const activities = create_activities(data);
-      set_activities(activities);
-    } catch (error) {
-      console.log(`Activities error: ${error.message}`);
-    }
-  }
-
-  useInterval(update, update_interval);
-  return activities;
 }
 
 class ActivitiesImplementation implements Activities {
