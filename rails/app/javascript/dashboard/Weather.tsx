@@ -23,7 +23,7 @@ function useWeather(update_interval: number) {
       set_temp(data.main.temp);
       set_error('');
     } catch (error) {
-      console.log(`Weather error: ${error}`);
+      console.log(`Weather error: ${error.message}`);
       set_error(error.message);
     }
 
