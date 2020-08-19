@@ -98,9 +98,13 @@ class ActivitiesImplementation implements Activities {
   }
 }
 
-export function create_activities(activities: {
-  [time: string]: string;
-}): Activities {
+type activities_data = null | { [time: string]: string };
+
+export function create_activities(activities: activities_data): Activities {
+  if (!activities) {
+    return new NullActivities();
+  }
+
   return new ActivitiesImplementation(activities);
 }
 

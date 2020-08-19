@@ -15,9 +15,7 @@ import { create_activities } from './Activities';
 type ActivitiesData = { [time: string]: string };
 
 export function useActivities(update_interval: number) {
-  const [activities, set_activities] = useState<ActivitiesData>({
-    '00:00': '',
-  });
+  const [activities, set_activities] = useState<ActivitiesData>();
 
   async function update() {
     console.log('Updating activities');
