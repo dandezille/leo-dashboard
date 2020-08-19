@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import { useInterval } from './support/Interval';
 
-export interface WeatherData {
+interface WeatherData {
   temp: number;
 }
 
-export type GetWeather = () => Promise<WeatherData>;
-
-export async function get_open_weather_map_data(): Promise<WeatherData> {
+async function get_weather(): Promise<WeatherData> {
   console.log('Updating weather');
   const response = await fetch('/weather.json');
 
@@ -18,12 +16,7 @@ export async function get_open_weather_map_data(): Promise<WeatherData> {
   };
 }
 
-interface Props {
-  get_weather: GetWeather;
-  update_interval: number;
-}
-
-function useWeather(get_weather: GetWeather, update_interval: number) {
+function useWeather(update_interval: number) {
   const [loading, set_loading] = useState(true);
   const [error, set_error] = useState('');
   const [temp, set_temp] = useState(0);
@@ -47,11 +40,12 @@ function useWeather(get_weather: GetWeather, update_interval: number) {
   return [loading, error, temp];
 }
 
-export default function App(props: Props) {
-  const [loading, error, temp] = useWeather(
-    props.get_weather,
-    props.update_interval
-  );
+interface Props {
+  update_interval: number;
+}
+
+export default function Weather(props: Props) {
+  const [loading, error, temp] = useWeather(props.update_interval);
 
   if (loading) {
     return <div style={{ color: 'white' }}>Loading...</div>;
