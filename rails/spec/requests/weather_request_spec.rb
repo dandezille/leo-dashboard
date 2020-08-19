@@ -8,11 +8,8 @@ RSpec.describe "Weather", type: :request do
       expect(response.content_type).to eq('application/json; charset=utf-8')
       expect(response).to have_http_status(:success)
 
-      expect(response.body).to include_json(
-         "08:00": "a",
-         "09:00": 'b',
-         "10:00": 'c' 
-      )
+      json = JSON.parse(response.body)
+      expect(json).to eq({})
     end
   end
 end
