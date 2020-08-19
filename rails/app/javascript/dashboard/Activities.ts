@@ -33,31 +33,20 @@ class ActivitiesFactory {
   }
 
   create(time: moment.Moment): Activities {
-    return {
-      current: this.current(time),
-      next: this.next(time),
-    };
-  }
-
-  private current(time: moment.Moment) {
     const current_index = this.activity_index_at(time);
-    const current_start = parse_time(this.activity_times[current_index]);
+    const next_index = this.next_index(current_index);
 
     return {
-      start: current_start,
-      duration: this.activity_duration(current_index),
-      symbol: this.activities[this.activity_times[current_index]],
-    };
-  }
-
-  private next(time: moment.Moment) {
-    const current_index = this.next_index(this.activity_index_at(time));
-    const current_start = parse_time(this.activity_times[current_index]);
-
-    return {
-      start: current_start,
-      duration: this.activity_duration(current_index),
-      symbol: this.activities[this.activity_times[current_index]],
+      current: {
+        start: parse_time(this.activity_times[current_index]),
+        duration: this.activity_duration(current_index),
+        symbol: this.activities[this.activity_times[current_index]],
+      },
+      next: {
+        start: parse_time(this.activity_times[next_index]),
+        duration: this.activity_duration(next_index),
+        symbol: this.activities[this.activity_times[next_index]],
+      },
     };
   }
 
