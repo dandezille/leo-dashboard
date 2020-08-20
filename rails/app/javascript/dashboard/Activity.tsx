@@ -13,7 +13,10 @@ interface Props {
 
 export default function Activity(props: Props) {
   const elapsed = props.time.diff(props.current_activity.time);
-  const duration = time_diff(props.current_activity.time, props.next_activity.time);
+  const duration = time_diff(
+    props.current_activity.time,
+    props.next_activity.time
+  );
   const progress = elapsed / duration;
   const remaining = moment
     .duration(props.current_activity.time.add(duration).diff(props.time))

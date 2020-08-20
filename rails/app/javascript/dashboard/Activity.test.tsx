@@ -15,7 +15,9 @@ it('renders successfully', async () => {
     symbol: 'B',
   };
 
-  render(<Activity current_activity={current} next_activity={next} time={moment()} />);
+  render(
+    <Activity current_activity={current} next_activity={next} time={moment()} />
+  );
 
   expect(await screen.findByText('A')).toBeInTheDocument();
 });
