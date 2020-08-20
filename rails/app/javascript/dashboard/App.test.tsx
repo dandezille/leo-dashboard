@@ -21,9 +21,6 @@ describe('App', () => {
 
     render(
       <App
-        get_activities={() => {
-          return Promise.resolve(activities_mock);
-        }}
       />
     );
 

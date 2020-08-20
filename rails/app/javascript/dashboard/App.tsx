@@ -9,13 +9,9 @@ import { useInterval } from './support/Interval';
 import Activities, { GetActivities, useActivities } from './Activities';
 import Weather from './Weather';
 
-interface Props {
-  get_activities: GetActivities;
-}
-
-export default function App(props: Props) {
+export default function App() {
   const time = useTime();
-  const activities = useActivities(props.get_activities, 10 * 1000);
+  const activities = useActivities(10 * 1000);
 
   const current_activity = activities.current(time);
   const next_activity = activities.next(time);

@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 
-import { get_activities } from './Activities';
-
 export function render_dashboard(container: Element) {
   ReactDOM.render(
     <React.StrictMode>
-      <App get_activities={get_activities} />
+      <App />
     </React.StrictMode>,
     container
   );

@@ -38,25 +38,24 @@ class NullActivities implements Activities {
 }
 
 export function useActivities(
-  get_activities: GetActivities,
   update_interval: number
 ) {
   const [activities, set_activities] = useState<Activities>(
     new NullActivities()
   );
 
-  function update() {
-    get_activities()
-      .then((result) => {
-        set_activities(result);
-      })
-      .catch((error: Error) => {
-        console.log(`Activities error: ${error.message}`);
-      });
+  async function update() {
+    console.log('Updating activities');
+    try{
+      const data = await get<ActivitiesData>('/activities.json');
+      const activities = create_activities(data);
+      set_activities(activities);
+    } catch (error) {
+      console.log(`Activities error: ${error.message}`);
+    }
   }
 
   useInterval(update, update_interval);
-
   return activities;
 }
 
@@ -108,12 +107,6 @@ class ActivitiesImplementation implements Activities {
 
 export function create_activities(activities: ActivitiesData): Activities {
   return new ActivitiesImplementation(activities);
-}
-
-export async function get_activities() {
-  console.log('Updating activities');
-  const data = await get<ActivitiesData>('/activities.json');
-  return create_activities(data);
 }
 
 export default Activities;
