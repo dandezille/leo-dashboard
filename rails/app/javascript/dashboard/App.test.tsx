@@ -28,5 +28,6 @@ describe('App', () => {
     );
 
     expect(await screen.findByText('current')).toBeInTheDocument();
+    expect(await screen.findByText('20 °C')).toBeInTheDocument();
   });
 });
