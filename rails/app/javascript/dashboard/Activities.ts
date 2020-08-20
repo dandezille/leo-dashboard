@@ -2,18 +2,7 @@ import { useState } from 'react';
 import moment from 'moment';
 
 import { useInterval } from './support/Interval';
-
-function parse_time(time: string) {
-  return moment(time, 'HH:mm');
-}
-
-function time_diff(current: moment.Moment, next: moment.Moment) {
-  if (next > current) {
-    return next.diff(current);
-  }
-
-  return next.add(1, 'day').diff(current);
-}
+import { parse_time, time_diff } from './support/Time';
 
 export interface Activity {
   start: moment.Moment;
