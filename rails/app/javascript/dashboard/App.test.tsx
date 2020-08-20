@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import moment from 'moment';
 
 import App from './App';
@@ -26,5 +26,7 @@ describe('App', () => {
         }}
       />
     );
+
+    expect(await screen.findByText('current')).toBeInTheDocument();
   });
 });
