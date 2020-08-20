@@ -3,6 +3,11 @@ import moment from 'moment';
 
 import { useInterval } from './support/Interval';
 import { parse_time, time_diff } from './support/Time';
+import { get } from './support/HTTP';
+
+type ActivitiesData = {
+  [time: string]: string;
+};
 
 export interface Activity {
   start: moment.Moment;
@@ -115,16 +120,13 @@ class ActivitiesImplementation implements Activities {
   }
 }
 
-export function create_activities(activities: {
-  [time: string]: string;
-}): Activities {
+export function create_activities(activities: ActivitiesData): Activities {
   return new ActivitiesImplementation(activities);
 }
 
 export async function get_activities() {
   console.log('Updating activities');
-  const response = await fetch('/activities.json');
-  const data = await response.json();
+  const data = await get<ActivitiesData>('/activities.json');
   return create_activities(data);
 }
 
