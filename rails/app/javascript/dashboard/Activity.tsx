@@ -6,17 +6,17 @@ import ProgressRing from './ProgressRing';
 import { time_diff } from './support/Time';
 
 interface Props {
-  activity: ActivityInterface;
-  next: ActivityInterface;
+  current_activity: ActivityInterface;
+  next_activity: ActivityInterface;
   time: moment.Moment;
 }
 
 export default function Activity(props: Props) {
-  const elapsed = props.time.diff(props.activity.time);
-  const duration = time_diff(props.activity.time, props.next.time);
+  const elapsed = props.time.diff(props.current_activity.time);
+  const duration = time_diff(props.current_activity.time, props.next_activity.time);
   const progress = elapsed / duration;
   const remaining = moment
-    .duration(props.activity.time.add(duration).diff(props.time))
+    .duration(props.current_activity.time.add(duration).diff(props.time))
     .humanize();
 
   return (
@@ -37,7 +37,7 @@ export default function Activity(props: Props) {
           textAnchor="middle"
           dominantBaseline="middle"
         >
-          {props.activity.symbol}
+          {props.current_activity.symbol}
         </text>
       </svg>
       <div

@@ -31,8 +31,8 @@ export default function App(props: Props) {
       }}
     >
       <ActivityDisplay
-        activity={current_activity}
-        next={next_activity}
+        current_activity={current_activity}
+        next_activity={next_activity}
         time={time}
       />
       <div
