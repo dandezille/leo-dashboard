@@ -7,13 +7,11 @@ import Activity from './Activity';
 it('renders successfully', async () => {
   const current = {
     start: moment().subtract(5, 'minutes'),
-    duration: moment.duration(1, 'hour').asMilliseconds(),
     symbol: 'A',
   };
 
   const next = {
     start: moment().add(5, 'minutes'),
-    duration: moment.duration(1, 'hour').asMilliseconds(),
     symbol: 'B',
   };
 
