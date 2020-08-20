@@ -2,5 +2,5 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   roots: ['app/javascript'],
-  setupFilesAfterEnv: ['./jest.setup.ts'],
+  setupFilesAfterEnv: ['./app/javascript/tests/setup.ts'],
 };
