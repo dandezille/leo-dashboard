@@ -19,7 +19,7 @@ function useWeather(update_interval: number) {
 
     try {
       const data = await get<WeatherData>('/weather.json');
-      console.log(`Weather update successful ${data}`);
+      console.log(`Weather update successful ${JSON.stringify(data)}`);
       set_temp(data.main.temp);
       set_error('');
     } catch (error) {
