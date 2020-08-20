@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Time from './Time';
 import moment from 'moment';
+
+import Time from './Time';
 
 it('renders successfully', () => {
   const time = moment('13:24', 'HH:mm');
