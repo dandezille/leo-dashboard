@@ -16,9 +16,7 @@ export default function Activity(props: Props) {
   const duration = time_diff(props.activity.start, props.next.start);
   const progress = elapsed / duration;
   const remaining = moment
-    .duration(
-      props.activity.start.add(duration).diff(props.time)
-    )
+    .duration(props.activity.start.add(duration).diff(props.time))
     .humanize();
 
   return (
