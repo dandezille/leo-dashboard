@@ -6,23 +6,7 @@ import App from './App';
 
 describe('App', () => {
   it('renders successfully', async () => {
-    const activities_mock = {
-      current: jest.fn().mockReturnValue({
-        start: moment().subtract(30, 'minutes'),
-        duration: 60,
-        symbol: 'current',
-      }),
-      next: jest.fn().mockReturnValue({
-        start: moment().add(30, 'minutes'),
-        duration: 60,
-        symbol: 'next',
-      }),
-    };
-
-    render(
-      <App
-      />
-    );
+    render(<App />);
 
     expect(await screen.findByText('current')).toBeInTheDocument();
     expect(await screen.findByText('20 °C')).toBeInTheDocument();

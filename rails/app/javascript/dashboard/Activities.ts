@@ -37,16 +37,14 @@ class NullActivities implements Activities {
   }
 }
 
-export function useActivities(
-  update_interval: number
-) {
+export function useActivities(update_interval: number) {
   const [activities, set_activities] = useState<Activities>(
     new NullActivities()
   );
 
   async function update() {
     console.log('Updating activities');
-    try{
+    try {
       const data = await get<ActivitiesData>('/activities.json');
       const activities = create_activities(data);
       set_activities(activities);
