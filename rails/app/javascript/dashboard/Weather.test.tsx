@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from '@testing-library/react';
 
 import Weather from './Weather';
 
 it('renders successfully', async () => {
-  ReactDOM.render(
-    <Weather update_interval={5 * 1000} />,
-    document.createElement('div')
+  render(
+    <Weather update_interval={5 * 1000} />
   );
 });

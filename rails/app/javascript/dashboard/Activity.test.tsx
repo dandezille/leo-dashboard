@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from '@testing-library/react';
 import moment from 'moment';
 
 import Activity from './Activity';
 
 it('renders successfully', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(
+  render(
     <Activity
       activity={{
         start: moment().subtract(5, 'minutes'),
@@ -14,7 +13,6 @@ it('renders successfully', () => {
         symbol: '?',
       }}
       time={moment()}
-    />,
-    div
+    />
   );
 });
