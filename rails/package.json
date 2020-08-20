@@ -23,6 +23,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.3",
     "@testing-library/react": "^10.4.8",
     "@types/jest": "^26.0.7",
     "fork-ts-checker-webpack-plugin": "^5.0.14",
