@@ -11,7 +11,6 @@ type ActivitiesData = {
 
 export interface Activity {
   start: moment.Moment;
-  duration: number;
   symbol: string;
 }
 
@@ -26,7 +25,6 @@ class NullActivities implements Activities {
   current(time: moment.Moment) {
     return {
       start: moment(),
-      duration: 60,
       symbol: '',
     };
   }
@@ -34,7 +32,6 @@ class NullActivities implements Activities {
   next(time: moment.Moment) {
     return {
       start: moment(),
-      duration: 60,
       symbol: '',
     };
   }
@@ -78,7 +75,6 @@ class ActivitiesImplementation implements Activities {
 
     return {
       start: current_start,
-      duration: this.activity_duration(current_index),
       symbol: this.activities[this.activity_times[current_index]],
     };
   }
@@ -89,7 +85,6 @@ class ActivitiesImplementation implements Activities {
 
     return {
       start: current_start,
-      duration: this.activity_duration(current_index),
       symbol: this.activities[this.activity_times[current_index]],
     };
   }
@@ -108,15 +103,6 @@ class ActivitiesImplementation implements Activities {
 
   private next_index(index: number): number {
     return (index + 1) % this.activity_times.length;
-  }
-
-  private activity_duration(current_index: number): number {
-    const next_index = this.next_index(current_index);
-
-    const current_start = parse_time(this.activity_times[current_index]);
-    const next_start = parse_time(this.activity_times[next_index]);
-
-    return time_diff(current_start, next_start);
   }
 }
 
