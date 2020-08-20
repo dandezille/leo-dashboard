@@ -1,8 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render, screen } from '@testing-library/react';
+
 import NextActivity from './NextActivity';
 
 it('renders successfully', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<NextActivity activity="?" />, div);
+  render(<NextActivity activity="?" />);
+  expect(screen.getByText('?')).toBeInTheDocument();
 });
