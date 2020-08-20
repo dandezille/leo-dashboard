@@ -10,7 +10,7 @@ type ActivitiesData = {
 };
 
 export interface Activity {
-  start: moment.Moment;
+  time: moment.Moment;
   symbol: string;
 }
 
@@ -24,14 +24,14 @@ export type GetActivities = () => Promise<Activities>;
 class NullActivities implements Activities {
   current(time: moment.Moment) {
     return {
-      start: moment(),
+      time: moment(),
       symbol: '',
     };
   }
 
   next(time: moment.Moment) {
     return {
-      start: moment(),
+      time: moment(),
       symbol: '',
     };
   }
@@ -74,7 +74,7 @@ class ActivitiesImplementation implements Activities {
     const current_start = parse_time(this.activity_times[current_index]);
 
     return {
-      start: current_start,
+      time: current_start,
       symbol: this.activities[this.activity_times[current_index]],
     };
   }
@@ -84,7 +84,7 @@ class ActivitiesImplementation implements Activities {
     const current_start = parse_time(this.activity_times[current_index]);
 
     return {
-      start: current_start,
+      time: current_start,
       symbol: this.activities[this.activity_times[current_index]],
     };
   }

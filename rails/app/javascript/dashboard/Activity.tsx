@@ -12,11 +12,11 @@ interface Props {
 }
 
 export default function Activity(props: Props) {
-  const elapsed = props.time.diff(props.activity.start);
-  const duration = time_diff(props.activity.start, props.next.start);
+  const elapsed = props.time.diff(props.activity.time);
+  const duration = time_diff(props.activity.time, props.next.time);
   const progress = elapsed / duration;
   const remaining = moment
-    .duration(props.activity.start.add(duration).diff(props.time))
+    .duration(props.activity.time.add(duration).diff(props.time))
     .humanize();
 
   return (
