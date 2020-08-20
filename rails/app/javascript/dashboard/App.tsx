@@ -30,7 +30,7 @@ export default function App(props: Props) {
         fontFamily: "'Rubik', sans-serif",
       }}
     >
-      <ActivityDisplay activity={current_activity} time={time} />
+      <ActivityDisplay activity={current_activity} next={next_activity} time={time} />
       <div
         style={{
           display: 'flex',

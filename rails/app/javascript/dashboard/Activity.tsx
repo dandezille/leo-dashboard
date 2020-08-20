@@ -3,18 +3,21 @@ import moment from 'moment';
 
 import { Activity as ActivityInterface } from './Activities';
 import ProgressRing from './ProgressRing';
+import { time_diff } from './support/Time';
 
 interface Props {
   activity: ActivityInterface;
+  next: ActivityInterface;
   time: moment.Moment;
 }
 
 export default function Activity(props: Props) {
   const elapsed = props.time.diff(props.activity.start);
-  const progress = elapsed / props.activity.duration;
+  const duration = time_diff(props.activity.start, props.next.start);
+  const progress = elapsed / duration;
   const remaining = moment
     .duration(
-      props.activity.start.add(props.activity.duration).diff(props.time)
+      props.activity.start.add(duration).diff(props.time)
     )
     .humanize();
 
