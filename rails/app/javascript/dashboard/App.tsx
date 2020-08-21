@@ -6,12 +6,25 @@ import NextActivity from './NextActivity';
 import TimeDisplay from './Time';
 
 import { useTime } from './support/Time';
-import { useActivities, create_activities, ActivitiesData } from './Activities';
+import { useActivities, ActivitiesFactory, ActivitiesData } from './Activities';
 import Weather from './Weather';
 
-function find_activities(activities_data: ActivitiesData, time: moment.Moment) {
-  const activities = create_activities(activities_data, time);
-  return [activities.current, activities.next];
+function find_activities(activities: ActivitiesData, time: moment.Moment) {
+  if (activities == null) {
+    return [
+      {
+        start: moment(),
+        symbol: '',
+      },
+      {
+        start: moment().add(1, 'hour'),
+        symbol: '',
+      },
+    ];
+  }
+
+  const factory = new ActivitiesFactory(activities);
+  return [factory.current(time), factory.next(time)];
 }
 
 export default function App() {

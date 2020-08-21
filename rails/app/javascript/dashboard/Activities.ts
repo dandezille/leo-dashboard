@@ -14,11 +14,6 @@ export interface Activity {
   symbol: string;
 }
 
-export interface Activities {
-  current: Activity;
-  next: Activity;
-}
-
 export function useActivities(update_interval: number) {
   const [activities, set_activities] = useState<ActivitiesData>(null);
 
@@ -36,7 +31,7 @@ export function useActivities(update_interval: number) {
   return activities;
 }
 
-class ActivitiesFactory {
+export class ActivitiesFactory {
   private activities: { [time: string]: string };
   private activity_times: string[];
 
@@ -45,14 +40,7 @@ class ActivitiesFactory {
     this.activity_times = Object.keys(this.activities);
   }
 
-  create(time: moment.Moment): Activities {
-    return {
-      current: this.current(time),
-      next: this.next(time),
-    };
-  }
-
-  private current(time: moment.Moment) {
+  current(time: moment.Moment) {
     const current_index = this.activity_index_at(time);
     const current_start = parse_time(this.activity_times[current_index]);
 
@@ -62,7 +50,7 @@ class ActivitiesFactory {
     };
   }
 
-  private next(time: moment.Moment) {
+  next(time: moment.Moment) {
     const current_index = this.next_index(this.activity_index_at(time));
     const current_start = parse_time(this.activity_times[current_index]);
 
@@ -87,26 +75,6 @@ class ActivitiesFactory {
   private next_index(index: number): number {
     return (index + 1) % this.activity_times.length;
   }
-}
-
-export function create_activities(
-  activities: ActivitiesData,
-  time: moment.Moment
-): Activities {
-  if (activities == null) {
-    return {
-      current: {
-        start: moment(),
-        symbol: '',
-      },
-      next: {
-        start: moment().add(1, 'hour'),
-        symbol: '',
-      },
-    };
-  }
-
-  return new ActivitiesFactory(activities).create(time);
 }
 
 export default Activities;

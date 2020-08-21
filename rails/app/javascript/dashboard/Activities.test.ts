@@ -1,14 +1,16 @@
 import moment from 'moment';
-import { create_activities } from './Activities';
+import { ActivitiesFactory } from './Activities';
 
 const activities = (time: moment.Moment) => {
-  return create_activities(
-    {
-      '10:00': '️a',
-      '12:00': '️b️',
-    },
-    time
-  );
+  const factory = new ActivitiesFactory({
+    '10:00': '️a',
+    '12:00': '️b️',
+  });
+
+  return {
+    current: factory.current(time),
+    next: factory.next(time),
+  };
 };
 
 describe('#current', () => {
