@@ -5,7 +5,7 @@ import { useInterval } from './support/Interval';
 import { parse_time, time_diff } from './support/Time';
 import { get } from './support/HTTP';
 
-type ActivitiesData = {
+type ActivitiesData = null | {
   [time: string]: string;
 };
 
@@ -18,8 +18,6 @@ export interface Activities {
   current(time: moment.Moment): Activity;
   next(time: moment.Moment): Activity;
 }
-
-export type GetActivities = () => Promise<Activities>;
 
 class NullActivities implements Activities {
   current(time: moment.Moment) {
@@ -38,16 +36,13 @@ class NullActivities implements Activities {
 }
 
 export function useActivities(update_interval: number) {
-  const [activities, set_activities] = useState<Activities>(
-    new NullActivities()
-  );
+  const [activities, set_activities] = useState<ActivitiesData>(null);
 
   async function update() {
     console.log('Updating activities');
     try {
       const data = await get<ActivitiesData>('/activities.json');
-      const activities = create_activities(data);
-      set_activities(activities);
+      set_activities(data);
     } catch (error) {
       console.log(`Activities error: ${error.message}`);
     }
@@ -104,6 +99,10 @@ class ActivitiesImplementation implements Activities {
 }
 
 export function create_activities(activities: ActivitiesData): Activities {
+  if (activities == null) {
+    return new NullActivities();
+  }
+
   return new ActivitiesImplementation(activities);
 }
 

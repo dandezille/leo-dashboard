@@ -6,12 +6,14 @@ import TimeDisplay from './Time';
 
 import { useTime } from './support/Time';
 import { useInterval } from './support/Interval';
-import Activities, { GetActivities, useActivities } from './Activities';
+import Activities, { useActivities, create_activities } from './Activities';
 import Weather from './Weather';
 
 export default function App() {
   const time = useTime();
-  const activities = useActivities(10 * 1000);
+
+  const activities_data = useActivities(10 * 1000);
+  const activities = create_activities(activities_data);
 
   const current_activity = activities.current(time);
   const next_activity = activities.next(time);
