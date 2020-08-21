@@ -1,18 +1,24 @@
 import React from 'react';
+import moment from 'moment';
 
 import ActivityDisplay from './Activity';
 import NextActivity from './NextActivity';
 import TimeDisplay from './Time';
 
 import { useTime } from './support/Time';
-import { useActivities, create_activities } from './Activities';
+import { useActivities, create_activities, ActivitiesData } from './Activities';
 import Weather from './Weather';
+
+function find_activities(activities_data: ActivitiesData, time: moment.Moment) {
+  const activities = create_activities(activities_data, time);
+  return [activities.current, activities.next];
+}
 
 export default function App() {
   const time = useTime();
 
-  const activities_data = useActivities(10 * 1000);
-  const activities = create_activities(activities_data, time);
+  const activities = useActivities(10 * 1000);
+  const [current, next] = find_activities(activities, time);
 
   return (
     <div
@@ -24,11 +30,7 @@ export default function App() {
         fontFamily: "'Rubik', sans-serif",
       }}
     >
-      <ActivityDisplay
-        activity={activities.current}
-        next={activities.next}
-        time={time}
-      />
+      <ActivityDisplay activity={current} next={next} time={time} />
       <div
         style={{
           display: 'flex',
@@ -42,7 +44,7 @@ export default function App() {
           <TimeDisplay time={time} />
           <Weather update_interval={5 * 60 * 1000} />
         </div>
-        <NextActivity activity={activities.next.symbol} />
+        <NextActivity activity={next.symbol} />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { useInterval } from './support/Interval';
 import { parse_time, time_diff } from './support/Time';
 import { get } from './support/HTTP';
 
-type ActivitiesData = null | {
+export type ActivitiesData = null | {
   [time: string]: string;
 };
 
