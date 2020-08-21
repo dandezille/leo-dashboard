@@ -5,18 +5,14 @@ import NextActivity from './NextActivity';
 import TimeDisplay from './Time';
 
 import { useTime } from './support/Time';
-import { useInterval } from './support/Interval';
-import Activities, { useActivities, create_activities } from './Activities';
+import { useActivities, create_activities } from './Activities';
 import Weather from './Weather';
 
 export default function App() {
   const time = useTime();
 
   const activities_data = useActivities(10 * 1000);
-  const activities = create_activities(activities_data);
-
-  const current_activity = activities.current(time);
-  const next_activity = activities.next(time);
+  const activities = create_activities(activities_data, time);
 
   return (
     <div
@@ -29,8 +25,8 @@ export default function App() {
       }}
     >
       <ActivityDisplay
-        activity={current_activity}
-        next={next_activity}
+        activity={activities.current}
+        next={activities.next}
         time={time}
       />
       <div
@@ -46,7 +42,7 @@ export default function App() {
           <TimeDisplay time={time} />
           <Weather update_interval={5 * 60 * 1000} />
         </div>
-        <NextActivity activity={next_activity.symbol} />
+        <NextActivity activity={activities.next.symbol} />
       </div>
     </div>
   );
