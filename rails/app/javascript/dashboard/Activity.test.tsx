@@ -6,16 +6,18 @@ import Activity from './Activity';
 
 it('renders successfully', async () => {
   const current = {
-    start: moment().subtract(5, 'minutes'),
+    time: moment().subtract(5, 'minutes'),
     symbol: 'A',
   };
 
   const next = {
-    start: moment().add(5, 'minutes'),
+    time: moment().add(5, 'minutes'),
     symbol: 'B',
   };
 
-  render(<Activity activity={current} next={next} time={moment()} />);
+  render(
+    <Activity current_activity={current} next_activity={next} time={moment()} />
+  );
 
   expect(await screen.findByText('A')).toBeInTheDocument();
 });
