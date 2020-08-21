@@ -1,32 +1,12 @@
 import React from 'react';
-import moment from 'moment';
 
 import ActivityDisplay from './Activity';
 import NextActivity from './NextActivity';
 import TimeDisplay from './Time';
-
-import { useTime } from './support/Time';
-import { useActivities, ActivitiesFactory, ActivitiesData } from './Activities';
 import Weather from './Weather';
 
-function find_activities(activities: ActivitiesData, time: moment.Moment) {
-  if (activities == null) {
-    return [
-      {
-        start: moment(),
-        symbol: '',
-      },
-      {
-        start: moment().add(1, 'hour'),
-        symbol: '',
-      },
-    ];
-  }
-
-  const factory = new ActivitiesFactory(activities);
-  const [current, next] = factory.find(time);
-  return [current, next];
-}
+import { useTime } from './support/Time';
+import { useActivities, find_activities } from './Activities';
 
 export default function App() {
   const time = useTime();
