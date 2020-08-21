@@ -2,10 +2,10 @@ import { useState } from 'react';
 import moment from 'moment';
 
 import { useInterval } from './support/Interval';
-import { parse_time, time_diff } from './support/Time';
+import { parse_time } from './support/Time';
 import { get } from './support/HTTP';
 
-type ActivitiesData = null | {
+export type ActivitiesData = null | {
   [time: string]: string;
 };
 
@@ -14,10 +14,16 @@ export interface Activity {
   symbol: string;
 }
 
-export interface Activities {
-  current: Activity;
-  next: Activity;
-}
+const default_activities: [Activity, Activity] = [
+  {
+    start: moment(),
+    symbol: '',
+  },
+  {
+    start: moment().add(1, 'hour'),
+    symbol: '',
+  },
+];
 
 export function useActivities(update_interval: number) {
   const [activities, set_activities] = useState<ActivitiesData>(null);
@@ -36,6 +42,19 @@ export function useActivities(update_interval: number) {
   return activities;
 }
 
+export function find_activities(
+  activities: ActivitiesData,
+  time: moment.Moment
+): [Activity, Activity] {
+  if (activities == null) {
+    return default_activities;
+  }
+
+  const factory = new ActivitiesFactory(activities);
+  const [current, next] = factory.find(time);
+  return [current, next];
+}
+
 class ActivitiesFactory {
   private activities: { [time: string]: string };
   private activity_times: string[];
@@ -45,31 +64,21 @@ class ActivitiesFactory {
     this.activity_times = Object.keys(this.activities);
   }
 
-  create(time: moment.Moment): Activities {
-    return {
-      current: this.current(time),
-      next: this.next(time),
-    };
-  }
-
-  private current(time: moment.Moment) {
+  find(time: moment.Moment) {
     const current_index = this.activity_index_at(time);
-    const current_start = parse_time(this.activity_times[current_index]);
+    const next_index = this.next_index(current_index);
 
-    return {
-      start: current_start,
+    const current = {
+      start: parse_time(this.activity_times[current_index]),
       symbol: this.activities[this.activity_times[current_index]],
     };
-  }
 
-  private next(time: moment.Moment) {
-    const current_index = this.next_index(this.activity_index_at(time));
-    const current_start = parse_time(this.activity_times[current_index]);
-
-    return {
-      start: current_start,
-      symbol: this.activities[this.activity_times[current_index]],
+    const next = {
+      start: parse_time(this.activity_times[next_index]),
+      symbol: this.activities[this.activity_times[next_index]],
     };
+
+    return [current, next];
   }
 
   private activity_index_at(time: moment.Moment) {
@@ -88,25 +97,3 @@ class ActivitiesFactory {
     return (index + 1) % this.activity_times.length;
   }
 }
-
-export function create_activities(
-  activities: ActivitiesData,
-  time: moment.Moment
-): Activities {
-  if (activities == null) {
-    return {
-      current: {
-        start: moment(),
-        symbol: '',
-      },
-      next: {
-        start: moment().add(1, 'hour'),
-        symbol: '',
-      },
-    };
-  }
-
-  return new ActivitiesFactory(activities).create(time);
-}
-
-export default Activities;

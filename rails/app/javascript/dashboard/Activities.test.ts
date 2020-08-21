@@ -1,14 +1,19 @@
 import moment from 'moment';
-import { create_activities } from './Activities';
+import { find_activities } from './Activities';
 
 const activities = (time: moment.Moment) => {
-  return create_activities(
+  const [current, next] = find_activities(
     {
       '10:00': '️a',
       '12:00': '️b️',
     },
     time
   );
+
+  return {
+    current: current,
+    next: next,
+  };
 };
 
 describe('#current', () => {
