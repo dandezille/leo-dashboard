@@ -5,7 +5,7 @@ import { useInterval } from './support/Interval';
 import { parse_time } from './support/Time';
 import { get } from './support/HTTP';
 
-export type ActivitiesData = null | {
+export type ActivitiesData = {
   [time: string]: string;
 };
 
@@ -14,19 +14,26 @@ export interface Activity {
   symbol: string;
 }
 
-const default_activities: [Activity, Activity] = [
-  {
-    start: moment(),
-    symbol: '',
-  },
-  {
-    start: moment().add(1, 'hour'),
-    symbol: '',
-  },
-];
+function transform(data: ActivitiesData): Array<Activity> {
+  const activities = new Array<Activity>();
+  Object.entries(data).forEach(([key, value]) => {
+    activities.push({ start: parse_time(key), symbol: value });
+  });
+
+  return activities;
+}
+
+function sort(activities: Array<Activity>): Array<Activity> {
+  return activities.sort((first, second) => {
+    return first.start.diff(second.start);
+  });
+}
 
 export function useActivities(update_interval: number) {
-  const [activities, set_activities] = useState<ActivitiesData>(null);
+  const [activities, set_activities] = useState<ActivitiesData>({
+    '9:00': '',
+    '10:00': '',
+  });
 
   async function update() {
     console.log('Updating activities');
@@ -46,10 +53,6 @@ export function find_activities(
   activities: ActivitiesData,
   time: moment.Moment
 ): [Activity, Activity] {
-  if (activities == null) {
-    return default_activities;
-  }
-
   const factory = new ActivitiesFactory(activities);
   const [current, next] = factory.find(time);
   return [current, next];
