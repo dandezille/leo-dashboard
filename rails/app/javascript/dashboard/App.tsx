@@ -24,7 +24,8 @@ function find_activities(activities: ActivitiesData, time: moment.Moment) {
   }
 
   const factory = new ActivitiesFactory(activities);
-  return [factory.current(time), factory.next(time)];
+  const [current, next] = factory.find(time);
+  return [current, next];
 }
 
 export default function App() {

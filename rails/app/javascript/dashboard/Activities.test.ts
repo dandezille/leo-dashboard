@@ -7,9 +7,10 @@ const activities = (time: moment.Moment) => {
     '12:00': '️b️',
   });
 
+  const [current, next] = factory.find(time);
   return {
-    current: factory.current(time),
-    next: factory.next(time),
+    current: current,
+    next: next
   };
 };
 

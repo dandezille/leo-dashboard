@@ -40,24 +40,21 @@ export class ActivitiesFactory {
     this.activity_times = Object.keys(this.activities);
   }
 
-  current(time: moment.Moment) {
+  find(time: moment.Moment){
     const current_index = this.activity_index_at(time);
-    const current_start = parse_time(this.activity_times[current_index]);
+    const next_index = this.next_index(current_index);
 
-    return {
-      start: current_start,
+    const current = {
+      start: parse_time(this.activity_times[current_index]),
       symbol: this.activities[this.activity_times[current_index]],
     };
-  }
 
-  next(time: moment.Moment) {
-    const current_index = this.next_index(this.activity_index_at(time));
-    const current_start = parse_time(this.activity_times[current_index]);
-
-    return {
-      start: current_start,
-      symbol: this.activities[this.activity_times[current_index]],
+    const next = {
+      start: parse_time(this.activity_times[next_index]),
+      symbol: this.activities[this.activity_times[next_index]],
     };
+
+    return [current, next];
   }
 
   private activity_index_at(time: moment.Moment) {
