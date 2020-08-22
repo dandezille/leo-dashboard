@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import moment from 'moment';
+import Ajv from 'ajv';
 
 import { useInterval } from './support/Interval';
 import { parse_time } from './support/Time';
@@ -9,6 +10,20 @@ export type ActivitiesData = {
   [time: string]: string;
 };
 
+const validate_activities_data = new Ajv().compile({
+  type: 'object',
+  patternProperties: {
+    '^[0-9]{1,2}:[0-9]{1,2}$': { type: 'string' },
+  },
+  additionalProperties: false,
+});
+
+function isActivitiesData(data: any): data is ActivitiesData {
+  const valid = validate_activities_data(data);
+  if (!valid) console.log(validate_activities_data.errors);
+  if (typeof valid !== 'boolean') throw Error('Async schema');
+  return valid;
+}
 export type Activity = {
   start: moment.Moment;
   symbol: string;
@@ -40,6 +55,13 @@ export function useActivities(update_interval: number) {
     console.log('Updating activities');
     try {
       const data = await get<ActivitiesData>('/activities.json');
+      console.log('Received activities data');
+      console.log(data);
+
+      if (!isActivitiesData(data)) {
+        throw Error('Invalid activities data');
+      }
+
       set_activities(data);
     } catch (error) {
       console.log(`Activities error: ${error.message}`);

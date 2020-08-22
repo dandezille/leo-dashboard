@@ -8,7 +8,7 @@ const handlers = [
   rest.get('/activities.json', (req, res, ctx) => {
     const current = moment().subtract(30, 'minutes').format('HH:mm');
     const next = moment().add(30, 'minutes').format('HH:mm');
-    return res(ctx.json({ current: 'current', next: 'next' }));
+    return res(ctx.json({ [current]: 'current', [next]: 'next' }));
   }),
 ];
 
