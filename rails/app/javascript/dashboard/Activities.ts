@@ -19,12 +19,9 @@ function mod(n: number, m: number): number {
 }
 
 function transform(data: ActivitiesData): Array<Activity> {
-  const activities = new Array<Activity>();
-  Object.entries(data).forEach(([key, value]) => {
-    activities.push({ start: parse_time(key), symbol: value });
+  return Object.entries(data).map(([key, value]) => {
+    return { start: parse_time(key), symbol: value };
   });
-
-  return activities;
 }
 
 function sort(activities: Array<Activity>): Array<Activity> {
