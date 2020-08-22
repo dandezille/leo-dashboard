@@ -4,6 +4,7 @@
     COMPOSE_HTTP_TIMEOUT: 240
   tasks:
     - include: tasks/dashboard-source.yml
+    - include: tasks/electron-build.yml
     - include: tasks/dashboard-build.yml
   handlers:
     - name: refresh browser

@@ -1,0 +1,30 @@
+---
+- name: Install electron dependencies
+  docker_container:
+    name: electron-build
+    image: "arm32v7/node:latest"
+    detach: no
+    cleanup: yes
+    volumes:
+      - "{{deploy_directory}}/electron:/src"
+      - electron-build-node-modules:/src/node_modules
+    working_dir: /src
+    command: npm install
+  register: electron_install
+
+- debug: var=electron_install.ansible_facts.docker_container.Output
+
+- name: Build electron app
+  docker_container:
+    name: electron-build
+    image: "arm32v7/node:latest"
+    detach: no
+    cleanup: yes
+    volumes:
+      - "{{deploy_directory}}/electron:/src"
+      - electron-build-node-modules:/src/node_modules
+    working_dir: /src
+    command: npm run build
+  register: electron_build
+
+- debug: var=electron_build.ansible_facts.docker_container.Output
