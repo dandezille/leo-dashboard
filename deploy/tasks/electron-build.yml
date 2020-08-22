@@ -15,5 +15,5 @@
 - name: Copy electron app
   copy:
     src: ../electron
-    dest: "{{deploy_directory}}/electron"
+    dest: "{{deploy_directory}}"
   notify: reboot
