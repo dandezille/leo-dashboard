@@ -1,0 +1,19 @@
+---
+- name: Remove build dir
+  file:
+    path: ../electron/build
+    state: absent
+  delegate_to: 127.0.0.1
+
+- name: Build electron app
+  shell: ../bin/build-electron
+  register: electron_build
+  delegate_to: 127.0.0.1
+
+- debug: msg="{{ electron_build.stdout_lines }}"
+
+- name: Copy electron app
+  copy:
+    src: ../electron
+    dest: "{{deploy_directory}}"
+  notify: reboot
