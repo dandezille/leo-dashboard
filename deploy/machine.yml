@@ -10,6 +10,7 @@
     - include: tasks/openbox-config.yml
     - include: tasks/display-schedule.yml
     - include: tasks/docker.yml
+    - include: tasks/electron-build.yml
 
   handlers:
     - name: reboot
