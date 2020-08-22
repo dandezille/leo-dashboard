@@ -3,3 +3,4 @@ all:
     pi-leo: 
       ansible_user: pi 
       deploy_directory: /usr/local/src/dashboard
+      ansible_python_interpreter: /usr/bin/python3
