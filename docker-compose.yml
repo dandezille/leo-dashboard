@@ -8,8 +8,9 @@ services:
       - "9000:3000"
     volumes:
       - ./rails:/app
+      - dashboard-rails-node-modules:/app/node_modules
+    tmpfs:
       - /app/tmp
-      - /app/node_modules
     environment:
       RAILS_ENV:
       SECRET_KEY_BASE:
@@ -25,3 +26,6 @@ services:
     environment:
       POSTGRES_PASSWORD:
     restart: unless-stopped
+
+volumes:
+  dashboard-rails-node-modules:
