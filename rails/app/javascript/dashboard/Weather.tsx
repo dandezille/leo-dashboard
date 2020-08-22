@@ -9,6 +9,12 @@ interface WeatherData {
   };
 }
 
+function isWeatherData(data: any): data is WeatherData {
+  return (
+    'main' in data && 'temp' in data.main && typeof data.main.temp === 'number'
+  );
+}
+
 function useWeather(update_interval: number) {
   const [loading, set_loading] = useState(true);
   const [error, set_error] = useState('');
@@ -19,7 +25,13 @@ function useWeather(update_interval: number) {
 
     try {
       const data = await get<WeatherData>('/weather.json');
-      console.log(`Weather update successful ${JSON.stringify(data)}`);
+      console.log('Received weather data');
+      console.log(data);
+
+      if (!isWeatherData(data)) {
+        throw Error('Invalid weather data');
+      }
+
       set_temp(data.main.temp);
       set_error('');
     } catch (error) {
