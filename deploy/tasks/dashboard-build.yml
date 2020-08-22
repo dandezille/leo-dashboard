@@ -9,15 +9,13 @@
     RAILS_ENV: production
   register: compose_out
 
-- debug: var=compose_out.stdout
-
 - name: Precompile assets
   command: docker-compose exec rails rails assets:precompile
   args:
     chdir: "{{deploy_directory}}" 
   register: assets_out
 
-- debug: var=assets_out.stdout
+- debug: msg="{{ assets_out.stdout_lines }}"
 
 - name: Restart to pick up assets
   docker_compose:
@@ -28,10 +26,7 @@
     ansible_python_interpreter: /usr/bin/python3
   environment:
     RAILS_ENV: production
-  register: compose_out
   notify: refresh browser
-
-- debug: var=compose_out.stdout
 
 - name: Clean assets
   command: docker-compose exec rails rails assets:clean
@@ -47,7 +42,7 @@
     chdir: "{{deploy_directory}}" 
   register: db_migrate
 
-- debug: var=db_migrate.stdout
+- debug: msg="{{ db_migrate.stdout_lines }}"
 
 - name: Install electron dependencies
   npm:
@@ -57,6 +52,6 @@
   command: npm run build
   args:
     chdir: "{{deploy_directory}}/electron" 
-  register: electron_build_out
+  register: electron_build
 
-- debug: var=electron_build_out
+- debug: msg="{{ electron_build.stdout_lines }}"
