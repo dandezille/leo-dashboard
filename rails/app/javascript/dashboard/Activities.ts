@@ -9,6 +9,12 @@ export type ActivitiesData = {
   [time: string]: string;
 };
 
+function isActivitiesData(data: any): data is ActivitiesData {
+  return Object.entries(data).every(
+    ([key, value]) => typeof key === 'string' && typeof value === 'string'
+  );
+}
+
 export type Activity = {
   start: moment.Moment;
   symbol: string;
@@ -40,6 +46,13 @@ export function useActivities(update_interval: number) {
     console.log('Updating activities');
     try {
       const data = await get<ActivitiesData>('/activities.json');
+      console.log('Received activities data');
+      console.log(data);
+
+      if (!isActivitiesData(data)) {
+        throw Error('Invalid activities data');
+      }
+
       set_activities(data);
     } catch (error) {
       console.log(`Activities error: ${error.message}`);
