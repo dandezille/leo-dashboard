@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Ajv from 'ajv';
 
 import { useInterval } from './support/Interval';
 import { get } from './support/HTTP';
@@ -9,10 +10,25 @@ interface WeatherData {
   };
 }
 
+const validate_weather_data = new Ajv().compile({
+  type: 'object',
+  properties: {
+    main: {
+      type: 'object',
+      properties: {
+        temp: { type: 'number' },
+      },
+      required: ['temp'],
+    },
+  },
+  required: ['main'],
+});
+
 function isWeatherData(data: any): data is WeatherData {
-  return (
-    'main' in data && 'temp' in data.main && typeof data.main.temp === 'number'
-  );
+  const valid = validate_weather_data(data);
+  if (!valid) console.log(validate_weather_data.errors);
+  if (typeof valid !== 'boolean') throw Error('Async schema');
+  return valid;
 }
 
 function useWeather(update_interval: number) {
