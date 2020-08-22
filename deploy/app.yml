@@ -11,3 +11,7 @@
       command: xdotool getactivewindow key F5
       environment:
         DISPLAY: ":0"
+
+    - name: reboot
+      become: yes
+      reboot:
