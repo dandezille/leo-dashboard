@@ -3,12 +3,7 @@ import Ajv from 'ajv';
 
 import { useInterval } from './support/Interval';
 import { get } from './support/HTTP';
-
-interface WeatherData {
-  main: {
-    temp: number;
-  };
-}
+import { WeatherData } from './models';
 
 const validate_weather_data = new Ajv().compile({
   type: 'object',
