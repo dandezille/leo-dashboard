@@ -51,7 +51,7 @@ interface Props {
   update_interval: number;
 }
 
-export default function Weather(props: Props) {
+export default function WeatherDisplay(props: Props) {
   const [loading, error, temp] = useWeather(props.update_interval);
 
   if (loading) {
