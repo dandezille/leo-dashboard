@@ -27,7 +27,7 @@ function useWeather(update_interval: number) {
     console.log('Updating weather');
 
     try {
-      const data = await get<Weather>('/weather.json');
+      const data = await get('/weather.json');
       console.log('Received weather data');
       console.log(data);
 

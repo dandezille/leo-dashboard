@@ -1,4 +1,4 @@
-export async function get<T>(request: RequestInfo): Promise<T> {
+export async function get(request: RequestInfo): Promise<any> {
   const response = await fetch(request);
   if (!response.ok) {
     throw new Error(response.statusText);
