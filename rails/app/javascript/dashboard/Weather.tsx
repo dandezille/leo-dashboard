@@ -1,30 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Ajv from 'ajv';
+import { JsonDecoder } from 'ts.data.json';
 
 import { useInterval } from './support/Interval';
 import { get } from './support/HTTP';
-import { WeatherData } from './models';
 
-const validate_weather_data = new Ajv().compile({
-  type: 'object',
-  properties: {
-    main: {
-      type: 'object',
-      properties: {
-        temp: { type: 'number' },
-      },
-      required: ['temp'],
-    },
+const weather_main_decoder = JsonDecoder.object<WeatherMain>(
+  {
+    temp: JsonDecoder.number,
   },
-  required: ['main'],
-});
+  'WeatherMain'
+);
 
-function isWeatherData(data: any): data is WeatherData {
-  const valid = validate_weather_data(data);
-  if (!valid) console.log(validate_weather_data.errors);
-  if (typeof valid !== 'boolean') throw Error('Async schema');
-  return valid;
-}
+const weather_decoder = JsonDecoder.object<Weather>(
+  {
+    main: weather_main_decoder,
+  },
+  'Weather'
+);
 
 function useWeather(update_interval: number) {
   const [loading, set_loading] = useState(true);
@@ -35,15 +28,13 @@ function useWeather(update_interval: number) {
     console.log('Updating weather');
 
     try {
-      const data = await get<WeatherData>('/weather.json');
+      const json = await get<Weather>('/weather.json');
       console.log('Received weather data');
-      console.log(data);
+      console.log(json);
 
-      if (!isWeatherData(data)) {
-        throw Error('Invalid weather data');
-      }
+      const result = await weather_decoder.decodePromise(json);
 
-      set_temp(data.main.temp);
+      set_temp(result.main.temp);
       set_error('');
     } catch (error) {
       console.log(`Weather error: ${error}`);
