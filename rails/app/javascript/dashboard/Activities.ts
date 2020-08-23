@@ -5,15 +5,18 @@ import { JsonDecoder } from 'ts.data.json';
 import { useInterval } from './support/Interval';
 import { parse_time } from './support/Time';
 import { get } from './support/HTTP';
-import { ActivitiesData, ActivitiesDataElement, Activity } from './models';
+import { ActivitiesData, Activity } from './models';
 
-const activity_decoder = JsonDecoder.object<ActivitiesDataElement>(
-  {
-    start: JsonDecoder.string,
-    symbol: JsonDecoder.string
-  }, 'Activity');
-
-const activities_decoder = JsonDecoder.array<ActivitiesDataElement>(activity_decoder, 'Activity[]');
+const activities_decoder = JsonDecoder.array<{ start: string; symbol: string }>(
+  JsonDecoder.object<{ start: string; symbol: string }>(
+    {
+      start: JsonDecoder.string,
+      symbol: JsonDecoder.string,
+    },
+    'Activity'
+  ),
+  'Activity[]'
+);
 
 function mod(n: number, m: number): number {
   return ((n % m) + m) % m;

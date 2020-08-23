@@ -1,12 +1,10 @@
-export type WeatherMain = {
-  temp: number;
-}
 export type Weather = {
-  main: WeatherMain;
+  main: {
+    temp: number;
+  };
 };
 
-export type ActivitiesDataElement = { start: string; symbol: string };
-export type ActivitiesData = Array<ActivitiesDataElement>;
+export type ActivitiesData = Array<{ start: string; symbol: string }>;
 
 export type Activity = {
   start: moment.Moment;

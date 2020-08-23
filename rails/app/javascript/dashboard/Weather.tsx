@@ -4,18 +4,16 @@ import { JsonDecoder } from 'ts.data.json';
 
 import { useInterval } from './support/Interval';
 import { get } from './support/HTTP';
-import { Weather, WeatherMain } from './models';
-
-const weather_main_decoder = JsonDecoder.object<WeatherMain>(
-  {
-    temp: JsonDecoder.number,
-  },
-  'WeatherMain'
-);
+import { Weather } from './models';
 
 const weather_decoder = JsonDecoder.object<Weather>(
   {
-    main: weather_main_decoder,
+    main: JsonDecoder.object<{ temp: number }>(
+      {
+        temp: JsonDecoder.number,
+      },
+      'WeatherMain'
+    ),
   },
   'Weather'
 );
