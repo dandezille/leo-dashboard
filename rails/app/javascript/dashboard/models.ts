@@ -1,4 +1,4 @@
-export type WeatherData = {
+export type Weather = {
   main: {
     temp: number;
   };

@@ -1,30 +1,23 @@
 import { useState } from 'react';
 import moment from 'moment';
-import Ajv from 'ajv';
+import { JsonDecoder } from 'ts.data.json';
 
 import { useInterval } from './support/Interval';
 import { parse_time } from './support/Time';
 import { get } from './support/HTTP';
 import { ActivitiesData, Activity } from './models';
 
-const validate_activities_data = new Ajv().compile({
-  type: 'array',
-  items: {
-    type: 'object',
-    properties: {
-      start: { type: 'string' },
-      symbol: { type: 'string' },
+const activities_decoder = JsonDecoder.array<{ start: string; symbol: string }>(
+  JsonDecoder.object<{ start: string; symbol: string }>(
+    {
+      start: JsonDecoder.string,
+      symbol: JsonDecoder.string,
     },
-    required: ['start', 'symbol'],
-  },
-});
+    'Activity'
+  ),
+  'Activity[]'
+);
 
-function isActivitiesData(data: any): data is ActivitiesData {
-  const valid = validate_activities_data(data);
-  if (!valid) console.log(validate_activities_data.errors);
-  if (typeof valid !== 'boolean') throw Error('Async schema');
-  return valid;
-}
 function mod(n: number, m: number): number {
   return ((n % m) + m) % m;
 }
@@ -50,15 +43,13 @@ export function useActivities(update_interval: number) {
   async function update() {
     console.log('Updating activities');
     try {
-      const data = await get<ActivitiesData>('/activities.json');
+      const data = await get('/activities.json');
       console.log('Received activities data');
       console.log(data);
 
-      if (!isActivitiesData(data)) {
-        throw Error('Invalid activities data');
-      }
+      const result = await activities_decoder.decodePromise(data);
 
-      set_activities(data);
+      set_activities(result);
     } catch (error) {
       console.log(`Activities error: ${error.message}`);
     }
