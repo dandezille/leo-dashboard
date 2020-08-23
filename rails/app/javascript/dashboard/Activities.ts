@@ -5,10 +5,7 @@ import Ajv from 'ajv';
 import { useInterval } from './support/Interval';
 import { parse_time } from './support/Time';
 import { get } from './support/HTTP';
-
-export type ActivitiesData = {
-  [time: string]: string;
-};
+import { ActivitiesData, Activity } from './models';
 
 const validate_activities_data = new Ajv().compile({
   type: 'object',
@@ -24,11 +21,6 @@ function isActivitiesData(data: any): data is ActivitiesData {
   if (typeof valid !== 'boolean') throw Error('Async schema');
   return valid;
 }
-export type Activity = {
-  start: moment.Moment;
-  symbol: string;
-};
-
 function mod(n: number, m: number): number {
   return ((n % m) + m) % m;
 }

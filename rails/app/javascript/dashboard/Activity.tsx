@@ -1,17 +1,17 @@
 import React from 'react';
 import moment from 'moment';
 
-import { Activity as ActivityInterface } from './Activities';
+import { Activity } from './models';
 import ProgressRing from './ProgressRing';
 import { time_diff } from './support/Time';
 
 interface Props {
-  activity: ActivityInterface;
-  next: ActivityInterface;
+  activity: Activity;
+  next: Activity;
   time: moment.Moment;
 }
 
-export default function Activity(props: Props) {
+export default function ActivityDisplay(props: Props) {
   const elapsed = props.time.diff(props.activity.start);
   const duration = time_diff(props.activity.start, props.next.start);
   const progress = elapsed / duration;
