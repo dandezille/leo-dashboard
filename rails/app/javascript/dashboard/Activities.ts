@@ -43,11 +43,11 @@ export function useActivities(update_interval: number) {
   async function update() {
     console.log('Updating activities');
     try {
-      const json = await get<ActivitiesData>('/activities.json');
+      const data = await get<ActivitiesData>('/activities.json');
       console.log('Received activities data');
-      console.log(json);
+      console.log(data);
 
-      const result = await activities_decoder.decodePromise(json);
+      const result = await activities_decoder.decodePromise(data);
 
       set_activities(result);
     } catch (error) {

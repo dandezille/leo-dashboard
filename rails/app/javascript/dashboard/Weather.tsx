@@ -27,11 +27,11 @@ function useWeather(update_interval: number) {
     console.log('Updating weather');
 
     try {
-      const json = await get<Weather>('/weather.json');
+      const data = await get<Weather>('/weather.json');
       console.log('Received weather data');
-      console.log(json);
+      console.log(data);
 
-      const result = await weather_decoder.decodePromise(json);
+      const result = await weather_decoder.decodePromise(data);
 
       set_temp(result.main.temp);
       set_error('');
