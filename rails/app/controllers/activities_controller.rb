@@ -7,7 +7,7 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: @activities.to_h { |a| [a.time.strftime('%H:%M'), a.symbol] }
+        render json: @activities.map { |a| { start: a.time.strftime('%H:%M'), symbol: a.symbol } }.to_a
       end
     end
   end

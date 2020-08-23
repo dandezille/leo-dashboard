@@ -3,10 +3,10 @@ import { find_activities } from './Activities';
 
 const activities = (time: moment.Moment) => {
   const [current, next] = find_activities(
-    {
-      '10:00': '️a',
-      '12:00': '️b️',
-    },
+    [
+      { start: '10:00', symbol: '️a' },
+      { start: '12:00', symbol: '️b️' },
+    ],
     time
   );
 

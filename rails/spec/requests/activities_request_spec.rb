@@ -14,11 +14,11 @@ RSpec.describe "Activities", type: :request do
 
       json = JSON.parse(response.body)
 
-      expect(json).to eq({
-         "08:00" => "a",
-         "09:00" => 'b',
-         "10:00" => 'c' 
-      })
+      expect(json).to eq([
+        { 'start'=> "08:00", 'symbol'=> "a" },
+        { 'start'=> "09:00", 'symbol'=> 'b' },
+        { 'start'=> "10:00", 'symbol'=> 'c' } 
+      ])
     end
   end
 end

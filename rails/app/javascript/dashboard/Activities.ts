@@ -8,11 +8,15 @@ import { get } from './support/HTTP';
 import { ActivitiesData, Activity } from './models';
 
 const validate_activities_data = new Ajv().compile({
-  type: 'object',
-  patternProperties: {
-    '^[0-9]{1,2}:[0-9]{1,2}$': { type: 'string' },
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      start: { type: 'string' },
+      symbol: { type: 'string' },
+    },
+    required: ['start', 'symbol'],
   },
-  additionalProperties: false,
 });
 
 function isActivitiesData(data: any): data is ActivitiesData {
@@ -26,8 +30,8 @@ function mod(n: number, m: number): number {
 }
 
 function transform(data: ActivitiesData): Array<Activity> {
-  return Object.entries(data).map(([key, value]) => {
-    return { start: parse_time(key), symbol: value };
+  return data.map((entry) => {
+    return { start: parse_time(entry.start), symbol: entry.symbol };
   });
 }
 
@@ -38,10 +42,10 @@ function sort(activities: Array<Activity>): Array<Activity> {
 }
 
 export function useActivities(update_interval: number) {
-  const [activities, set_activities] = useState<ActivitiesData>({
-    '9:00': '',
-    '10:00': '',
-  });
+  const [activities, set_activities] = useState<ActivitiesData>([
+    { start: '9:00', symbol: '' },
+    { start: '10:00', symbol: '' },
+  ]);
 
   async function update() {
     console.log('Updating activities');

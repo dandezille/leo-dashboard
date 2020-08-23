@@ -4,9 +4,7 @@ export type WeatherData = {
   };
 };
 
-export type ActivitiesData = {
-  [time: string]: string;
-};
+export type ActivitiesData = Array<{ start: string; symbol: string }>;
 
 export type Activity = {
   start: moment.Moment;
