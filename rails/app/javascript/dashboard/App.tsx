@@ -34,7 +34,13 @@ export default function App() {
           padding: '15px',
         }}
       >
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
           <TimeDisplay time={time} />
           <Weather update_interval={5 * 60 * 1000} />
         </div>

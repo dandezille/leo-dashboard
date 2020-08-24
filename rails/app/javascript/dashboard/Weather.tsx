@@ -65,15 +65,19 @@ export default function WeatherDisplay(props: Props) {
     <div
       style={{
         color: 'white',
-        fontSize: '12vmin',
+        fontSize: '8vmin',
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-end',
+        flexDirection: 'row',
+        alignItems: 'center',
+        color: 'grey',
       }}
     >
-      <div>{(+weather.main.temp_max).toFixed(0)}</div>
-      <div>{(+weather.main.temp).toFixed(0)} °C</div>
       <div>{(+weather.main.temp_min).toFixed(0)}</div>
+      <div style={{ fontSize: '12vmin', padding: '0px 8px', color: 'white' }}>
+        {(+weather.main.temp).toFixed(0)}
+      </div>
+      <div>{(+weather.main.temp_max).toFixed(0)}</div>
+      <div style={{ paddingLeft: '10px' }}>°C</div>
     </div>
   );
 }
