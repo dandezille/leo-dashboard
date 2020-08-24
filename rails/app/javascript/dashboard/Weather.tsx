@@ -4,13 +4,15 @@ import { JsonDecoder } from 'ts.data.json';
 
 import { useInterval } from './support/Interval';
 import { get } from './support/HTTP';
-import { Weather } from './models';
+import { Weather, WeatherMain } from './models';
 
 const weather_decoder = JsonDecoder.object<Weather>(
   {
-    main: JsonDecoder.object<{ temp: number }>(
+    main: JsonDecoder.object<WeatherMain>(
       {
         temp: JsonDecoder.number,
+        temp_min: JsonDecoder.number,
+        temp_max: JsonDecoder.number,
       },
       'WeatherMain'
     ),
@@ -69,7 +71,9 @@ export default function WeatherDisplay(props: Props) {
         alignItems: 'flex-end',
       }}
     >
-      {(+weather.main.temp).toFixed(0)} °C
+      <div>{(+weather.main.temp_max).toFixed(0)}</div>
+      <div>{(+weather.main.temp).toFixed(0)} °C</div>
+      <div>{(+weather.main.temp_min).toFixed(0)}</div>
     </div>
   );
 }
