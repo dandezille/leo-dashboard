@@ -9,6 +9,6 @@ describe('App', () => {
     render(<App />);
 
     expect(await screen.findByText('current')).toBeInTheDocument();
-    expect(await screen.findByText('20 °C')).toBeInTheDocument();
+    expect(await screen.findByText('20')).toBeInTheDocument();
   });
 });

@@ -1,7 +1,7 @@
+export type WeatherMain = { temp: number; temp_min: number; temp_max: number };
+
 export type Weather = {
-  main: {
-    temp: number;
-  };
+  main: WeatherMain;
 };
 
 export type ActivitiesData = Array<{ start: string; symbol: string }>;
