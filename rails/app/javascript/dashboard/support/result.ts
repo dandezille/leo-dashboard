@@ -8,3 +8,6 @@ export function tryCatch<T>(action: () => T): Result<T> {
   }
 }
 
+export function isError<T>(result: Result<T>): result is Error {
+  return result instanceof Error;
+}

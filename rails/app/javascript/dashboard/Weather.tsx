@@ -4,7 +4,7 @@ import { JsonDecoder } from 'ts.data.json';
 
 import { useInterval } from './support/Interval';
 import { get } from './support/HTTP';
-import { Result, tryCatch } from './support/result';
+import { Result, tryCatch, isError } from './support/result';
 import { Weather } from './models';
 
 const weather_decoder = JsonDecoder.object<Weather>(
@@ -23,14 +23,16 @@ function useWeather(update_interval: number) {
   const [weather, set_weather] = useState<null | Result<Weather>>();
 
   async function update() {
-    set_weather(await tryCatch(async () => {
-      console.log('Updating weather');
-      const data = await get('/weather.json');
-      console.log('Received weather data');
-      console.log(data);
+    set_weather(
+      await tryCatch(async () => {
+        console.log('Updating weather');
+        const data = await get('/weather.json');
+        console.log('Received weather data');
+        console.log(data);
 
-      return await weather_decoder.decodePromise(data);
-    }));
+        return await weather_decoder.decodePromise(data);
+      })
+    );
   }
 
   useInterval(update, update_interval);
@@ -48,7 +50,7 @@ export default function WeatherDisplay(props: Props) {
     return <div style={{ color: 'white' }}>Loading...</div>;
   }
 
-  if (weather instanceof Error) {
+  if (isError(weather)) {
     return <div style={{ color: 'white' }}>Error: {weather.message}</div>;
   }
 

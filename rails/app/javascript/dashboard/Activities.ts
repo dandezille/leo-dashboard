@@ -5,6 +5,7 @@ import { JsonDecoder } from 'ts.data.json';
 import { useInterval } from './support/Interval';
 import { parse_time } from './support/Time';
 import { get } from './support/HTTP';
+import { Result, tryCatch } from './support/result';
 import { ActivitiesData, Activity } from './models';
 
 const activities_decoder = JsonDecoder.array<{ start: string; symbol: string }>(
@@ -35,24 +36,22 @@ function sort(activities: Array<Activity>): Array<Activity> {
 }
 
 export function useActivities(update_interval: number) {
-  const [activities, set_activities] = useState<ActivitiesData>([
+  const [activities, set_activities] = useState<Result<ActivitiesData>>([
     { start: '9:00', symbol: '' },
     { start: '10:00', symbol: '' },
   ]);
 
   async function update() {
-    console.log('Updating activities');
-    try {
-      const data = await get('/activities.json');
-      console.log('Received activities data');
-      console.log(data);
+    set_activities(
+      await tryCatch(async () => {
+        console.log('Updating activities');
+        const data = await get('/activities.json');
+        console.log('Received activities data');
+        console.log(data);
 
-      const result = await activities_decoder.decodePromise(data);
-
-      set_activities(result);
-    } catch (error) {
-      console.log(`Activities error: ${error.message}`);
-    }
+        return await activities_decoder.decodePromise(data);
+      })
+    );
   }
 
   useInterval(update, update_interval);

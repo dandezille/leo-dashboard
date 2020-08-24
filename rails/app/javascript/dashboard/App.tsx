@@ -6,12 +6,17 @@ import TimeDisplay from './Time';
 import Weather from './Weather';
 
 import { useTime } from './support/Time';
+import { isError } from './support/result';
 import { useActivities, find_activities } from './Activities';
 
 export default function App() {
   const time = useTime();
-
   const activities = useActivities(10 * 1000);
+
+  if (isError(activities)) {
+    return <div>activities.message</div>;
+  }
+
   const [current, next] = find_activities(activities, time);
 
   return (
