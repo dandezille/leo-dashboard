@@ -4,6 +4,7 @@ import { JsonDecoder } from 'ts.data.json';
 
 import { useInterval } from './support/Interval';
 import { get } from './support/HTTP';
+import { Result, tryCatch } from './support/result';
 import { Weather } from './models';
 
 const weather_decoder = JsonDecoder.object<Weather>(
@@ -18,31 +19,18 @@ const weather_decoder = JsonDecoder.object<Weather>(
   'Weather'
 );
 
-type Result<T> = T | Error;
-
-function tryCatch<T>(action: () => T): Result<T> {
-  try {
-    return action();
-  } catch (error) {
-    return error;
-  }
-}
-
 function useWeather(update_interval: number) {
   const [weather, set_weather] = useState<null | Result<Weather>>();
 
   async function update() {
-    console.log('Updating weather');
-
-    var result = await tryCatch(async () => {
+    set_weather(await tryCatch(async () => {
+      console.log('Updating weather');
       const data = await get('/weather.json');
       console.log('Received weather data');
       console.log(data);
 
       return await weather_decoder.decodePromise(data);
-    });
-
-    set_weather(result);
+    }));
   }
 
   useInterval(update, update_interval);
