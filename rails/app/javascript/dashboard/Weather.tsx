@@ -19,9 +19,8 @@ const weather_decoder = JsonDecoder.object<Weather>(
 );
 
 function useWeather(update_interval: number) {
-  const [loading, set_loading] = useState(true);
-  const [error, set_error] = useState('');
-  const [temp, set_temp] = useState(0);
+  const [weather, set_weather] = useState<null | Weather>();
+  const [error, set_error] = useState<null | Error>();
 
   async function update() {
     console.log('Updating weather');
@@ -33,18 +32,16 @@ function useWeather(update_interval: number) {
 
       const result = await weather_decoder.decodePromise(data);
 
-      set_temp(result.main.temp);
-      set_error('');
+      set_weather(result);
+      set_error(null);
     } catch (error) {
       console.log(`Weather error: ${error}`);
-      set_error(error.message);
+      set_error(error);
     }
-
-    set_loading(false);
   }
 
   useInterval(update, update_interval);
-  return [loading, error, temp];
+  return { weather, error };
 }
 
 interface Props {
@@ -52,14 +49,14 @@ interface Props {
 }
 
 export default function WeatherDisplay(props: Props) {
-  const [loading, error, temp] = useWeather(props.update_interval);
-
-  if (loading) {
-    return <div style={{ color: 'white' }}>Loading...</div>;
-  }
+  const { weather, error } = useWeather(props.update_interval);
 
   if (error) {
-    return <div style={{ color: 'white' }}>Error: {error}</div>;
+    return <div style={{ color: 'white' }}>Error: {error.message}</div>;
+  }
+
+  if (!weather) {
+    return <div style={{ color: 'white' }}>Loading...</div>;
   }
 
   return (
@@ -72,7 +69,7 @@ export default function WeatherDisplay(props: Props) {
         alignItems: 'flex-end',
       }}
     >
-      {(+temp).toFixed(0)} °C
+      {(+weather.main.temp).toFixed(0)} °C
     </div>
   );
 }
