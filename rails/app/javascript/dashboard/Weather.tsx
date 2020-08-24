@@ -18,30 +18,35 @@ const weather_decoder = JsonDecoder.object<Weather>(
   'Weather'
 );
 
+type Result<T> = T | Error;
+
+function tryCatch<T>(action: () => T): Result<T> {
+  try {
+    return action();
+  } catch (error) {
+    return error;
+  }
+}
+
 function useWeather(update_interval: number) {
-  const [weather, set_weather] = useState<null | Weather>();
-  const [error, set_error] = useState<null | Error>();
+  const [weather, set_weather] = useState<null | Result<Weather>>();
 
   async function update() {
     console.log('Updating weather');
 
-    try {
+    var result = await tryCatch(async () => {
       const data = await get('/weather.json');
       console.log('Received weather data');
       console.log(data);
 
-      const result = await weather_decoder.decodePromise(data);
+      return await weather_decoder.decodePromise(data);
+    });
 
-      set_weather(result);
-      set_error(null);
-    } catch (error) {
-      console.log(`Weather error: ${error}`);
-      set_error(error);
-    }
+    set_weather(result);
   }
 
   useInterval(update, update_interval);
-  return { weather, error };
+  return { weather };
 }
 
 interface Props {
@@ -49,14 +54,14 @@ interface Props {
 }
 
 export default function WeatherDisplay(props: Props) {
-  const { weather, error } = useWeather(props.update_interval);
+  const { weather } = useWeather(props.update_interval);
 
-  if (error) {
-    return <div style={{ color: 'white' }}>Error: {error.message}</div>;
+  if (weather == null) {
+    return <div style={{ color: 'white' }}>Loading...</div>;
   }
 
-  if (!weather) {
-    return <div style={{ color: 'white' }}>Loading...</div>;
+  if (weather instanceof Error) {
+    return <div style={{ color: 'white' }}>Error: {weather.message}</div>;
   }
 
   return (
