@@ -1,19 +1,40 @@
 class WeatherController < ApplicationController
   def index
-    query = { q: 'Dublin,IE', 
-              units: 'metric', 
-              appid: ENV.fetch('WEATHER_API_KEY') }
-    response = HTTParty.get('http://api.openweathermap.org/data/2.5/weather', 
-                            query: query)
+    data = fetch_weather_data
+    filtered = filter_weather_data data
+    render :ok, json: filtered
+  end
 
-    data = JSON.parse response.body
+  def full
+    render :ok, json: fetch_weather_data
+  end
 
-    weather = {
-      'temp' => data['main']['temp'],
-      'temp_min' => data['main']['temp_min'],
-      'temp_max' => data['main']['temp_max']
+  private 
+  
+  def weather_query
+    { 
+      lat: '53.344559',
+      lon: '-6.232352',
+      units: 'metric',
+      exclude: 'minutely,hourly',
+      appid: ENV.fetch('WEATHER_API_KEY')
     }
+  end
 
-    render :ok, json: weather
+  def weather_url
+    'https://api.openweathermap.org/data/2.5/onecall'
+  end
+
+  def fetch_weather_data
+    response = HTTParty.get(weather_url, query: weather_query)
+    JSON.parse response.body
+  end
+
+  def filter_weather_data(data)
+    {
+      'temp' => data.dig('current', 'temp'),
+      'temp_min' => data.dig('daily', 0, 'temp', 'min'),
+      'temp_max' => data.dig('daily', 0, 'temp', 'max'),
+    }
   end
 end
