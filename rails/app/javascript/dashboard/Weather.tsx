@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Ajv from 'ajv';
 import { JsonDecoder } from 'ts.data.json';
 
 import { useInterval } from './support/Interval';
 import { get } from './support/HTTP';
-import { Weather, WeatherMain } from './models';
+import { Weather } from './models';
 
 const weather_decoder = JsonDecoder.object<Weather>(
   {
-    main: JsonDecoder.object<WeatherMain>(
-      {
-        temp: JsonDecoder.number,
-        temp_min: JsonDecoder.number,
-        temp_max: JsonDecoder.number,
-      },
-      'WeatherMain'
-    ),
+    temp: JsonDecoder.number,
+    temp_min: JsonDecoder.number,
+    temp_max: JsonDecoder.number,
   },
   'Weather'
 );
@@ -71,11 +65,11 @@ export default function WeatherDisplay(props: Props) {
         alignItems: 'center',
       }}
     >
-      <div>{weather.main.temp_min.toFixed(0)}</div>
+      <div>{weather.temp_min.toFixed(0)}</div>
       <div style={{ fontSize: '12vmin', padding: '0px 8px', color: 'white' }}>
-        {weather.main.temp.toFixed(0)}
+        {weather.temp.toFixed(0)}
       </div>
-      <div>{weather.main.temp_max.toFixed(0)}</div>
+      <div>{weather.temp_max.toFixed(0)}</div>
       <div style={{ paddingLeft: '10px' }}>°C</div>
     </div>
   );

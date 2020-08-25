@@ -6,7 +6,9 @@ import { Weather, ActivitiesData } from '../dashboard/models';
 const handlers = [
   rest.get('/weather.json', (req, res, ctx) => {
     const test_weather: Weather = {
-      main: { temp: 20, temp_min: 18, temp_max: 22 },
+      temp: 20,
+      temp_min: 18,
+      temp_max: 22,
     };
     return res(ctx.json(test_weather));
   }),
