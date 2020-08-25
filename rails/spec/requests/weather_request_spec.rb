@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Weather", type: :request do
-
   describe "GET /weather" do
     it "returns weather as json" do
-      weather_data = { 'weather' => { 'temp' => 20, 'wind' => 5 } }
+      weather_data = { 'main' => { 'temp' => 20, 'temp_min' => 18, 'temp_max' => 22 } }
+
       stub_request(:get, 'http://api.openweathermap.org/data/2.5/weather')
         .with(query: { q: 'Dublin,IE', 
                        units: 'metric',
@@ -19,8 +19,15 @@ RSpec.describe "Weather", type: :request do
       expect(response.content_type).to eq('application/json; charset=utf-8')
       expect(response).to have_http_status(:success)
 
-      json = JSON.parse(response.body)
-      expect(json).to eq(weather_data)
+      expect(json).to eq({
+        'temp' => 20,
+        'temp_min' => 18,
+        'temp_max' => 22
+      })
     end
+  end
+
+  def json
+    JSON.parse response.body
   end
 end
