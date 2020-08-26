@@ -13,7 +13,6 @@ export function render_dashboard(container: Element) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const target = document.getElementById('dashboard');
-  if (!target) return;
-  render_dashboard(target);
+  const dashboard = document.getElementById('dashboard');
+  render_dashboard(dashboard);
 });
