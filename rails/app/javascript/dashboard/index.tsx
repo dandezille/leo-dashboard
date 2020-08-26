@@ -12,8 +12,13 @@ export function render_dashboard(container: Element) {
   );
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function get_target(id: string) {
   const target = document.getElementById('dashboard');
-  if (!target) return;
-  render_dashboard(target);
+  if (!target) throw new Error(`Could not find target id=\'${target}\'`);
+  return target;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dashboard = get_target('dashboard');
+  render_dashboard(dashboard);
 });
