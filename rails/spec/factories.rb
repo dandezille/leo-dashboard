@@ -7,4 +7,10 @@ FactoryBot.define do
     symbol 
     note 
   end
+
+  sequence(:name) { |n| "Schedule #{n}" }
+
+  factory :schedule do
+    name
+  end
 end
