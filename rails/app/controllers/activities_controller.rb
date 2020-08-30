@@ -13,11 +13,11 @@ class ActivitiesController < ApplicationController
   end
 
   def new
-    @activity = Activity.new(time: '00:00')
+    @activity = default_schedule.activities.new(time: '00:00')
   end
 
   def create
-    @activity = Activity.new(activity_params)
+    @activity = default_schedule.activities.new(activity_params)
     if @activity.save
       redirect_to activities_path
     else
@@ -49,5 +49,9 @@ class ActivitiesController < ApplicationController
 
   def find_activity
     @activity = Activity.find_by(id: params[:id])
+  end
+
+  def default_schedule
+    Schedule.find_by!(name: 'default')
   end
 end
