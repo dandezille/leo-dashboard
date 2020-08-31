@@ -12,11 +12,11 @@ RSpec.describe Schedule, type: :model do
 
   describe 'ordering' do
     it 'should be ordered by name' do
-      b = create(:schedule, name: 'b')
-      a = create(:schedule, name: 'a')
-      c = create(:schedule, name: 'c')
+      create(:schedule, name: 'b')
+      create(:schedule, name: 'a')
+      create(:schedule, name: 'c')
 
-      expect(Schedule.all).to eq([a, c, b])
+      expect(Schedule.all.map(&:name)).to eq(['a', 'b', 'c'])
     end
   end
 end

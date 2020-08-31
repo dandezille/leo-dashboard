@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature "ManageActivities", type: :feature do
+
+  before(:each) do
+    Rails.application.load_seed
+  end
+
   scenario 'User creates an activity' do
     visit '/activities'
     click_on 'Add activity'
