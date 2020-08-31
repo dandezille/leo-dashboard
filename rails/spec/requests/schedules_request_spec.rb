@@ -15,9 +15,9 @@ RSpec.describe "Schedules", type: :request do
       json = JSON.parse(response.body)
 
       expect(json).to eq([
-        { 'id'=> weekday.id, 'name'=> "weekday" },
         { 'id'=> saturday.id, 'name'=> 'saturday' },
-        { 'id'=> sunday.id, 'name'=> 'sunday' } 
+        { 'id'=> sunday.id, 'name'=> 'sunday' },
+        { 'id'=> weekday.id, 'name'=> "weekday" }
       ])
     end
   end
