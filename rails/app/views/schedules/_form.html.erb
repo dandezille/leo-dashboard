@@ -1,0 +1,12 @@
+<div class="flex justify-around m-12">
+  <%= form_with model: schedule, html: { class: 'bg-gray-200 rounded border-b' } do |f| %>
+    <div class="m-3 mb-6">
+      <%= f.label :name, class: 'block text-gray-700 mb-1' %>
+      <%= f.text_field :name, class: 'border p-1' %>
+    </div>
+
+    <div class="flex justify-around m-3">
+      <%= f.submit class: 'bg-gray-800 text-white rounded px-4 py-1' %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,24 @@
+<div class="flex justify-around m-6">
+  <%= link_to 'Add schedule', new_schedule_path, class: 'bg-gray-800 hover:bg-gray-700 text-white rounded px-4 py-2 font-bold' %>
+</div>
+<div class="flex justify-around m-6">
+  <table>
+    <thead class="bg-gray-800 text-white text-left">
+      <tr>
+        <th class="py-3 px-4">Name</th>
+        <th class="py-3 px-4"></th>
+        <th class="py-3 px-4"></th>
+      </tr>
+    </thead>
+    <tbody class="bg-gray-100 text-gray-700">
+      <% @schedules.each do |schedule| %>
+        <tr data-schedule-id="<%= schedule.id %>">
+          <td class="py-1 px-4"><%= schedule.name %></td>
+
+          <td class="py-1 px-2"><%= link_to '✏️', edit_schedule_path(schedule) %></td>
+          <td class="py-1 px-2"><%= link_to '🗑️', schedule_path(schedule), method: :delete, data: { confirm: "Delete schedule #{schedule.name}?" } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
