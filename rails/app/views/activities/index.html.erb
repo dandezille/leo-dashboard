@@ -11,7 +11,7 @@
     </thead>
     <tbody class="bg-gray-100 text-gray-700">
       <% @activities.each do |activity| %>
-        <tr data-activity-id="<%= activity.id %>">
+        <tr data-activity-id="<%= activity.id %>" class="even:bg-gray-200">
           <td class="py-1 px-2 text-center"><%= activity.time.strftime('%H:%M') %></td>
           <td class="py-1 px-2 text-center"><%= activity.symbol %></td>
           <td class="py-1 px-2"><%= activity.note %></td>
