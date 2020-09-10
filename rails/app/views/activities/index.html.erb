@@ -1,23 +1,20 @@
-<div class="flex justify-around m-6">
-  <%= link_to 'Add activity', new_activity_path, class: 'bg-gray-800 hover:bg-gray-700 text-white rounded px-4 py-2 font-bold' %>
-</div>
-<div class="flex justify-around m-6">
-  <table>
+<div class="sm:flex sm:justify-around">
+  <table class="w-screen sm:max-w-screen-sm">
     <thead class="bg-gray-800 text-white text-left">
       <tr>
-        <th class="py-3 px-4 text-center">Time</th>
-        <th class="py-3 px-4 text-center">Symbol</th>
-        <th class="py-3 px-4">Note</th>
-        <th class="py-3 px-4"></th>
-        <th class="py-3 px-4"></th>
+        <th class="py-3 px-2 text-center">Time</th>
+        <th class="py-3 px-2 text-center">Symbol</th>
+        <th class="py-3 px-2">Note</th>
+        <th class="py-3 px-2"></th>
+        <th class="py-3 px-2"></th>
       </tr>
     </thead>
     <tbody class="bg-gray-100 text-gray-700">
       <% @activities.each do |activity| %>
         <tr data-activity-id="<%= activity.id %>">
-          <td class="py-1 px-4 text-center"><%= activity.time.strftime('%H:%M') %></td>
-          <td class="py-1 px-4 text-center"><%= activity.symbol %></td>
-          <td class="py-1 px-4"><%= activity.note %></td>
+          <td class="py-1 px-2 text-center"><%= activity.time.strftime('%H:%M') %></td>
+          <td class="py-1 px-2 text-center"><%= activity.symbol %></td>
+          <td class="py-1 px-2"><%= activity.note %></td>
 
           <td class="py-1 px-2"><%= link_to '✏️', edit_activity_path(activity) %></td>
           <td class="py-1 px-2"><%= link_to '🗑️', activity_path(activity), method: :delete, data: { confirm: "Delete activity - #{activity.time.strftime('%H:%M')} #{activity.symbol}?" } %></td>
@@ -25,4 +22,8 @@
       <% end %>
     </tbody>
   </table>
+</div>
+
+<div class="flex justify-around m-6">
+  <%= link_to 'Add activity', new_activity_path, class: 'bg-gray-800 hover:bg-gray-700 text-white rounded px-4 py-2 font-bold' %>
 </div>
