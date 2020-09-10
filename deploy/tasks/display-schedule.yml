@@ -3,7 +3,7 @@
   become: yes
   cron:
     name: Display on
-    hour: '7'
+    hour: '6'
     minute: '0'
     job: echo 0 > /sys/class/backlight/rpi_backlight/bl_power
 
