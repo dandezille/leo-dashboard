@@ -13,8 +13,8 @@ class WeatherController < ApplicationController
   
   def weather_query
     { 
-      lat: '49.215913',
-      lon: '-2.183231',
+      lat: ENV.fetch('WEATHER_API_LAT'),
+      lon: ENV.fetch('WEATHER_API_LON'),
       units: 'metric',
       exclude: 'minutely,hourly',
       appid: ENV.fetch('WEATHER_API_KEY')

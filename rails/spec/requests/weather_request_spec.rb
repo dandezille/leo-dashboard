@@ -20,12 +20,14 @@ RSpec.describe "Weather", type: :request do
       stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall")
         .with(query: { appid: 'test_api_key',
                        exclude: 'minutely,hourly',
-                       lat: '53.344559',
-                       lon: '-6.232352',
+                       lat: 'lat',
+                       lon: 'lon',
                        units: 'metric'})
         .to_return(status: 200, body: weather_data.to_json, headers: {})      
 
-      ClimateControl.modify WEATHER_API_KEY: 'test_api_key' do
+      ClimateControl.modify WEATHER_API_KEY: 'test_api_key',
+                            WEATHER_API_LON: 'lon',
+                            WEATHER_API_LAT: 'lat' do
         get "/weather.json"
       end
 
