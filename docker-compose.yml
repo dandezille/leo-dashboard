@@ -18,7 +18,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD:
       WEATHER_API_KEY:
+      WEATHER_API_LAT:
+      WEATHER_API_LON:
     restart: unless-stopped
+
   db:
     image: postgres:latest
     volumes:
