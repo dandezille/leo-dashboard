@@ -2,26 +2,20 @@
 - name: Get docker command
   shell: command -v docker
   register: docker_command
+  ignore_errors: yes
 
 - debug: var=docker_command.stdout
 
 - name: Download get-docker.sh
-  become: yes
   get_url:
     url: https://get.docker.com
-    dest: /root/get-docker.sh
-  when: docker_command.stdout == ''
-
-- name: Allow execution of get-docker.sh
-  become: yes
-  file: 
-    dest: /root/get-docker.sh
-    mode: a+x
+    dest: /tmp/get-docker.sh
+    mode: +x
   when: docker_command.stdout == ''
 
 - name: Run get-docker.sh
   become: yes
-  shell: /root/get-docker.sh
+  shell: /tmp/get-docker.sh
   register: get_docker
   when: docker_command.stdout == ''
 
