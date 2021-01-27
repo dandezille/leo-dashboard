@@ -1,3 +1,0 @@
-[submodule "electron"]
-	path = electron
-	url = git@github.com:dandezille/electron-kiosk.git
