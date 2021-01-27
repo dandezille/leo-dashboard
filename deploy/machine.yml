@@ -2,7 +2,6 @@
 - hosts: all
   tasks:
     - include: tasks/ssh-keys.yml
-    - include: tasks/display-schedule.yml
     - include: tasks/docker.yml
     - include: tasks/electron-build.yml
 
