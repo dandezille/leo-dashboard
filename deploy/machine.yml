@@ -2,7 +2,6 @@
 - hosts: all
   tasks:
     - include: tasks/ssh-keys.yml
-    - include: tasks/vnc-server.yml
     - include: tasks/openbox-config.yml
     - include: tasks/display-schedule.yml
     - include: tasks/docker.yml
