@@ -1,9 +1,0 @@
----
-- hosts: all
-  tasks:
-    - include: tasks/docker.yml
-
-  handlers:
-    - name: reboot
-      become: yes
-      reboot:
