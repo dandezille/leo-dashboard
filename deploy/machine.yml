@@ -3,7 +3,6 @@
   tasks:
     - include: tasks/ssh-keys.yml
     - include: tasks/docker.yml
-    - include: tasks/electron-build.yml
 
   handlers:
     - name: reboot
