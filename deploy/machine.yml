@@ -1,7 +1,6 @@
 ---
 - hosts: all
   tasks:
-    - include: tasks/screen-rotation.yml
     - include: tasks/ssh-keys.yml
     - include: tasks/vnc-server.yml
     - include: tasks/openbox-config.yml
