@@ -1,7 +1,6 @@
 ---
 - hosts: all
   tasks:
-    - include: tasks/ssh-keys.yml
     - include: tasks/docker.yml
 
   handlers:
