@@ -1,4 +1,0 @@
-#!/bin/bash
-set -e
-
-ansible-playbook -i deploy/inventory.yml deploy/app.yml "${@:2}"
