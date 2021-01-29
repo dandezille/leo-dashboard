@@ -1,6 +1,6 @@
-![CI](https://github.com/dandezille/leo-dashboard/workflows/CI/badge.svg)
+![CI](https://github.com/dandezille/family-dashboard/workflows/CI/badge.svg)
 
-# Leo Dashboard
+# Family Dashboard
 
 ## Setup
 
