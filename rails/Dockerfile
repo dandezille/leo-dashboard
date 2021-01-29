@@ -1,7 +1,7 @@
 FROM ruby:2.7.1
 
 # Add node repo
-RUN curl -sL https://deb.nodesource.com/setup_current.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
 
 # Add yarn repo
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -

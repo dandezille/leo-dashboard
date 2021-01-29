@@ -1,9 +1,0 @@
----
-- name: Generate ssh keypair
-  openssh_keypair:
-    path: ~/.ssh/id_rsa
-  register: ssh_keypair
-
-- name: Print ssh public key
-  debug:
-    var: ssh_keypair.public_key
