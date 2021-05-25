@@ -6,7 +6,7 @@ import (
 )
 
 func get_activities(c *gin.Context) {
-	c.String(http.StatusOK, "Hello")
+	c.HTML(http.StatusOK, "activities/index.html", gin.H{})
 }
 
 func post_activities(c *gin.Context) {
@@ -14,11 +14,12 @@ func post_activities(c *gin.Context) {
 }
 
 func get_activities_new(c *gin.Context) {
-	c.String(http.StatusOK, "Hello")
+	c.HTML(http.StatusOK, "activities/new.html", gin.H{})
 }
 
 func get_activity_edit(c *gin.Context) {
-	c.String(http.StatusOK, "Hello")
+	// id := c.Param("id")
+	c.HTML(http.StatusOK, "activities/edit.html", gin.H{})
 }
 
 func patch_activity(c *gin.Context) {
@@ -42,11 +43,14 @@ func get_weather_full(c *gin.Context) {
 }
 
 func get_root(c *gin.Context) {
-	c.String(http.StatusOK, "Hello")
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"title": "Main website",
+	})
 }
 
 func main() {
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
 
 	r.GET("/activities", get_activities)
 	r.POST("/activities", post_activities)
