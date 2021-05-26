@@ -2,6 +2,8 @@ package database
 
 import (
 	"github.com/jmoiron/sqlx"
+	_ "github.com/mattn/go-sqlite3"
+	"log"
 )
 
 type ServerDB interface {
@@ -14,9 +16,20 @@ type DB struct {
 }
 
 func (d *DB) Open() error {
+	db, err := sqlx.Open("sqlite3", "./data.db")
+	if err != nil {
+		return err
+	}
+
+	log.Println("Database opened")
+
+	db.MustExec(createSchema)
+	log.Println("Schema applied")
+
+	d.db = db
 	return nil
 }
 
 func (d *DB) Close() error {
-	return nil
+	return d.db.Close()
 }
