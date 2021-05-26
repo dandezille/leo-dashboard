@@ -4,11 +4,14 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
+	"server/app/models"
 )
 
 type ServerDB interface {
 	Open() error
 	Close() error
+	CreateActivity(a *models.Activity) error
+	GetActivities() ([]*models.Activity, error)
 }
 
 type DB struct {

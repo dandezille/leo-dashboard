@@ -8,3 +8,7 @@ CREATE TABLE IF NOT EXISTS activities
 	note TEXT
 )
 `
+
+var insertActivitySchema = `
+INSERT INTO activities(symbol, note) VALUES($1, $2) RETURNING id
+`
