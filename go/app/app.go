@@ -1,9 +1,13 @@
 package app
 
-import "github.com/gorilla/mux"
+import (
+	"github.com/gorilla/mux"
+	"server/app/database"
+)
 
 type App struct {
 	Router *mux.Router
+	DB     database.ServerDB
 }
 
 func New() *App {
