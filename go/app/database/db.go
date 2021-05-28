@@ -1,38 +1,30 @@
 package database
 
 import (
-	"github.com/jmoiron/sqlx"
-	_ "github.com/mattn/go-sqlite3"
+	"database/sql"
 	"log"
-	"server/app/models"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
-type ServerDB interface {
-	Open() error
-	Close() error
-	CreateActivity(a *models.Activity) error
-	GetActivities() ([]*models.Activity, error)
-}
-
 type DB struct {
-	db *sqlx.DB
+	db *sql.DB
 }
 
-func (d *DB) Open() error {
-	db, err := sqlx.Open("sqlite3", "./data.db")
+func Open() *DB {
+	db, err := sql.Open("sqlite3", "./data.db")
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 
-	log.Println("Database opened")
-
-	db.MustExec(createSchema)
-	log.Println("Schema applied")
-
-	d.db = db
-	return nil
+	return &DB{
+		db: db,
+	}
 }
 
-func (d *DB) Close() error {
-	return d.db.Close()
+func (d *DB) Close() {
+	err := d.db.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
 }

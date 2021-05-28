@@ -1,25 +1,26 @@
 package app
 
 import (
-	"github.com/gorilla/mux"
 	"server/app/database"
+	"server/app/routes"
 )
 
 type App struct {
-	Router *mux.Router
-	DB     database.ServerDB
+	router *routes.Router
+	db     *database.DB
 }
 
 func New() *App {
-	a := &App{
-		Router: mux.NewRouter(),
+	return &App{
+		router: routes.New(),
+		db:     database.Open(),
 	}
-
-	a.initRoutes()
-	return a
 }
 
-func (a *App) initRoutes() {
-	a.Router.HandleFunc("/", a.IndexHandler()).Methods("GET")
-	a.Router.HandleFunc("/api/activites", a.CreateActivityHandler()).Methods("POST")
+func (a *App) Close() {
+	a.db.Close()
+}
+
+func (a *App) Start() {
+	a.router.Start()
 }
