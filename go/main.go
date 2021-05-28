@@ -6,6 +6,7 @@ import (
 	"os"
 	"server/app"
 	"server/app/database"
+	"time"
 )
 
 func main() {
@@ -16,11 +17,18 @@ func main() {
 
 	defer app.DB.Close()
 
-	http.Handle("/", app.Router)
+	app.Router.HandleFunc("/api/activites", app.CreateActivityHandler()).Methods("POST")
 
 	log.Println("App running...")
-	err = http.ListenAndServe(":9000", nil)
-	check(err)
+
+	srv := &http.Server{
+		Handler:      app.Router,
+		Addr:         "127.0.0.1:9000",
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
+	log.Fatal(srv.ListenAndServe())
 }
 
 func check(e error) {

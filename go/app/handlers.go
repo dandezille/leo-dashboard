@@ -29,6 +29,8 @@ func (a *App) CreateActivityHandler() http.HandlerFunc {
 			Note:   req.Note,
 		}
 
+		log.Printf("%s\n", p.Note)
+
 		err = a.DB.CreateActivity(p)
 		if err != nil {
 			log.Printf("Cannot save post in DB. err=%v \n", err)
