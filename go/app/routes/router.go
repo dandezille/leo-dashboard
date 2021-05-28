@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+
+	"server/app/handlers"
 )
 
 type Router struct {
@@ -15,7 +17,8 @@ type Router struct {
 func New() *Router {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/", homeHandler)
+	r.HandleFunc("/", handlers.Home)
+	r.Use(loggingMiddleware)
 
 	return &Router{
 		router: r,
@@ -34,6 +37,9 @@ func (r *Router) Start() {
 	log.Fatal(srv.ListenAndServe())
 }
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
-
+func loggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println(r.RequestURI)
+		next.ServeHTTP(w, r)
+	})
 }
