@@ -18,6 +18,16 @@ func New() *Router {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", handlers.Home)
+	r.HandleFunc("/activities", nil)
+	r.HandleFunc("/activities", nil).Methods("POST")
+	r.HandleFunc("/activities/new", nil)
+	r.HandleFunc("/activities/:id/edit", nil)
+	r.HandleFunc("/activities/:id", nil).Methods("PATCH")
+	r.HandleFunc("/activities/:id", nil).Methods("PUT")
+	r.HandleFunc("/activities/:id", nil).Methods("DELETE")
+	r.HandleFunc("/weather", nil)
+	r.HandleFunc("/weather_full", nil)
+
 	r.Use(loggingMiddleware)
 
 	return &Router{
