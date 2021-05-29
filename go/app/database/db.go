@@ -17,6 +17,8 @@ func Open() *DB {
 		log.Fatal(err)
 	}
 
+	setup(db)
+
 	return &DB{
 		db: db,
 	}
@@ -24,6 +26,13 @@ func Open() *DB {
 
 func (d *DB) Close() {
 	err := d.db.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func setup(db *sql.DB) {
+	_, err := db.Exec(createActivitiesTable)
 	if err != nil {
 		log.Fatal(err)
 	}
