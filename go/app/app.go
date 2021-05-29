@@ -5,22 +5,27 @@ import (
 	"server/app/routes"
 )
 
-type App struct {
+type App interface {
+	Start()
+	Close()
+}
+
+type appImp struct {
 	router *routes.Router
 	db     *database.DB
 }
 
-func New(db *database.DB) *App {
-	return &App{
+func New(db *database.DB) App {
+	return &appImp{
 		router: routes.New(),
 		db:     db,
 	}
 }
 
-func (a *App) Close() {
+func (a *appImp) Close() {
 	a.db.Close()
 }
 
-func (a *App) Start() {
+func (a *appImp) Start() {
 	a.router.Start()
 }
