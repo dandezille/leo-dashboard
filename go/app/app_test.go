@@ -22,14 +22,26 @@ func (r *testRouter) Start() {
 
 func TestAppStart(t *testing.T) {
 	r := &testRouter{}
-	d := &testDB{}
 	a := appImp{
 		router: r,
-		db:     d,
+		db:     &testDB{},
 	}
 
 	a.Start()
 	if !r.IsStarted {
 		t.Error("Expected router to be started")
+	}
+}
+
+func TestAppClose(t *testing.T) {
+	d := &testDB{}
+	a := appImp{
+		router: &testRouter{},
+		db:     d,
+	}
+
+	a.Close()
+	if !d.IsClosed {
+		t.Error("Expected database connection to be closed")
 	}
 }
