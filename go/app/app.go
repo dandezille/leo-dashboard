@@ -1,7 +1,6 @@
 package app
 
 import (
-	"server/app/database"
 	"server/app/routes"
 )
 
@@ -10,12 +9,16 @@ type App interface {
 	Close()
 }
 
-type appImp struct {
-	router *routes.Router
-	db     *database.DB
+type DB interface {
+	Close()
 }
 
-func New(db *database.DB) App {
+type appImp struct {
+	router *routes.Router
+	db     DB
+}
+
+func New(db DB) App {
 	return &appImp{
 		router: routes.New(),
 		db:     db,
