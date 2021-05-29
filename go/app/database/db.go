@@ -11,8 +11,8 @@ type DB struct {
 	db *sql.DB
 }
 
-func Open() *DB {
-	db, err := sql.Open("sqlite3", "./data.db")
+func Open(file string) *DB {
+	db, err := sql.Open("sqlite3", file)
 	if err != nil {
 		log.Fatal(err)
 	}

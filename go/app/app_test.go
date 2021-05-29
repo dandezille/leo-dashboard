@@ -2,8 +2,11 @@ package app
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"testing"
+
+	"server/app/models"
 )
 
 type testDB struct {
@@ -12,6 +15,10 @@ type testDB struct {
 
 func (d *testDB) Close() {
 	d.IsClosed = true
+}
+
+func (d *testDB) Create(a *models.Activity) {
+	log.Fatal("Not implemented")
 }
 
 type testRouter struct {

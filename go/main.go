@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	db := database.Open()
+	db := database.Open("./data.db")
 	r := router.New()
 	a := app.New(db, r)
 	defer a.Close()

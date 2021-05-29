@@ -3,6 +3,7 @@ package app
 import (
 	"net/http"
 	"server/app/handlers"
+	"server/app/models"
 )
 
 type App interface {
@@ -12,6 +13,7 @@ type App interface {
 
 type DB interface {
 	Close()
+	Create(*models.Activity)
 }
 
 type Router interface {
