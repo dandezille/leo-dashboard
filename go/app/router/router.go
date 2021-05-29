@@ -6,8 +6,6 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-
-	"server/app/handlers"
 )
 
 type Router struct {
@@ -16,17 +14,6 @@ type Router struct {
 
 func New() *Router {
 	r := mux.NewRouter()
-
-	r.HandleFunc("/", handlers.Home)
-	r.HandleFunc("/activities", nil)
-	r.HandleFunc("/activities", nil).Methods("POST")
-	r.HandleFunc("/activities/new", nil)
-	r.HandleFunc("/activities/:id/edit", nil)
-	r.HandleFunc("/activities/:id", nil).Methods("PATCH")
-	r.HandleFunc("/activities/:id", nil).Methods("PUT")
-	r.HandleFunc("/activities/:id", nil).Methods("DELETE")
-	r.HandleFunc("/weather", nil)
-	r.HandleFunc("/weather_full", nil)
 
 	r.Use(loggingMiddleware)
 
@@ -46,6 +33,16 @@ func (r *Router) Start() {
 
 	log.Fatal(srv.ListenAndServe())
 }
+
+func (r *Router) Get(path string, handler http.HandlerFunc) {}
+
+func (r *Router) Post(path string, handler http.HandlerFunc) {}
+
+func (r *Router) Put(path string, handler http.HandlerFunc) {}
+
+func (r *Router) Patch(path string, handler http.HandlerFunc) {}
+
+func (r *Router) Delete(path string, handler http.HandlerFunc) {}
 
 func loggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

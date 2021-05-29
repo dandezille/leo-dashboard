@@ -1,6 +1,8 @@
 package app
 
 import (
+	"fmt"
+	"net/http"
 	"testing"
 )
 
@@ -14,10 +16,57 @@ func (d *testDB) Close() {
 
 type testRouter struct {
 	IsStarted bool
+	Routes    []string
 }
 
 func (r *testRouter) Start() {
 	r.IsStarted = true
+}
+
+func (r *testRouter) Get(path string, handler http.HandlerFunc) {
+	r.Routes = append(r.Routes, fmt.Sprint("get ", path))
+}
+
+func (r *testRouter) Post(path string, handler http.HandlerFunc) {
+	r.Routes = append(r.Routes, fmt.Sprint("post ", path))
+}
+
+func (r *testRouter) Put(path string, handler http.HandlerFunc) {
+	r.Routes = append(r.Routes, fmt.Sprint("put ", path))
+}
+
+func (r *testRouter) Patch(path string, handler http.HandlerFunc) {
+	r.Routes = append(r.Routes, fmt.Sprint("patch ", path))
+}
+
+func (r *testRouter) Delete(path string, handler http.HandlerFunc) {
+	r.Routes = append(r.Routes, fmt.Sprint("delete ", path))
+}
+
+func assertHasRoute(t *testing.T, r *testRouter, spec string) {
+	for _, s := range r.Routes {
+		if spec == s {
+			return
+		}
+	}
+
+	t.Errorf("Route %s not defined", spec)
+}
+
+func TestAppNew(t *testing.T) {
+	r := &testRouter{}
+	New(&testDB{}, r)
+
+	assertHasRoute(t, r, "get /")
+	assertHasRoute(t, r, "get /activities")
+	assertHasRoute(t, r, "post /activities")
+	assertHasRoute(t, r, "get /activities/new")
+	assertHasRoute(t, r, "get /activities/:id/edit")
+	assertHasRoute(t, r, "patch /activities/:id")
+	assertHasRoute(t, r, "put /activities/:id")
+	assertHasRoute(t, r, "delete /activities/:id")
+	assertHasRoute(t, r, "get /weather")
+	assertHasRoute(t, r, "get /weather_full")
 }
 
 func TestAppStart(t *testing.T) {
