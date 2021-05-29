@@ -12,7 +12,11 @@ type App interface {
 
 type DB interface {
 	Close()
+
+	FindActivity(id int64) *models.Activity
+	GetActivities() []*models.Activity
 	Create(*models.Activity)
+	Delete(id int64)
 }
 
 type Router interface {
