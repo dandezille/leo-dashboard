@@ -48,3 +48,21 @@ func TestGetActivities(t *testing.T) {
 		t.Errorf("Expected fetched activity %+v to equal %+v", activities[0], a)
 	}
 }
+
+func TestDeleteActivity(t *testing.T) {
+	os.Remove("test.db")
+	db := Open("test.db")
+	defer db.Close()
+
+	a := &models.Activity{
+		Symbol: "a",
+		Time:   8 * time.Hour,
+		Note:   "sample",
+	}
+
+	db.Create(a)
+	db.Delete(a.ID)
+	if len(db.GetActivities()) != 0 {
+		t.Error("Expected there to be no activities")
+	}
+}

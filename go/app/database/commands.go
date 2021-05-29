@@ -15,5 +15,9 @@ INSERT INTO activities(symbol, time, note) VALUES($1, $2, $3) RETURNING id
 `
 
 const getActivities = `
-SELECT (symbol, time, note) FROM activities
+SELECT (id, symbol, time, note) FROM activities
+`
+
+const deleteActivity = `
+DELETE FROM activities WHERE id = $1
 `

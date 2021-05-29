@@ -32,3 +32,10 @@ func (d *DB) Create(a *models.Activity) {
 		log.Fatal(err)
 	}
 }
+
+func (d *DB) Delete(id int64) {
+	_, err := d.db.Exec(deleteActivity, id)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
