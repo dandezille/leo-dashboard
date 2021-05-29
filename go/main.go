@@ -2,10 +2,12 @@ package main
 
 import (
 	"server/app"
+	"server/app/database"
 )
 
 func main() {
-	a := app.New()
+	db := database.Open()
+	a := app.New(db)
 	defer a.Close()
 	a.Start()
 }

@@ -10,10 +10,10 @@ type App struct {
 	db     *database.DB
 }
 
-func New() *App {
+func New(db *database.DB) *App {
 	return &App{
 		router: routes.New(),
-		db:     database.Open(),
+		db:     db,
 	}
 }
 
