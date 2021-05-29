@@ -6,6 +6,15 @@ import (
 	"server/app/models"
 )
 
+func (d *DB) FindActivity(id int64) *models.Activity {
+	var a models.Activity
+	err := d.db.QueryRow(findActivity, id).Scan(&a.ID, &a.Symbol, &a.Time, &a.Note)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return &a
+}
+
 func (d *DB) GetActivities() []*models.Activity {
 	rows, err := d.db.Query(getActivities)
 	if err != nil {
@@ -15,12 +24,12 @@ func (d *DB) GetActivities() []*models.Activity {
 
 	var activities []*models.Activity
 	for rows.Next() {
-		a := &models.Activity{}
+		var a models.Activity
 		err := rows.Scan(&a.ID, &a.Symbol, &a.Time, &a.Note)
 		if err != nil {
 			log.Fatal(err)
 		}
-		activities = append(activities, a)
+		activities = append(activities, &a)
 	}
 
 	return activities

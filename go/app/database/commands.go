@@ -10,14 +10,18 @@ CREATE TABLE IF NOT EXISTS activities
 )
 `
 
-const insertActivity = `
-INSERT INTO activities(symbol, time, note) VALUES($1, $2, $3) RETURNING id
+const getActivities = `
+SELECT id, symbol, time, note FROM activities
 `
 
-const getActivities = `
-SELECT (id, symbol, time, note) FROM activities
+const findActivity = `
+SELECT id, symbol, time, note FROM activities WHERE id=?
+`
+
+const insertActivity = `
+INSERT INTO activities(symbol, time, note) VALUES(?, ?, ?) RETURNING id
 `
 
 const deleteActivity = `
-DELETE FROM activities WHERE id = $1
+DELETE FROM activities WHERE id=?
 `
