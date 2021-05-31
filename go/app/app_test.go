@@ -21,6 +21,20 @@ func (d *testDB) Create(a *models.Activity) {
 	log.Fatal("Not implemented")
 }
 
+func (d *testDB) Delete(id int64) {
+	log.Fatal("Not implemented")
+}
+
+func (d *testDB) FindActivity(id int64) *models.Activity {
+	log.Fatal("Not implemented")
+	return nil
+}
+
+func (d *testDB) GetActivities() []*models.Activity {
+	log.Fatal("Not implemented")
+	return nil
+}
+
 type testRouter struct {
 	IsStarted bool
 	Routes    []string
