@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"log"
 	"net/http"
 	"time"
@@ -39,4 +40,15 @@ func logRequests(next http.Handler) http.Handler {
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
+
+	files := []string{
+		"app/views/layouts/layout.html",
+		"app/views/pages/home.html",
+	}
+
+	templates := template.Must(template.ParseFiles(files...))
+	err := templates.ExecuteTemplate(w, "layout", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Family Dashboard</title>
+    <title>{{ block "title" . }} Family Dashboard {{ end }}</title>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
@@ -16,7 +16,7 @@
     <!-- Styles -->
     <!-- Scripts -->
 
-    {{ template "scripts" . }}
+    {{ block "scripts" . }} {{ end }}
   </head>
   <body>
     {{ template "content" . }}
