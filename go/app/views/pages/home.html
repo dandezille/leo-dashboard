@@ -16,12 +16,12 @@
         </circle>
 
         <text fill="#edf3ff" font-size="1.1" text-anchor="middle" dominant-baseline="middle">
-          🛌 
+        {{ .CurrentActivity }} 
         </text>
       </svg>
 
       <div style="color: white; position: absolute; bottom: 60px; font-size: 1.8em;">
-        21 hours
+        {{ .TimeRemaining }}
       </div>
 
     </div>
@@ -31,18 +31,20 @@
       <div style="display: flex; flex-direction: column; align-items: center;">
 
         <div style="font-size: 18vmin; color: rgb(237, 243, 255);">
-          20:58
+          {{ .CurrentTime }}
         </div>
 
         <div style="color: grey; font-size: 8vmin; display: flex; flex-direction: row; align-items: center;">
-          <div>14</div>
-          <div style="font-size: 12vmin; padding: 0px 8px; color: white;">16</div>
-          <div>16</div>
+          <div>{{ .TempMin }}</div>
+          <div style="font-size: 12vmin; padding: 0px 8px; color: white;">
+            {{ .TempCurrent}}
+          </div>
+          <div>{{ .TempMax }}</div>
           <div style="padding-left: 10px;">°C</div>
         </div>
       </div>
 
-      <div style="font-size: 18vmin; color: rgb(237, 243, 255);">🍽</div>
+      <div style="font-size: 18vmin; color: rgb(237, 243, 255);">{{ .NextActivity }}</div>
     </div>
   </div>
 </div>

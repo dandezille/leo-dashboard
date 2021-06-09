@@ -49,7 +49,26 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 	}
 
 	templates := template.Must(template.ParseFiles(files...))
-	err := templates.ExecuteTemplate(w, "layout", nil)
+
+	data := struct {
+		CurrentTime     string
+		CurrentActivity string
+		NextActivity    string
+		TimeRemaining   string
+		TempMin         int
+		TempCurrent     int
+		TempMax         int
+	}{
+		"20:58",
+		"🛌",
+		"🍽",
+		"21 hours",
+		14,
+		16,
+		17,
+	}
+
+	err := templates.ExecuteTemplate(w, "layout", data)
 	if err != nil {
 		log.Fatal(err)
 	}
