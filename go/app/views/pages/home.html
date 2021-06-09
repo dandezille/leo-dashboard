@@ -4,7 +4,36 @@
 
 {{ define "content" }}
 
-<noscript>You need to enable JavaScript to run this app.</noscript>
-<div id="dashboard"></div>
+<div id="dashboard">
+  <div style="display:flex;flex:1;min-height:100vh;background-color:#090a0d;font-family:Rubik, sans-serif">
+      <!-- <ActivityDisplay activity={current} next={next} time={time} /> -->
+
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+        <svg viewBox="-1 -1 2 2" height="95vh" width="95vh">
+          <!-- <ProgressRing radius={0.94} progress={progress} /> -->
+          <text
+            fill="#edf3ff"
+            fontSize="1.1"
+            textAnchor="middle"
+            dominantBaseline="middle"
+          >
+            A
+            <!-- {props.activity.symbol} -->
+          </text>
+        </svg>
+        <div style="color:white;position:absolute;bottom:60px;font-size:1.8em">
+          <!-- {remaining} -->
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;justify-content:space-between;align-itmes:flex-end;padding:15px;">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <!-- <TimeDisplay time={time} /> -->
+          <!-- <Weather update_interval={5 * 60 * 1000} /> -->
+        </div>
+        <!-- <NextActivity activity={next.symbol} /> -->
+      </div>
+    </div>
+</div>
 
 {{ end }}
