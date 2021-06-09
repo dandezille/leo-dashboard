@@ -1,0 +1,26 @@
+{{ define "layout" }}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ block "title" . }} Family Dashboard {{ end }}</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <!-- Scripts -->
+
+    {{ block "scripts" . }} {{ end }}
+  </head>
+  <body>
+    {{ template "content" . }}
+  </body>
+</html>
+
+{{ end }}
