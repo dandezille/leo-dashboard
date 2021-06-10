@@ -8,6 +8,9 @@
 
     <title>{{ block "title" . }} Family Dashboard {{ end }}</title>
 
+    <script src="https://unpkg.com/stimulus/dist/stimulus.umd.js"></script>
+    <script src="static/javascript/main.js"></script>
+
     <link rel="stylesheet" href="static/stylesheets/normalize.css" />
 
     <link
@@ -21,6 +24,10 @@
     {{ block "scripts" . }} {{ end }}
   </head>
   <body>
+    <div data-controller="hello">
+      <input data-hello-target="name" type="text">
+      <button data-action="click->hello#greet">Greet</button>
+    </div>
     {{ template "content" . }}
   </body>
 </html>
