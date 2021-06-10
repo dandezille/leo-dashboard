@@ -1,6 +1,4 @@
-function twoDigits(value) {
-  return ('0' + value).slice(-2);
-}
+import twoDigits from './utils.js'
 
 class CurrentTimeController extends Stimulus.Controller {
   static get targets() {
