@@ -51,7 +51,6 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 	templates := template.Must(template.ParseFiles(files...))
 
 	data := struct {
-		CurrentTime     string
 		CurrentActivity string
 		NextActivity    string
 		TimeRemaining   string
@@ -59,7 +58,6 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 		TempCurrent     int
 		TempMax         int
 	}{
-		"20:58",
 		"🛌",
 		"🍽",
 		"21 hours",
