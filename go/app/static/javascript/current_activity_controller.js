@@ -1,7 +1,14 @@
 export default class CurrentActivityController extends Stimulus.Controller {
+  static get targets () {
+    return [ "symbol" ]
+  }
+
+  static values = { refreshInterval: Number }
+
   connect() {
+    console.log(this.hasSymbolTarget)
     this.load()
-    this.refreshTimer = setInterval(() => { this.load() }, 1000)
+    this.refreshTimer = setInterval(() => { this.load() }, this.refreshIntervalValue)
   }
 
   disconnect() {
@@ -11,6 +18,6 @@ export default class CurrentActivityController extends Stimulus.Controller {
   load() {
     fetch("api/activities/current")
       .then(response => response.json())
-      .then(data => this.element.innerHTML = data.Symbol)
+      .then(data => this.symbolTarget.innerHTML = data.Symbol)
   }
 }
