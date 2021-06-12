@@ -35,7 +35,7 @@
       </svg>
 
       <div style="color: white; position: absolute; bottom: 60px; font-size: 1.8em;"
-           data-activities-target="remaining" />
+           data-activities-target="remaining"></div>
 
     </div>
 
@@ -43,21 +43,21 @@
 
       <div style="display: flex; flex-direction: column; align-items: center;">
 
-        <div data-controller="current-time" 
-             style="font-size: 18vmin; color: rgb(237, 243, 255);" />
+        <div data-controller="time" 
+             style="font-size: 18vmin; color: rgb(237, 243, 255);"></div>
 
-        <div style="color: grey; font-size: 8vmin; display: flex; flex-direction: row; align-items: center;">
-          <div>{{ .TempMin }}</div>
-          <div style="font-size: 12vmin; padding: 0px 8px; color: white;">
-            {{ .TempCurrent}}
-          </div>
-          <div>{{ .TempMax }}</div>
+        <div data-controller="weather"
+             data-weather-refresh-interval-value="60000"
+             style="color: grey; font-size: 8vmin; display: flex; flex-direction: row; align-items: center;">
+          <div data-weather-target="min"></div>
+          <div data-weather-target="now" style="font-size: 12vmin; padding: 0px 8px; color: white;"></div>
+          <div data-weather-target="max"></div>
           <div style="padding-left: 10px;">°C</div>
         </div>
       </div>
 
       <div data-activities-target="next"
-           style="font-size: 18vmin; color: rgb(237, 243, 255);" />
+           style="font-size: 18vmin; color: rgb(237, 243, 255);"></div>
     </div>
   </div>
 </div>

@@ -26,7 +26,7 @@ export default class ActivitiesController extends Stimulus.Controller {
     this.currentTarget.innerHTML = data.Current.Symbol
     this.nextTarget.innerHTML = data.Next.Symbol
 
-    var formatter = new CountdownFormatter()
+    const formatter = new CountdownFormatter()
     this.remainingTarget.innerHTML = formatter.format(data.Next.Start)
   }
 }

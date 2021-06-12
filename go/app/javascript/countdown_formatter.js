@@ -1,9 +1,9 @@
 export default class CountdownFormatter {
   format(targetTime) {
-    var remaining = this._diffNow(targetTime)
+    const remaining = this._diffNow(targetTime)
     console.log(remaining.toObject())
 
-    var text = [ 
+    const text = [ 
       this._hoursString(remaining), 
       this._minutesString(remaining),
       this._secondsString(remaining)
