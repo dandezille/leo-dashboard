@@ -33,11 +33,7 @@ func handleActivities(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleWeather(w http.ResponseWriter, r *http.Request) {
-	data := struct {
-		Min int
-		Now int
-		Max int
-	}{
+	data := models.Temperature{
 		Min: 12,
 		Now: 13,
 		Max: 14,
