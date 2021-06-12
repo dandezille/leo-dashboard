@@ -1,27 +1,38 @@
 package app
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/gorilla/mux"
+
+	"server/app/api"
 )
 
 func SetupRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.Use(logRequests)
 
-	r.HandleFunc("/", HandleHome)
-
-	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./app/static"))))
-	r.PathPrefix("/javascript/").Handler(http.StripPrefix("/javascript/", http.FileServer(http.Dir("./app/javascript"))))
-
-	api := r.PathPrefix("/api").Subrouter()
-	api.HandleFunc("/activities", handleActivities)
+	setupRoutes(r)
+	setupStatic(r)
+	setupJavascript(r)
+	api.SetupRoutes(r.PathPrefix("/api").Subrouter())
 
 	return r
+}
+
+func setupRoutes(r *mux.Router) {
+	r.HandleFunc("/", HandleHome)
+}
+
+func setupStatic(r *mux.Router) {
+	static := r.PathPrefix("/static/")
+	static.Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./app/static"))))
+}
+
+func setupJavascript(r *mux.Router) {
+	js := r.PathPrefix("/javascript/")
+	js.Handler(http.StripPrefix("/javascript/", http.FileServer(http.Dir("./app/javascript"))))
 }
 
 func logRequests(next http.Handler) http.Handler {
@@ -29,21 +40,4 @@ func logRequests(next http.Handler) http.Handler {
 		log.Println(r.RequestURI)
 		next.ServeHTTP(w, r)
 	})
-}
-
-func handleActivities(w http.ResponseWriter, r *http.Request) {
-	data := Activities{
-		Current: Activity{
-			Symbol: "A",
-			Start:  time.Now().Local(),
-		},
-		Next: Activity{
-			Symbol: "B",
-			Start:  time.Now().Local().Add(time.Hour * time.Duration(1)),
-		},
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(data)
 }
