@@ -11,6 +11,19 @@ import (
 )
 
 func main() {
+	srv := &http.Server{
+		Addr:         "0.0.0.0:8080",
+		WriteTimeout: time.Second * 15,
+		ReadTimeout:  time.Second * 15,
+		IdleTimeout:  time.Second * 15,
+		Handler:      setupRouter(),
+	}
+
+	log.Print("Server starting")
+	log.Fatal(srv.ListenAndServe())
+}
+
+func setupRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.Use(logRequests)
 
@@ -22,16 +35,7 @@ func main() {
 	api := r.PathPrefix("/api").Subrouter()
 	api.HandleFunc("/activities", handleActivities)
 
-	srv := &http.Server{
-		Addr:         "0.0.0.0:8080",
-		WriteTimeout: time.Second * 15,
-		ReadTimeout:  time.Second * 15,
-		IdleTimeout:  time.Second * 15,
-		Handler:      r,
-	}
-
-	log.Print("Server starting")
-	log.Fatal(srv.ListenAndServe())
+	return r
 }
 
 func logRequests(next http.Handler) http.Handler {
