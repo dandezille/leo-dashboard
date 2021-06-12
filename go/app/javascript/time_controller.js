@@ -1,6 +1,6 @@
 import twoDigits from './utils.js'
 
-export default class CurrentTimeController extends Stimulus.Controller {
+export default class TimeController extends Stimulus.Controller {
   connect() {
     this.load()
     this.refreshTimer = setInterval(() => { this.load() }, 1000)
@@ -11,8 +11,8 @@ export default class CurrentTimeController extends Stimulus.Controller {
   }
 
   load() {
-    const now = new Date()
-    this.element.innerHTML = twoDigits(now.getHours()) + ":" + twoDigits(now.getMinutes())
+    const now = luxon.DateTime.now()
+    this.element.innerHTML = twoDigits(now.hours) + ":" + twoDigits(now.minutes)
   }
 }
 

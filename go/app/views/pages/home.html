@@ -46,12 +46,12 @@
         <div data-controller="current-time" 
              style="font-size: 18vmin; color: rgb(237, 243, 255);" />
 
-        <div style="color: grey; font-size: 8vmin; display: flex; flex-direction: row; align-items: center;">
-          <div>{{ .TempMin }}</div>
-          <div style="font-size: 12vmin; padding: 0px 8px; color: white;">
-            {{ .TempCurrent}}
-          </div>
-          <div>{{ .TempMax }}</div>
+        <div data-controller="weather"
+             data-weather-refresh-interval-value="60000" >
+             style="color: grey; font-size: 8vmin; display: flex; flex-direction: row; align-items: center;">
+          <div data-weather-target="min" />
+          <div data-weather-target="current" style="font-size: 12vmin; padding: 0px 8px; color: white;" />
+          <div data-weather-target="max" />
           <div style="padding-left: 10px;">°C</div>
         </div>
       </div>
