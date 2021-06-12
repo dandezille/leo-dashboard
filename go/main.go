@@ -1,17 +1,22 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+	"time"
+
+	"server/app"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello from %s!", r.URL.Path[1:])
-}
-
 func main() {
-	http.HandleFunc("/", handler)
-	log.Print("Starting server...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	srv := &http.Server{
+		Addr:         "0.0.0.0:8080",
+		WriteTimeout: time.Second * 15,
+		ReadTimeout:  time.Second * 15,
+		IdleTimeout:  time.Second * 15,
+		Handler:      app.SetupRouter(),
+	}
+
+	log.Print("Server starting")
+	log.Fatal(srv.ListenAndServe())
 }
