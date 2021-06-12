@@ -24,8 +24,7 @@ func main() {
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./app/static"))))
 
 	api := r.PathPrefix("/api").Subrouter()
-	api.Handle("/activities/current", handleActivitiesCurrent(db))
-	api.Handle("/activities/next", handleActivitiesNext(db))
+	api.Handle("/activities", handleActivities(db))
 
 	srv := &http.Server{
 		Addr:         "0.0.0.0:8080",
@@ -56,15 +55,11 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 	templates := template.Must(template.ParseFiles(files...))
 
 	data := struct {
-		CurrentActivity string
-		NextActivity    string
-		TimeRemaining   string
-		TempMin         int
-		TempCurrent     int
-		TempMax         int
+		TimeRemaining string
+		TempMin       int
+		TempCurrent   int
+		TempMax       int
 	}{
-		"🛌",
-		"🍽",
 		"21 hours",
 		14,
 		16,
@@ -77,29 +72,27 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func handleActivitiesCurrent(db *database.DB) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		data := struct {
-			Symbol string
-			Start  time.Time
-		}{
-			Symbol: "A",
-			Start:  time.Now().Local(),
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(data)
-	})
+type Activity struct {
+	Symbol string
+	Start  time.Time
 }
-func handleActivitiesNext(db *database.DB) http.Handler {
+
+type Activities struct {
+	Current Activity
+	Next    Activity
+}
+
+func handleActivities(db *database.DB) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		data := struct {
-			Symbol string
-			Start  time.Time
-		}{
-			Symbol: "B",
-			Start:  time.Now().Local().Add(time.Hour * time.Duration(1)),
+		data := Activities{
+			Current: Activity{
+				Symbol: "A",
+				Start:  time.Now().Local(),
+			},
+			Next: Activity{
+				Symbol: "B",
+				Start:  time.Now().Local().Add(time.Hour * time.Duration(1)),
+			},
 		}
 
 		w.Header().Set("Content-Type", "application/json")

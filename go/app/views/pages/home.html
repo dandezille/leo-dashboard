@@ -4,20 +4,20 @@
 
 {{ define "content" }}
 
-<div id="dashboard">
+<div id="dashboard"
+     data-controller="activities"
+     data-activities-refresh-interval-value="5000" >
 
   <div style="display: flex; flex: 1 1 0%; min-height: 100vh; background-color: rgb(9, 10, 13); font-family: &quot;Rubik&quot;, sans-serif;">
 
-    <div data-controller="current-activity"
-         data-current-activity-refresh-interval-value="5000"
-         style="flex: 1 1 0%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div style="flex: 1 1 0%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
 
       <svg viewBox="-1 -1 2 2" height="95vh" width="95vh">
 
         <circle class="progress-ring__circle" style="transition: stroke-dashoffset 0.35s ease 0s; transform: rotate(-90deg);" stroke="white" stroke-width="0.06000000000000005" stroke-dasharray="5.9061941887488105 5.9061941887488105" stroke-dashoffset="5.518176550561343" fill="transparent" r="0.94" cx="0" cy="0">
         </circle>
 
-        <text data-current-activity-target="symbol"
+        <text data-activities-target="current"
               fill="#edf3ff" 
               font-size="1.1" 
               text-anchor="middle" 
@@ -48,8 +48,7 @@
         </div>
       </div>
 
-      <div data-controller="next-activity" 
-           data-next-activity-refresh-interval-value="5000"
+      <div data-activities-target="next"
            style="font-size: 18vmin; color: rgb(237, 243, 255);" />
     </div>
   </div>
