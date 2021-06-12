@@ -1,6 +1,6 @@
 export default class WeatherController extends Stimulus.Controller {
   static get targets () {
-    return [ "min", "current", "max" ]
+    return [ "min", "now", "max" ]
   }
 
   static values = { refreshInterval: Number }
@@ -21,8 +21,9 @@ export default class WeatherController extends Stimulus.Controller {
   }
 
   update(data) {
+    console.log(data)
     this.minTarget.innerHTML = data.Min
-    this.currentTarget.innerHTML = data.Current
+    this.nowTarget.innerHTML = data.Now
     this.maxTarget.innerHTML = data.Max
   }
 }

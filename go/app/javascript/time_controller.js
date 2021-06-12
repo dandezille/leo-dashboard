@@ -1,5 +1,3 @@
-import twoDigits from './utils.js'
-
 export default class TimeController extends Stimulus.Controller {
   connect() {
     this.load()
@@ -12,7 +10,7 @@ export default class TimeController extends Stimulus.Controller {
 
   load() {
     const now = luxon.DateTime.now()
-    this.element.innerHTML = twoDigits(now.hours) + ":" + twoDigits(now.minutes)
+    this.element.innerHTML = now.toLocaleString(luxon.DateTime.TIME_SIMPLE)
   }
 }
 

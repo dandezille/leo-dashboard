@@ -12,6 +12,7 @@ import (
 
 func SetupRoutes(r *mux.Router) {
 	r.HandleFunc("/activities", handleActivities)
+	r.HandleFunc("/weather", handleWeather)
 }
 
 func handleActivities(w http.ResponseWriter, r *http.Request) {
@@ -24,6 +25,22 @@ func handleActivities(w http.ResponseWriter, r *http.Request) {
 			Symbol: "B",
 			Start:  time.Now().Local().Add(time.Hour * time.Duration(1)),
 		},
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(data)
+}
+
+func handleWeather(w http.ResponseWriter, r *http.Request) {
+	data := struct {
+		Min int
+		Now int
+		Max int
+	}{
+		Min: 12,
+		Now: 13,
+		Max: 14,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
