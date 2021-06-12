@@ -13,17 +13,7 @@ func HandleHome(w http.ResponseWriter, r *http.Request) {
 	templates = template.Must(templates.ParseGlob("app/views/layouts/*.html"))
 	templates = template.Must(templates.ParseGlob("app/views/pages/home.html"))
 
-	data := struct {
-		TempMin     int
-		TempCurrent int
-		TempMax     int
-	}{
-		14,
-		16,
-		17,
-	}
-
-	err := templates.ExecuteTemplate(w, "layout", data)
+	err := templates.ExecuteTemplate(w, "layout", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
