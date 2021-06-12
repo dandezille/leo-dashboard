@@ -9,25 +9,20 @@ import (
 func HandleHome(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
-	files := []string{
-		"app/views/layouts/layout.html",
-		"app/views/pages/home.html",
-	}
-
-	templates := template.Must(template.ParseFiles(files...))
-
-	data := struct {
-		TempMin     int
-		TempCurrent int
-		TempMax     int
-	}{
-		14,
-		16,
-		17,
-	}
-
-	err := templates.ExecuteTemplate(w, "layout", data)
+	err := renderPage("app/views/pages/home.html", w)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func renderPage(page string, w http.ResponseWriter) error {
+	// partials
+	templates := template.Must(template.ParseGlob("app/views/**/_*.html"))
+
+	// layouts
+	templates = template.Must(templates.ParseGlob("app/views/layouts/*.html"))
+
+	templates = template.Must(templates.ParseGlob(page))
+
+	return templates.ExecuteTemplate(w, "layout", nil)
 }

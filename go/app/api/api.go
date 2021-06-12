@@ -23,7 +23,7 @@ func handleActivities(w http.ResponseWriter, r *http.Request) {
 		},
 		Next: models.Activity{
 			Symbol: "B",
-			Start:  time.Now().Local().Add(time.Hour * time.Duration(1)),
+			Start:  time.Now().Local().Add(time.Minute * time.Duration(1)),
 		},
 	}
 
