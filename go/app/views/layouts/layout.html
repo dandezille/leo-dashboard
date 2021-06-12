@@ -8,9 +8,7 @@
 
     <title>{{ block "title" . }} Family Dashboard {{ end }}</title>
 
-    <script src="https://unpkg.com/stimulus/dist/stimulus.umd.js"></script>
-    <script type="module" src="static/javascript/main.js"></script>
-
+    <!-- Styles -->
     <link rel="stylesheet" href="static/stylesheets/normalize.css" />
 
     <link
@@ -18,10 +16,12 @@
       rel="stylesheet"
     />
 
-    <!-- Styles -->
     <!-- Scripts -->
-
+    <script src="javascript/stimulus.umd.js"></script>
+    <script src="javascript/luxon.js"></script>
+    <script type="module" src="javascript/main.js"></script>
     {{ block "scripts" . }} {{ end }}
+
   </head>
   <body>
     {{ template "content" . }}

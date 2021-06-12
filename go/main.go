@@ -22,6 +22,7 @@ func main() {
 	r.HandleFunc("/", handleHome)
 
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./app/static"))))
+	r.PathPrefix("/javascript/").Handler(http.StripPrefix("/javascript/", http.FileServer(http.Dir("./app/javascript"))))
 
 	api := r.PathPrefix("/api").Subrouter()
 	api.Handle("/activities", handleActivities(db))
@@ -34,6 +35,7 @@ func main() {
 		Handler:      r,
 	}
 
+	log.Print("Server starting")
 	log.Fatal(srv.ListenAndServe())
 }
 

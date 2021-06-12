@@ -14,7 +14,16 @@
 
       <svg viewBox="-1 -1 2 2" height="95vh" width="95vh">
 
-        <circle class="progress-ring__circle" style="transition: stroke-dashoffset 0.35s ease 0s; transform: rotate(-90deg);" stroke="white" stroke-width="0.06000000000000005" stroke-dasharray="5.9061941887488105 5.9061941887488105" stroke-dashoffset="5.518176550561343" fill="transparent" r="0.94" cx="0" cy="0">
+        <circle class="progress-ring__circle" 
+                style="transition: stroke-dashoffset 0.35s ease 0s; transform: rotate(-90deg);" 
+                stroke="white" 
+                stroke-width="0.06000000000000005" 
+                stroke-dasharray="5.9061941887488105 5.9061941887488105" 
+                stroke-dashoffset="5.518176550561343" 
+                fill="transparent" 
+                r="0.94" 
+                cx="0" 
+                cy="0">
         </circle>
 
         <text data-activities-target="current"
@@ -25,9 +34,8 @@
         </text>
       </svg>
 
-      <div style="color: white; position: absolute; bottom: 60px; font-size: 1.8em;">
-        {{ .TimeRemaining }}
-      </div>
+      <div style="color: white; position: absolute; bottom: 60px; font-size: 1.8em;"
+           data-activities-target="remaining" />
 
     </div>
 
