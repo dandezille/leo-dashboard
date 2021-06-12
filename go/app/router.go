@@ -10,16 +10,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type Activity struct {
-	Symbol string
-	Start  time.Time
-}
-
-type Activities struct {
-	Current Activity
-	Next    Activity
-}
-
 func SetupRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.Use(logRequests)
