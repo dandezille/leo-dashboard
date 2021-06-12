@@ -1,0 +1,66 @@
+{{ define "title" }}
+  Family Dashboard | Home
+{{ end }}
+
+{{ define "content" }}
+
+<div id="dashboard"
+     data-controller="activities"
+     data-activities-refresh-interval-value="5000" >
+
+  <div style="display: flex; flex: 1 1 0%; min-height: 100vh; background-color: rgb(9, 10, 13); font-family: &quot;Rubik&quot;, sans-serif;">
+
+    <div style="flex: 1 1 0%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+
+      <svg viewBox="-1 -1 2 2" height="95vh" width="95vh">
+
+        <circle class="progress-ring__circle" 
+                style="transition: stroke-dashoffset 0.35s ease 0s; transform: rotate(-90deg);" 
+                stroke="white" 
+                stroke-width="0.06000000000000005" 
+                stroke-dasharray="5.9061941887488105 5.9061941887488105" 
+                stroke-dashoffset="5.518176550561343" 
+                fill="transparent" 
+                r="0.94" 
+                cx="0" 
+                cy="0">
+        </circle>
+
+        <text data-activities-target="current"
+              fill="#edf3ff" 
+              font-size="1.1" 
+              text-anchor="middle" 
+              dominant-baseline="middle">
+        </text>
+      </svg>
+
+      <div style="color: white; position: absolute; bottom: 60px; font-size: 1.8em;"
+           data-activities-target="remaining" />
+
+    </div>
+
+    <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; padding: 15px;">
+
+      <div style="display: flex; flex-direction: column; align-items: center;">
+
+        <div data-controller="current-time" 
+             style="font-size: 18vmin; color: rgb(237, 243, 255);" />
+
+        <div style="color: grey; font-size: 8vmin; display: flex; flex-direction: row; align-items: center;">
+          <div>{{ .TempMin }}</div>
+          <div style="font-size: 12vmin; padding: 0px 8px; color: white;">
+            {{ .TempCurrent}}
+          </div>
+          <div>{{ .TempMax }}</div>
+          <div style="padding-left: 10px;">°C</div>
+        </div>
+      </div>
+
+      <div data-activities-target="next"
+           style="font-size: 18vmin; color: rgb(237, 243, 255);" />
+    </div>
+  </div>
+</div>
+
+
+{{ end }}

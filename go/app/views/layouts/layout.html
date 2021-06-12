@@ -1,0 +1,31 @@
+{{ define "layout" }}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ block "title" . }} Family Dashboard {{ end }}</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="static/stylesheets/normalize.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Scripts -->
+    <script src="javascript/stimulus.umd.js"></script>
+    <script src="javascript/luxon.js"></script>
+    <script type="module" src="javascript/main.js"></script>
+    {{ block "scripts" . }} {{ end }}
+
+  </head>
+  <body>
+    {{ template "content" . }}
+  </body>
+</html>
+
+{{ end }}
