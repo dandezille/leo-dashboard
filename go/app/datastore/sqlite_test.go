@@ -10,7 +10,7 @@ import (
 	"server/app/models"
 )
 
-func createDatastore(t *testing.T) (Datastore, func()) {
+func create(t *testing.T) (Datastore, func()) {
 	temp, err := ioutil.TempFile("", "testdb_")
 	if err != nil {
 		t.Fatal(err)
@@ -32,7 +32,7 @@ func createDatastore(t *testing.T) (Datastore, func()) {
 }
 
 func TestCreateGet(t *testing.T) {
-	store, cleanup := createDatastore(t)
+	store, cleanup := create(t)
 	defer cleanup()
 
 	activity := models.Activity{
@@ -63,7 +63,7 @@ func TestCreateGet(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
-	store, cleanup := createDatastore(t)
+	store, cleanup := create(t)
 	defer cleanup()
 
 	activities := []*models.Activity{
@@ -98,7 +98,7 @@ func TestGetAll(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	store, cleanup := createDatastore(t)
+	store, cleanup := create(t)
 	defer cleanup()
 
 	activity := models.Activity{
@@ -129,7 +129,7 @@ func TestUpdate(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	store, cleanup := createDatastore(t)
+	store, cleanup := create(t)
 	defer cleanup()
 
 	activity := models.Activity{
