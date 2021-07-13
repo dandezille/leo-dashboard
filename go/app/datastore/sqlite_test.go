@@ -2,32 +2,27 @@ package datastore
 
 import (
 	"io/ioutil"
-	"log"
 	"os"
 	"testing"
 	"time"
 
 	"server/app/models"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func create(t *testing.T) (Datastore, func()) {
 	temp, err := ioutil.TempFile("", "testdb_")
-	if err != nil {
-		t.Fatal(err)
-	}
+	assert.NoError(t, err)
 
 	store, err := NewSqliteDatastore(temp.Name())
-	if err != nil {
-		t.Fatal(err)
-	}
+	assert.NoError(t, err)
 
 	return store, func() {
 		store.Close()
 		temp.Close()
 		err := os.Remove(temp.Name())
-		if err != nil {
-			t.Fatal(err)
-		}
+		assert.NoError(t, err)
 	}
 }
 
@@ -41,24 +36,13 @@ func TestCreateGet(t *testing.T) {
 		Note:   "note",
 	}
 
-	err := store.Create(&activity)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if activity.ID == 0 {
-		t.Fatal("ID should be non-zero")
-	}
+	assert.NoError(t, store.Create(&activity))
+	assert.NotEqual(t, 0, activity.ID)
 
 	got, err := store.FindById(activity.ID)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if *got != activity {
-		log.Printf("activity %+v\n", activity)
-		log.Printf("got %+v\n", got)
-		t.Fatal("Expected activities to match")
+	assert.NoError(t, err)
+	if assert.NotNil(t, got) {
+		assert.Equal(t, activity, *got)
 	}
 }
 
@@ -75,25 +59,17 @@ func TestGetAll(t *testing.T) {
 	}
 
 	for _, element := range activities {
-		err := store.Create(element)
-		if err != nil {
-			t.Fatal(err)
-		}
+		assert.NoError(t, store.Create(element))
 	}
 
 	got, err := store.Find()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if len(activities) != len(got) {
-		t.Fatal("Expected activities count to match")
+	assert.NoError(t, err)
+	if assert.NotNil(t, got) {
+		assert.Len(t, got, 1)
 	}
 
 	for index, element := range activities {
-		if *element != *got[index] {
-			t.Errorf("Activity %v missmatch\n%v\n%v\n", index, element, got[index])
-		}
+		assert.Equal(t, element, got[index])
 	}
 }
 
@@ -107,24 +83,15 @@ func TestUpdate(t *testing.T) {
 		Note:   "note",
 	}
 
-	err := store.Create(&activity)
-	if err != nil {
-		t.Fatal(err)
-	}
+	assert.NoError(t, store.Create(&activity))
 
 	activity.Symbol = "b"
-	err = store.Update(&activity)
-	if err != nil {
-		t.Fatal(err)
-	}
+	assert.NoError(t, store.Update(&activity))
 
 	got, err := store.FindById(activity.ID)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if got.Symbol != "b" {
-		t.Fatal("Symbol should have changed")
+	assert.NoError(t, err)
+	if assert.NotNil(t, got) {
+		assert.Equal(t, "b", got.Symbol)
 	}
 }
 
@@ -138,22 +105,12 @@ func TestDelete(t *testing.T) {
 		Note:   "note",
 	}
 
-	err := store.Create(&activity)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	err = store.Delete(activity.ID)
-	if err != nil {
-		t.Fatal(err)
-	}
+	assert.NoError(t, store.Create(&activity))
+	assert.NoError(t, store.Delete(activity.ID))
 
 	got, err := store.Find()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if len(got) != 0 {
-		t.Fatal("Expected to find no activities")
+	assert.NoError(t, err)
+	if assert.NotNil(t, got) {
+		assert.Empty(t, got)
 	}
 }
