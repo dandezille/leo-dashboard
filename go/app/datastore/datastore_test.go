@@ -1,6 +1,7 @@
 package datastore
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 	"testing"
@@ -9,32 +10,25 @@ import (
 	"server/app/models"
 )
 
-func createDatastore(file string, t *testing.T) (*Datastore, func()) {
-	store := Open(file)
+func createDatastore(t *testing.T) (*Datastore, func()) {
+	temp, err := ioutil.TempFile("", "testdb_")
+	if err != nil {
+		t.Fatal(err)
+	}
 
+	store := Open(temp.Name())
 	return store, func() {
 		store.Close()
-		err := os.Remove(file)
+		temp.Close()
+		err := os.Remove(temp.Name())
 		if err != nil {
 			t.Fatal(err)
 		}
 	}
 }
 
-func TestOpenClose(t *testing.T) {
-	_, cleanup := createDatastore("test.db", t)
-	if _, err := os.Stat("test.db"); os.IsNotExist(err) {
-		t.Fatal("Expected test.db to exist")
-	}
-
-	cleanup()
-	if _, err := os.Stat("test.db"); !os.IsNotExist(err) {
-		t.Fatal(err)
-	}
-}
-
 func TestCreateGet(t *testing.T) {
-	store, cleanup := createDatastore("test.db", t)
+	store, cleanup := createDatastore(t)
 	defer cleanup()
 
 	activity := &models.Activity{
@@ -58,7 +52,7 @@ func TestCreateGet(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
-	store, cleanup := createDatastore("test.db", t)
+	store, cleanup := createDatastore(t)
 	defer cleanup()
 
 	activities := []*models.Activity{
@@ -87,7 +81,7 @@ func TestGetAll(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	store, cleanup := createDatastore("test.db", t)
+	store, cleanup := createDatastore(t)
 	defer cleanup()
 
 	activity := &models.Activity{
@@ -108,7 +102,7 @@ func TestUpdate(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	store, cleanup := createDatastore("test.db", t)
+	store, cleanup := createDatastore(t)
 	defer cleanup()
 
 	activity := &models.Activity{
