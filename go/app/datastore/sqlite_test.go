@@ -35,13 +35,13 @@ func TestCreateGet(t *testing.T) {
 	store, cleanup := createDatastore(t)
 	defer cleanup()
 
-	activity := &models.Activity{
+	activity := models.Activity{
 		Symbol: "a",
 		Start:  time.Now().Round(0),
 		Note:   "note",
 	}
 
-	err := store.Create(activity)
+	err := store.Create(&activity)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,7 +55,7 @@ func TestCreateGet(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if *got != *activity {
+	if *got != activity {
 		log.Printf("activity %+v\n", activity)
 		log.Printf("got %+v\n", got)
 		t.Fatal("Expected activities to match")
@@ -101,19 +101,19 @@ func TestUpdate(t *testing.T) {
 	store, cleanup := createDatastore(t)
 	defer cleanup()
 
-	activity := &models.Activity{
+	activity := models.Activity{
 		Symbol: "a",
 		Start:  time.Now().Round(0),
 		Note:   "note",
 	}
 
-	err := store.Create(activity)
+	err := store.Create(&activity)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	activity.Symbol = "b"
-	err = store.Update(activity)
+	err = store.Update(&activity)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -132,13 +132,13 @@ func TestDelete(t *testing.T) {
 	store, cleanup := createDatastore(t)
 	defer cleanup()
 
-	activity := &models.Activity{
+	activity := models.Activity{
 		Symbol: "a",
 		Start:  time.Now().Round(0),
 		Note:   "note",
 	}
 
-	err := store.Create(activity)
+	err := store.Create(&activity)
 	if err != nil {
 		t.Fatal(err)
 	}
