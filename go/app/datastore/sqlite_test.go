@@ -16,7 +16,7 @@ func createDatastore(t *testing.T) (Datastore, func()) {
 		t.Fatal(err)
 	}
 
-	store, err := Open(temp.Name())
+	store, err := NewSqliteDatastore(temp.Name())
 	if err != nil {
 		t.Fatal(err)
 	}
