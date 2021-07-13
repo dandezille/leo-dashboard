@@ -10,13 +10,17 @@ import (
 	"server/app/models"
 )
 
-func createDatastore(t *testing.T) (*Datastore, func()) {
+func createDatastore(t *testing.T) (Datastore, func()) {
 	temp, err := ioutil.TempFile("", "testdb_")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	store := Open(temp.Name())
+	store, err := Open(temp.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	return store, func() {
 		store.Close()
 		temp.Close()
@@ -37,13 +41,20 @@ func TestCreateGet(t *testing.T) {
 		Note:   "note",
 	}
 
-	store.CreateActivity(activity)
+	err := store.Create(activity)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	if activity.ID == 0 {
 		t.Fatal("ID should be non-zero")
 	}
 
-	got := store.GetActivity(activity.ID)
+	got, err := store.FindById(activity.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	if *got != *activity {
 		log.Printf("activity %+v\n", activity)
 		log.Printf("got %+v\n", got)
@@ -64,10 +75,16 @@ func TestGetAll(t *testing.T) {
 	}
 
 	for _, element := range activities {
-		store.CreateActivity(element)
+		err := store.Create(element)
+		if err != nil {
+			t.Fatal(err)
+		}
 	}
 
-	got := store.GetActivities()
+	got, err := store.Find()
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	if len(activities) != len(got) {
 		t.Fatal("Expected activities count to match")
@@ -90,12 +107,22 @@ func TestUpdate(t *testing.T) {
 		Note:   "note",
 	}
 
-	store.CreateActivity(activity)
+	err := store.Create(activity)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	activity.Symbol = "b"
-	store.UpdateActivity(activity)
+	err = store.Update(activity)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	got := store.GetActivity(activity.ID)
+	got, err := store.FindById(activity.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	if got.Symbol != "b" {
 		t.Fatal("Symbol should have changed")
 	}
@@ -111,10 +138,21 @@ func TestDelete(t *testing.T) {
 		Note:   "note",
 	}
 
-	store.CreateActivity(activity)
-	store.DeleteActivity(activity.ID)
+	err := store.Create(activity)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	got := store.GetActivities()
+	err = store.Delete(activity.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	got, err := store.Find()
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	if len(got) != 0 {
 		t.Fatal("Expected to find no activities")
 	}

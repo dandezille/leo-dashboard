@@ -2,13 +2,21 @@ package datastore
 
 import (
 	"database/sql"
-	"log"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 
 	"server/app/models"
 )
+
+type Datastore interface {
+	Close() error
+	FindById(id int64) (*models.Activity, error)
+	Find() ([]*models.Activity, error)
+	Create(activity *models.Activity) error
+	Update(activity *models.Activity) error
+	Delete(id int64) error
+}
 
 const createActivitiesTable = `
 CREATE TABLE IF NOT EXISTS activities
@@ -20,57 +28,57 @@ CREATE TABLE IF NOT EXISTS activities
 )
 `
 
-const getActivities = `
-SELECT id, symbol, start, note FROM activities
-`
-
-const getActivity = `
-SELECT id, symbol, start, note FROM activities WHERE id=?
-`
-
-const insertActivity = `
-INSERT INTO activities(symbol, start, note) VALUES (?,?,?) RETURNING id
-`
-
-const updateActivity = `
-UPDATE activities SET symbol=?, start=?, note=? WHERE id=?
-`
-
-const deleteActivity = `
-DELETE FROM activities WHERE id=?
-`
-
-type Datastore struct {
+type datastore struct {
 	db *sql.DB
 }
 
-func Open(path string) *Datastore {
+func Open(path string) (Datastore, error) {
 	db, err := sql.Open("sqlite3", path)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
+	}
+
+	err = db.Ping()
+	if err != nil {
+		return nil, err
 	}
 
 	_, err = db.Exec(createActivitiesTable)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return &Datastore{
+	return &datastore{
 		db: db,
-	}
+	}, nil
 }
 
-func (s *Datastore) Close() {
-	err := s.db.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
+func (s *datastore) Close() error {
+	return s.db.Close()
 }
 
-func (s *Datastore) GetActivities() []*models.Activity {
-	rows, err := s.db.Query(getActivities)
+func (s *datastore) FindById(id int64) (*models.Activity, error) {
+	var a models.Activity
+	var start string
+	query := "SELECT id, symbol, start, note FROM activities WHERE id=?"
+	err := s.db.QueryRow(query, id).Scan(&a.ID, &a.Symbol, &start, &a.Note)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
+	}
+
+	a.Start, err = time.Parse(time.RFC3339, start)
+	if err != nil {
+		return nil, err
+	}
+
+	return &a, nil
+}
+
+func (s *datastore) Find() ([]*models.Activity, error) {
+	query := "SELECT id, symbol, start, note FROM activities"
+	rows, err := s.db.Query(query)
+	if err != nil {
+		return nil, err
 	}
 	defer rows.Close()
 
@@ -80,53 +88,33 @@ func (s *Datastore) GetActivities() []*models.Activity {
 		var start string
 		err := rows.Scan(&a.ID, &a.Symbol, &start, &a.Note)
 		if err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
 
 		a.Start, err = time.Parse(time.RFC3339, start)
 		if err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
 
 		activities = append(activities, &a)
 	}
 
-	return activities
+	return activities, nil
 }
 
-func (s *Datastore) GetActivity(id int64) *models.Activity {
-	var a models.Activity
-	var start string
-	err := s.db.QueryRow(getActivity, id).Scan(&a.ID, &a.Symbol, &start, &a.Note)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	a.Start, err = time.Parse(time.RFC3339, start)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return &a
+func (s *datastore) Create(a *models.Activity) error {
+	query := "INSERT INTO activities(symbol, start, note) VALUES (?,?,?) RETURNING id"
+	return s.db.QueryRow(query, a.Symbol, a.Start, a.Note).Scan(&a.ID)
 }
 
-func (s *Datastore) CreateActivity(a *models.Activity) {
-	err := s.db.QueryRow(insertActivity, a.Symbol, a.Start, a.Note).Scan(&a.ID)
-	if err != nil {
-		log.Fatal(err)
-	}
+func (s *datastore) Update(a *models.Activity) error {
+	query := "UPDATE activities SET symbol=?, start=?, note=? WHERE id=?"
+	_, err := s.db.Exec(query, a.Symbol, a.Start, a.Note, a.ID)
+	return err
 }
 
-func (s *Datastore) UpdateActivity(a *models.Activity) {
-	_, err := s.db.Exec(updateActivity, a.Symbol, a.Start, a.Note, a.ID)
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-func (s *Datastore) DeleteActivity(id int64) {
-	_, err := s.db.Exec(deleteActivity, id)
-	if err != nil {
-		log.Fatal(err)
-	}
+func (s *datastore) Delete(id int64) error {
+	query := "DELETE FROM activities WHERE id=?"
+	_, err := s.db.Exec(query, id)
+	return err
 }
