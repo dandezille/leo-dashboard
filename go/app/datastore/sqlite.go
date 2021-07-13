@@ -73,7 +73,7 @@ func (s *datastore) Find() ([]*models.Activity, error) {
 	}
 	defer rows.Close()
 
-	var activities []*models.Activity
+	activities := make([]*models.Activity, 0)
 	for rows.Next() {
 		var a models.Activity
 		var start string
